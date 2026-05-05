@@ -3,33 +3,27 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
-const engineering = [
+const technical = [
   {
-    name: "Liam Chen",
-    role: "Principal Data Scientist",
-    desc: "Pioneering neural networks for real-time market sentiment analysis.",
+    name: "Raviranjan Mahto",
+    role: "Tech Lead",
+    desc: "Directing the architectural vision and technical excellence of our digital products.",
     img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&q=80",
   },
   {
-    name: "Sarah Jenkins",
-    role: "Head of Infrastructure",
-    desc: "Architecting the backbone of high-frequency data pipelines.",
+    name: "Amit Atihya",
+    role: "Full Stack Dev",
+    desc: "Building seamless end-to-end experiences across the entire technology stack.",
     img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
   },
 ];
 
-const marketing = [
+const risingTalent = [
   {
-    name: "Jameson Wu",
-    role: "Strategic Growth Lead",
-    desc: "Bridging the gap between complex tech and human connection.",
+    name: "Sagar kumar",
+    role: "Developer Intern",
+    desc: "Contributing fresh perspectives and growing with our engineering team.",
     img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80",
-  },
-  {
-    name: "Maya Patel",
-    role: "Brand Architect",
-    desc: "Crafting the narratives that define digital leadership.",
-    img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80",
   },
 ];
 
@@ -82,7 +76,7 @@ export default function TeamGrid() {
   return (
     <section className="py-20 bg-surface-container-lowest">
       <div className="max-w-screen-xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Engineering */}
+        {/* Technical Core */}
         <div>
           <motion.div
             initial={{ opacity: 0 }}
@@ -92,17 +86,17 @@ export default function TeamGrid() {
           >
             <span className="w-1 h-6 bg-primary-container rounded-full" />
             <h2 className="text-base font-headline font-black uppercase tracking-wider text-on-surface">
-              Engineering &amp; Intelligence
+              Technical Core
             </h2>
           </motion.div>
           <div className="space-y-4">
-            {engineering.map((m, i) => (
+            {technical.map((m, i) => (
               <MemberCard key={m.name} member={m} delay={i * 0.12} />
             ))}
           </div>
         </div>
 
-        {/* Marketing */}
+        {/* Rising Talent */}
         <div>
           <motion.div
             initial={{ opacity: 0 }}
@@ -112,11 +106,11 @@ export default function TeamGrid() {
           >
             <span className="w-1 h-6 bg-primary-container rounded-full" />
             <h2 className="text-base font-headline font-black uppercase tracking-wider text-on-surface">
-              Marketing Strategists
+              Rising Talent
             </h2>
           </motion.div>
           <div className="space-y-4">
-            {marketing.map((m, i) => (
+            {risingTalent.map((m, i) => (
               <MemberCard key={m.name} member={m} delay={i * 0.12 + 0.1} />
             ))}
           </div>

@@ -2,9 +2,9 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { TrendingUp, BarChart2, ExternalLink } from "lucide-react";
+import { TrendingUp, BarChart2, ShoppingCart, Heart } from "lucide-react";
 
-const filters = ["All", "Web", "Data", "Marketing"];
+const filters = ["All Works", "Web", "Apps", "Data"];
 
 const projects = [
   {
@@ -12,8 +12,8 @@ const projects = [
     category: "data",
     dept: "Data Engineering",
     title: "Nexus Analytics Engine",
-    desc: "Developed a real-time data processing pipeline for global logistics, handling over 2M events per second with sub-millisecond latency.",
-    result: "40% reduction in infrastructure costs & zero-downtime migration.",
+    desc: "Real-time data processing pipeline for global logistics, handling over 2M events per second with sub-millisecond latency.",
+    result: "Growth: 40% reduction in infra costs & zero-downtime migration.",
     img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
     icon: BarChart2,
     size: "large",
@@ -21,7 +21,7 @@ const projects = [
   {
     id: 2,
     category: "web",
-    dept: "Web Experience",
+    dept: "Web Development",
     title: "Aura Design System",
     desc: "Architected a scalable multi-platform design system for a Fortune 500 fintech firm.",
     result: "95% developer adoption rate across 12 product squads.",
@@ -31,11 +31,11 @@ const projects = [
   },
   {
     id: 3,
-    category: "marketing",
-    dept: "Marketing Tech",
-    title: "Growth Loop 2.0",
-    desc: "AI-driven customer acquisition strategy leveraging predictive modeling.",
-    result: "3.4x ROI increase in first quarter of deployment.",
+    category: "apps",
+    dept: "App Development",
+    title: "Zenith Fintech App",
+    desc: "A high-security, ultra-low latency mobile banking solution with native encryption.",
+    result: "Acquired 500k users in the first 3 months post-launch.",
     img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=80",
     icon: null,
     size: "medium",
@@ -43,23 +43,34 @@ const projects = [
   {
     id: 4,
     category: "data",
-    dept: "Data Infrastructure",
-    title: "System Integration",
-    desc: "End-to-end enterprise data integration across 14 legacy systems.",
-    result: "Unified pipeline serving 3M daily active users.",
+    dept: "Data Solutions",
+    title: "Void Intelligence",
+    desc: "Predictive maintenance platform using ML to anticipate system failures before they occur.",
+    result: "Saved $2.4M annually in unplanned downtime costs.",
     img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80",
     icon: null,
     size: "feature",
   },
   {
     id: 5,
+    category: "apps",
+    dept: "App Development",
+    title: "VitalPulse Health",
+    desc: "IoT-integrated health monitoring app providing real-time biometric feedback to clinicians.",
+    result: "300% increase in patient engagement.",
+    img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=80",
+    icon: Heart,
+    size: "small",
+  },
+  {
+    id: 6,
     category: "web",
-    dept: "Web Infrastructure",
-    title: "Void Edge Framework",
-    desc: "Next-generation serverless framework optimized for extreme edge computing environments.",
-    result: "Lighthouse score 100/100 across all core vitals globally.",
-    img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80",
-    icon: null,
+    dept: "Web Development",
+    title: "LuxeStore Global",
+    desc: "Headless e-commerce architecture for global luxury brand, optimized for lightning-fast delivery.",
+    result: "Conversion rate increased by 22% in first month.",
+    img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80",
+    icon: ShoppingCart,
     size: "small",
   },
 ];
@@ -85,10 +96,9 @@ function ProjectCard({ project }) {
       whileHover={{ y: -4 }}
       className="bg-surface-container border border-white/5 rounded-sm overflow-hidden group cursor-pointer transition-all hover:border-primary-container/20 flex flex-col"
     >
-      {/* Image */}
       <div
         className={`relative overflow-hidden ${
-          isLarge ? "h-64" : isFeature ? "h-56" : "h-40"
+          isLarge ? "h-64" : isFeature ? "h-56" : "h-44"
         }`}
       >
         <img
@@ -106,15 +116,12 @@ function ProjectCard({ project }) {
         )}
       </div>
 
-      {/* Content */}
       <div className="p-6 flex flex-col flex-1">
         <div className="flex items-start justify-between mb-3">
           <span className="text-[10px] font-label uppercase tracking-widest text-primary-container font-bold bg-primary-container/10 px-2.5 py-1 rounded-sm">
             {project.dept}
           </span>
-          {Icon && (
-            <Icon className="w-5 h-5 text-primary-container opacity-70" />
-          )}
+          {Icon && <Icon className="w-5 h-5 text-primary-container opacity-70" />}
         </div>
         <h3 className="text-lg font-headline font-black text-on-surface mb-2">
           {project.title}
@@ -127,16 +134,10 @@ function ProjectCard({ project }) {
             <div className="flex items-center gap-2">
               <TrendingUp className="w-3 h-3 text-primary-container flex-shrink-0" />
               <span className="text-xs font-label uppercase tracking-wider text-primary-container font-bold">
-                {isLarge ? "Result:" : "Metric Delivered"}
+                Result
               </span>
             </div>
-            <p
-              className={`text-xs mt-1 font-bold ${
-                isLarge
-                  ? "text-primary-container uppercase tracking-wide"
-                  : "text-on-surface-variant"
-              }`}
-            >
+            <p className="text-xs mt-1 font-bold text-on-surface-variant">
               {project.result}
             </p>
           </div>
@@ -147,14 +148,13 @@ function ProjectCard({ project }) {
 }
 
 export default function PortfolioGrid() {
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeFilter, setActiveFilter] = useState("All Works");
 
+  const filterKey = activeFilter === "All Works" ? "all" : activeFilter.toLowerCase();
   const filtered =
-    activeFilter === "All"
+    filterKey === "all"
       ? projects
-      : projects.filter(
-          (p) => p.category === activeFilter.toLowerCase()
-        );
+      : projects.filter((p) => p.category === filterKey);
 
   return (
     <section className="pb-24 bg-surface">
@@ -164,7 +164,7 @@ export default function PortfolioGrid() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="flex gap-2 mb-12"
+          className="flex gap-2 mb-12 flex-wrap"
         >
           {filters.map((f) => (
             <button

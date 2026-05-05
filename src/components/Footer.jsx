@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Globe, AtSign } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
 const footerLinks = {
-  Solutions: ["Services", "Case Studies", "App Architecture"],
-  Company: ["Portfolio", "Team", "Privacy"],
+  Systems: ["Data Intelligence", "Product Engines", "Performance Growth"],
+  Company: ["Growth Models", "Portfolio", "Privacy"],
 };
 
 export default function Footer() {
@@ -18,17 +18,15 @@ export default function Footer() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20 w-full border-t border-white/5">
         {/* Brand */}
         <div className="md:col-span-1">
-          <div className="text-xl font-bold text-slate-100 font-headline mb-6">CovianLab</div>
-          <p className="text-slate-500 text-sm leading-relaxed">
-            Engineering the digital void with architectural precision and creative intelligence.
+          <div className="text-xl font-bold text-slate-100 font-headline mb-4">CovianLab</div>
+          <p className="text-slate-500 text-sm leading-relaxed mb-3">
+            Engineering end-to-end growth systems for the next generation of business leaders.
           </p>
-          <div className="mt-8 flex gap-4">
-            <motion.a whileHover={{ scale: 1.2, color: "#22d3ee" }} href="#" className="text-slate-500 transition-colors">
-              <Globe className="w-6 h-6" />
-            </motion.a>
-            <motion.a whileHover={{ scale: 1.2, color: "#22d3ee" }} href="#" className="text-slate-500 transition-colors">
-              <AtSign className="w-6 h-6" />
-            </motion.a>
+          <div className="mt-2 text-xs text-slate-600 uppercase tracking-widest space-y-1">
+            <div>Business &amp; Growth</div>
+            <div className="text-slate-400 font-semibold">Balmukund kumar</div>
+            <div className="text-slate-600">CTO</div>
+            <div className="text-slate-400 font-semibold">Vijay Gaurav</div>
           </div>
         </div>
 
@@ -52,13 +50,13 @@ export default function Footer() {
           </div>
         ))}
 
-        {/* Newsletter */}
+        {/* Updates / Newsletter */}
         <div>
-          <h5 className="font-label text-sm uppercase tracking-widest text-cyan-400 mb-8 font-bold">Newsletter</h5>
+          <h5 className="font-label text-sm uppercase tracking-widest text-cyan-400 mb-8 font-bold">Updates</h5>
           <div className="bg-surface-container-low p-1 border border-white/5 flex">
             <input
               type="email"
-              placeholder="Email"
+              placeholder="Your Work Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="bg-transparent border-none outline-none text-sm w-full px-4 text-on-surface placeholder-slate-600"
@@ -77,11 +75,11 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="px-12 py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
         <span className="text-slate-500 text-xs font-label tracking-widest uppercase">
-          © 2024 CovianLab. Engineered for the Digital Void.
+          © 2024 CovianLab. Engineered for Growth.
         </span>
         <div className="flex gap-8">
           <Link href="#" className="text-slate-500 hover:text-cyan-400 text-xs uppercase tracking-widest transition-colors">Terms</Link>
-          <Link href="#" className="text-slate-500 hover:text-cyan-400 text-xs uppercase tracking-widest transition-colors">Contact</Link>
+          <Link href="/contact" className="text-slate-500 hover:text-cyan-400 text-xs uppercase tracking-widest transition-colors">Contact</Link>
         </div>
       </div>
     </footer>

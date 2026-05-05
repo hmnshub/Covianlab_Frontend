@@ -14,15 +14,13 @@ export default function PortfolioCTA() {
           transition={{ duration: 0.6 }}
           className="relative overflow-hidden rounded-sm bg-surface-container border border-white/5 py-24 px-10"
         >
-          {/* Decorative background orb */}
           <div className="absolute right-[-10%] top-[-20%] w-[40%] h-[150%] bg-primary-container/5 blur-[80px] rounded-full pointer-events-none" />
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl font-headline font-black tracking-tight text-on-surface leading-tight">
-                Ready to Engineer Your
-                <br />
-                Next Success?
+                Ready to collaborate your business ideas into a scalable
+                systems?
               </h2>
               <p className="mt-5 text-on-surface-variant leading-relaxed">
                 Our projects are more than just deliverables; they are

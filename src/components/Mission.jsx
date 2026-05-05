@@ -18,8 +18,10 @@ export default function Mission() {
             className="border-l-4 border-primary-container pl-12"
           >
             <h2 className="text-4xl lg:text-5xl font-headline font-bold leading-tight">
-              Building Websites, Apps, Automations, and Data Insights That Help{" "}
-              <span className="text-primary-container italic">Businesses Grow.</span>
+              One Stop Solution for{" "}
+              <span className="text-primary-container italic">
+                End-to-End Growth.
+              </span>
             </h2>
           </motion.div>
 
@@ -30,10 +32,10 @@ export default function Mission() {
             className="space-y-6"
           >
             <p className="text-lg text-on-surface-variant leading-relaxed">
-              In the digital void, existence isn't enough—you need to command
-              authority. We engineer solutions that don't just function; they
-              evolve. Our multidisciplinary approach ensures your tech stack and
-              marketing efforts move in perfect synchronization.
+              Covianlab helps startups and businesses build end-to-end growth
+              systems by combining development, performance marketing, data and
+              AI solutions under one roof. We eliminate the friction between
+              departments to focus on what matters: your bottom line.
             </p>
             <div className="flex items-center gap-4 text-primary">
               <motion.div
@@ -42,7 +44,7 @@ export default function Mission() {
                 className="w-2 h-2 rounded-full bg-primary-container"
               />
               <span className="text-sm font-label font-bold uppercase tracking-widest">
-                Active Innovation Lab
+                Active Development Cycle
               </span>
             </div>
           </motion.div>

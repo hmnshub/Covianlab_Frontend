@@ -19,7 +19,7 @@ export default function CareersHero() {
         />
       </div>
 
-      <div className="relative z-10 max-w-screen-xl mx-auto px-8 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-8 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -40,8 +40,7 @@ export default function CareersHero() {
         >
           Join the Architects
           <br />
-          of the{" "}
-          <span className="text-primary-container">Digital Void.</span>
+          of the <span className="text-primary-container">Digital Void.</span>
         </motion.h1>
 
         <motion.div

@@ -1,7 +1,8 @@
 "use client";
+
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Code2, TrendingUp, Workflow, BrainCircuit } from "lucide-react";
+import { Database, Rocket, BarChart2, CheckSquare, Layers } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
@@ -37,9 +38,8 @@ function Hero() {
           transition={{ delay: 0.6, duration: 0.6 }}
           className="text-lg text-on-surface-variant leading-relaxed pt-6"
         >
-          Engineering the digital void with architectural precision. We build
-          robust systems that bridge the gap between complex data and intuitive
-          human experiences.
+          Data-driven tech & marketing solutions for startups. Engineering the
+          digital void with architectural precision and strategic growth.
         </motion.p>
       </div>
     </section>
@@ -49,44 +49,50 @@ function Hero() {
 /* ── Service Cards ─────────────────────── */
 const services = [
   {
-    icon: Code2,
-    title: "Web & App Development",
+    icon: Database,
+    title: "Data Engineering & Analytics",
     description:
-      "Beyond simple interfaces. We engineer high-performance, custom tech stacks with React, Node, and specialized cloud infrastructures. Every pixel is responsive, every interaction is intentional.",
+      "Transform raw data into your most valuable asset. We build the pipelines and visual intelligence layers that power modern startup decision-making.",
     bullets: [
-      "Custom React Frameworks",
-      "Microservices Architecture",
-      "PWA & Native Integrations",
+      "ETL/ELT Pipelines",
+      "Cloud Data Warehousing",
+      "Spark / Hive Processing",
+      "Custom BI Dashboards",
     ],
-    hasCode: true,
+    col: "md:col-span-8",
+    hasImage: true,
+  },
+  {
+    icon: Rocket,
+    title: "Web Development & Startup Products",
+    description:
+      "Scalable, secure, and user-centric. We turn your product vision into a market-ready digital reality with cutting-edge tech stacks.",
+    bullets: ["React / Node.js", "SaaS Product Build", "Modern UI / UX Design"],
     col: "md:col-span-4",
   },
   {
-    icon: TrendingUp,
-    title: "Digital Marketing & SEO",
+    icon: BarChart2,
+    title: "Digital Marketing & Sales",
     description:
-      "Precision-targeted growth strategies designed to dominate the digital landscape. We focus on search intent, technical visibility, and ROI-driven conversion paths.",
-    stat: { label: "Growth Rate", value: "+142%" },
+      "Performance-driven growth for B2B and SaaS startups. We don't just generate traffic; we engineer conversion funnels that drive revenue.",
+    tags: ["SEO & Ads", "LinkedIn B2B", "Sales Funnels"],
     col: "md:col-span-4",
   },
   {
-    icon: Workflow,
-    title: "Marketing Automation & CRM",
+    icon: CheckSquare,
+    title: "QA & Data Testing",
     description:
-      "Eliminate manual friction. We build intelligent workflows that nurture leads and manage customer lifecycles with surgical precision.",
-    tags: ["Workflows", "Segmentation", "Lead Scoring"],
-    col: "md:col-span-3",
+      "Reliability at scale. We ensure your systems and data stay accurate and high-performing through rigorous automated validation frameworks.",
+    bullets: ["Test Automation", "ETL Validation", "Regression Testing"],
+    col: "md:col-span-4",
   },
   {
-    icon: BrainCircuit,
-    title: "Data Engineering & ML",
+    icon: Layers,
+    title: "IT Consulting & Tech Roadmap",
     description:
-      "Transform raw data into competitive advantages. Our machine learning models and real-time dashboards provide deep insights into user behavior and market shifts.",
-    dual: [
-      { label: "Predictive", value: "Analytics" },
-      { label: "Real-Time", value: "Dashboards" },
-    ],
-    col: "md:col-span-5",
+      "Architecting for the future. We provide the strategic technical guidance startups need to scale without breaking their systems.",
+    bullets: ["Cloud Architecture", "CRM Implementation", "Scaling Strategy"],
+    col: "md:col-span-4",
   },
 ];
 
@@ -94,111 +100,64 @@ function ServiceCard({ s, i }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const Icon = s.icon;
+
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, delay: i * 0.1 }}
-      className={`${s.col} bg-surface-container hover:bg-surface-container-high transition-all duration-500 p-10 relative overflow-hidden group`}
+      className={`${s.col} bg-surface-container-low hover:bg-surface-container-highest transition-all duration-500 p-10 relative overflow-hidden group rounded-sm`}
     >
-      <div className="absolute top-6 right-6 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
-        <Icon className="w-32 h-32 text-primary" strokeWidth={0.5} />
-      </div>
-
-      <div className="w-10 h-10 bg-primary-container/10 flex items-center justify-center mb-6 rounded-sm">
-        <Icon className="w-5 h-5 text-primary-container" />
-      </div>
-      <h3 className="text-2xl font-headline font-bold mb-4">{s.title}</h3>
-      <p className="text-on-surface-variant text-sm leading-relaxed max-w-sm">
-        {s.description}
-      </p>
-
-      {s.bullets && (
-        <ul className="mt-8 space-y-2">
-          {s.bullets.map((b) => (
-            <li
-              key={b}
-              className="flex items-center gap-3 text-xs text-on-surface-variant uppercase tracking-wide"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-primary-container flex-shrink-0" />
-              {b}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {s.stat && (
-        <div className="mt-8 pt-6 border-t border-white/5">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-xs text-slate-500 uppercase tracking-widest">
-              {s.stat.label}
-            </span>
-            <span className="text-3xl font-headline font-black text-primary-container">
-              {s.stat.value}
-            </span>
-          </div>
-          <div className="h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={inView ? { width: "85%" } : {}}
-              transition={{ delay: 0.7, duration: 1.2, ease: "easeOut" }}
-              className="h-full signature-gradient"
-            />
-          </div>
+      {s.hasImage && (
+        <div className="absolute top-0 right-0 w-2/5 h-full opacity-30 group-hover:opacity-50 transition-opacity">
+          <div
+            className="w-full h-full"
+            style={{
+              background:
+                "url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&q=60') center/cover no-repeat",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-surface-container-low to-transparent" />
         </div>
       )}
 
-      {s.tags && (
-        <div className="flex flex-wrap gap-2 mt-8">
-          {s.tags.map((t) => (
-            <span
-              key={t}
-              className="px-3 py-1 bg-surface-container-lowest border border-white/5 text-xs text-on-surface-variant uppercase"
-            >
-              {t}
-            </span>
-          ))}
+      <div className="relative z-10 max-w-md">
+        <div className="text-primary-container mb-6">
+          <Icon className="w-8 h-8" />
         </div>
-      )}
+        <h3 className="text-2xl font-headline font-bold mb-4">{s.title}</h3>
+        <p className="text-on-surface-variant text-sm leading-relaxed">
+          {s.description}
+        </p>
 
-      {s.dual && (
-        <div className="grid grid-cols-2 gap-4 mt-8">
-          {s.dual.map((d) => (
-            <div
-              key={d.label}
-              className="border-l-2 border-primary-container pl-4"
-            >
-              <span className="block text-xs text-slate-500 uppercase tracking-widest">
-                {d.label}
+        {s.bullets && (
+          <ul className="mt-6 space-y-2">
+            {s.bullets.map((b) => (
+              <li
+                key={b}
+                className="flex items-center gap-3 text-xs text-on-surface-variant uppercase tracking-wide"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-primary-container flex-shrink-0" />
+                {b}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {s.tags && (
+          <div className="flex flex-wrap gap-2 mt-8">
+            {s.tags.map((t) => (
+              <span
+                key={t}
+                className="px-3 py-1 bg-surface-dim border border-outline-variant/10 text-xs text-on-surface-variant uppercase"
+              >
+                {t}
               </span>
-              <span className="block font-headline font-bold text-on-surface mt-1">
-                {d.value}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {s.hasCode && (
-        <div className="absolute top-8 right-44 w-44 rounded-sm overflow-hidden bg-surface-container-lowest opacity-20 group-hover:opacity-35 transition-opacity hidden xl:block">
-          {[
-            "const api = fetch(",
-            "  endpoint, {",
-            "    method:'POST',",
-            "    body: payload",
-            "  })",
-            ".then(r => r.json())",
-          ].map((line, idx) => (
-            <div
-              key={idx}
-              className="text-[9px] font-mono px-3 py-0.5 text-cyan-400/70 leading-5"
-            >
-              {line}
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </motion.div>
   );
 }
@@ -256,32 +215,14 @@ export default function ServicesPage() {
       <Navbar />
       <Hero />
       <section className="pb-8 px-8 max-w-screen-xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-8 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {services.map((s, i) => (
             <ServiceCard key={s.title} s={s} i={i} />
           ))}
         </div>
       </section>
       <ServicesCTA />
-      <Footer
-        links={[
-          {
-            heading: "Explore",
-            items: [
-              { label: "Services", href: "/services" },
-              { label: "Portfolio", href: "/portfolio" },
-              { label: "Team", href: "/team" },
-            ],
-          },
-          {
-            heading: "Legal",
-            items: [
-              { label: "Privacy", href: "#" },
-              { label: "Terms", href: "#" },
-            ],
-          },
-        ]}
-      />
+      <Footer />
     </main>
   );
 }

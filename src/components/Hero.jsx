@@ -1,12 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap } from "lucide-react";
-
-const stats = [
-  { value: "24k", label: "Events/Sec" },
-  { value: "0.4ms", label: "Latency" },
-];
+import { TrendingUp } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -26,7 +21,7 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-screen-2xl mx-auto px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left */}
-        <div className="lg:col-span-8">
+        <div className="lg:col-span-7">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -35,7 +30,7 @@ export default function Hero() {
           >
             <span className="w-12 h-[2px] bg-primary-container" />
             <span className="text-sm font-label uppercase tracking-widest text-primary-container font-bold">
-              Innovation Agency
+              Growth Engineering Lab
             </span>
           </motion.div>
 
@@ -43,21 +38,21 @@ export default function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7 }}
-            className="text-[clamp(3rem,8vw,5.5rem)] font-headline font-black leading-[1.1] tracking-tighter text-glow"
+            className="text-[clamp(2.8rem,7vw,5rem)] font-headline font-black leading-[1.1] tracking-tighter text-glow"
           >
-            Tech, Marketing, and Data Solutions{" "}
-            <span className="text-primary-container">Under One Roof.</span>
+            Engineering Growth Systems,{" "}
+            <span className="text-primary-container">not just websites.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65, duration: 0.6 }}
-            className="mt-8 text-xl text-on-surface-variant max-w-2xl leading-relaxed"
+            className="mt-8 text-lg text-on-surface-variant max-w-xl leading-relaxed"
           >
-            We bridge the gap between creative vision and technical execution.
-            CovianLab crafts high-performance digital ecosystems for the next
-            generation of business leaders.
+            We build growth systems, not just services. CovianLab crafts
+            end-to-end digital ecosystems that scale startups and enterprises
+            through the intersection of tech and performance.
           </motion.p>
 
           <motion.div
@@ -69,16 +64,16 @@ export default function Hero() {
             <motion.button
               whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(0,240,255,0.4)" }}
               whileTap={{ scale: 0.96 }}
-              className="signature-gradient text-on-primary-fixed px-10 py-4 rounded-sm font-headline font-black text-lg cursor-pointer"
+              className="signature-gradient text-on-primary-fixed px-10 py-4 rounded-sm font-headline font-black text-base cursor-pointer"
             >
-              Launch Project
+              Scale Your Business
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.04, backgroundColor: "rgba(255,255,255,0.05)" }}
               whileTap={{ scale: 0.96 }}
-              className="px-10 py-4 rounded-sm font-headline font-bold text-lg text-primary-fixed border border-outline-variant/30 transition-all cursor-pointer"
+              className="px-10 py-4 rounded-sm font-headline font-bold text-base text-primary-fixed border border-outline-variant/30 transition-all cursor-pointer"
             >
-              View Portfolio
+              View Growth Models
             </motion.button>
           </motion.div>
         </div>
@@ -88,45 +83,57 @@ export default function Hero() {
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.7, duration: 0.7 }}
-          className="lg:col-span-4 hidden lg:block"
+          className="lg:col-span-5 hidden lg:block"
         >
           <div className="glass-panel p-8 border border-white/10 rounded-sm relative">
             <div className="absolute -top-4 -right-4 w-12 h-12 signature-gradient rounded-sm flex items-center justify-center">
-              <Zap className="text-on-primary-fixed w-5 h-5 fill-current" />
+              <TrendingUp className="text-on-primary-fixed w-5 h-5" />
             </div>
             <div className="space-y-6">
               <div className="flex justify-between items-end">
                 <span className="text-xs font-label text-on-surface-variant uppercase">
-                  Network Load
+                  Conversion Efficiency
                 </span>
-                <span className="text-primary-container font-headline font-bold">
-                  98.2%
+                <span className="text-primary-container font-headline font-bold text-xl">
+                  +142%
                 </span>
               </div>
               <div className="h-2 bg-surface-container-highest rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: "0%" }}
-                  animate={{ width: "98%" }}
+                  animate={{ width: "85%" }}
                   transition={{ delay: 1, duration: 1.2, ease: "easeOut" }}
                   className="h-full signature-gradient"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
-                {stats.map((stat, i) => (
+                {[{ value: "ROI", label: "Tracked" }, { value: "Scale", label: "Guaranteed" }].map((stat, i) => (
                   <motion.div
                     key={stat.label}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 1.1 + i * 0.1, duration: 0.4 }}
-                    className="bg-surface-container-low p-4 rounded-sm"
+                    className="bg-surface-container-low p-4 rounded-sm border border-white/5"
                   >
-                    <span className="block text-[2rem] font-black text-primary font-headline">
+                    <span className="block text-[1.8rem] font-black text-primary font-headline">
                       {stat.value}
                     </span>
                     <span className="text-xs uppercase text-slate-500">
                       {stat.label}
                     </span>
                   </motion.div>
+                ))}
+              </div>
+              {/* Mini bar chart */}
+              <div className="flex items-end gap-1.5 h-16 pt-2">
+                {[35, 55, 42, 70, 58, 82, 65, 90, 75, 95].map((h, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ height: 0 }}
+                    animate={{ height: `${h}%` }}
+                    transition={{ delay: 1.2 + i * 0.05, duration: 0.4 }}
+                    className="flex-1 signature-gradient rounded-sm opacity-60"
+                  />
                 ))}
               </div>
             </div>

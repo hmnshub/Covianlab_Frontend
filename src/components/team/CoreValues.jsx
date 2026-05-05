@@ -1,23 +1,23 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck, Layers, Users, Rocket } from "lucide-react";
+import { Zap, Flag, Focus, Rocket } from "lucide-react";
 
 const values = [
   {
-    icon: ShieldCheck,
-    title: "Radical Integrity",
-    desc: "In a world of data manipulation, we hold ourselves to the highest standard of verifiable truth.",
+    icon: Zap,
+    title: "Momentum over policy",
+    desc: "We favor decisive action and continuous movement over rigid bureaucratic frameworks.",
   },
   {
-    icon: Layers,
-    title: "Architectural Agility",
-    desc: "We build structures that are robust enough to last, yet flexible enough to evolve.",
+    icon: Flag,
+    title: "Outcomes over activity",
+    desc: "Impact is our metric. We celebrate the results achieved, not the hours spent in motion.",
   },
   {
-    icon: Users,
-    title: "Collective Genius",
-    desc: "The best solutions emerge from the intersection of diverse perspectives and specialized expertise.",
+    icon: Focus,
+    title: "Clarity over noise",
+    desc: "In a complex world, we strive for simple truths and focused communication.",
   },
   {
     icon: Rocket,
@@ -59,7 +59,7 @@ export default function CoreValues() {
           >
             Guided by
             <br />
-            Precision.
+            Culture.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -68,8 +68,8 @@ export default function CoreValues() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="mt-5 text-sm text-on-surface-variant leading-relaxed"
           >
-            Our values aren't slogans; they're the variables that drive our
-            algorithmic decisions every day.
+            We believe that how we work is as important as what we build. Our
+            culture defines our trajectory.
           </motion.p>
         </div>
 

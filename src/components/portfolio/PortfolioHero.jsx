@@ -18,7 +18,7 @@ export default function PortfolioHero() {
         >
           <span className="w-10 h-[2px] bg-primary-container" />
           <span className="text-xs font-label uppercase tracking-widest text-primary-container font-bold">
-            Portfolio Exhibition
+            Success Stories
           </span>
         </motion.div>
 
@@ -28,12 +28,11 @@ export default function PortfolioHero() {
           transition={{ delay: 0.45, duration: 0.7 }}
           className="text-[clamp(2.8rem,7vw,5.5rem)] font-headline font-black leading-[1.05] tracking-tighter text-glow max-w-3xl"
         >
-          Showcasing Projects,
+          End-to-End Growth
           <br />
-          Skills, and Results
+          Systems
         </motion.h1>
 
-        {/* Underline accent */}
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}

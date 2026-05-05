@@ -2,38 +2,43 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Globe, Smartphone, TrendingUp, BarChart2 } from "lucide-react";
+import { BarChart2, Cpu, Rocket, Bot } from "lucide-react";
 
 const services = [
   {
-    category: "Architecture",
-    title: "Web Development",
-    description: "High-fidelity corporate sites and complex web applications built for speed, SEO, and massive scale.",
-    icon: Globe,
-    tags: ["React", "Next.js", "Webflow"],
-    colSpan: "md:col-span-8",
+    category: "Foundation",
+    title: "Data & Strategic Models",
+    description:
+      "We start with the math. Advanced analytics and AI-powered predictive models that form the bedrock of every decision.",
+    icon: BarChart2,
+    tags: ["Predictive Models", "ROI Attribution", "Market Intelligence"],
+    colSpan: "md:col-span-6",
   },
   {
-    category: "Product",
-    title: "App Design",
-    description: "Native and hybrid mobile experiences that prioritize user psychology and fluid interactions.",
-    icon: Smartphone,
-    colSpan: "md:col-span-4",
-  },
-  {
-    category: "Growth",
-    title: "Marketing",
-    description: "Data-driven performance marketing and content strategies that dominate the digital noise.",
-    icon: TrendingUp,
-    colSpan: "md:col-span-4",
+    category: "Build",
+    title: "Product Engine",
+    description:
+      "Scalable design and high-performance development focused on user acquisition and retention mechanics.",
+    icon: Cpu,
+    colSpan: "md:col-span-6",
     hasArrow: true,
   },
   {
-    category: "Intelligence",
-    title: "Data Insights",
-    description: "Advanced analytics, AI-powered predictive modeling, and custom dashboard engineering for decision makers.",
-    icon: BarChart2,
-    colSpan: "md:col-span-8",
+    category: "Attract",
+    title: "Performance Growth",
+    description:
+      "Aggressive marketing systems that leverage data to find your highest-value customers at scale.",
+    icon: Rocket,
+    colSpan: "md:col-span-6",
+    hasRocket: true,
+  },
+  {
+    category: "Optimize",
+    title: "QA & AI Automations",
+    description:
+      "Continuous improvement models through automated testing and AI workflows that ensure the system never stops evolving.",
+    icon: Bot,
+    colSpan: "md:col-span-6",
     hasChart: true,
   },
 ];
@@ -60,8 +65,8 @@ function ServiceCard({ service, index }) {
         <span className="text-primary-container font-bold text-sm tracking-widest font-label uppercase">
           {service.category}
         </span>
-        <h3 className="text-4xl font-headline font-bold mt-4">{service.title}</h3>
-        <p className="mt-6 text-on-surface-variant max-w-md text-lg">{service.description}</p>
+        <h3 className="text-3xl font-headline font-bold mt-4">{service.title}</h3>
+        <p className="mt-4 text-on-surface-variant max-w-md">{service.description}</p>
       </div>
 
       {service.tags && (
@@ -77,13 +82,13 @@ function ServiceCard({ service, index }) {
         </div>
       )}
 
-      {service.hasArrow && (
+      {service.hasRocket && (
         <motion.div
           className="mt-8 text-primary relative z-10"
-          whileHover={{ x: 8 }}
+          whileHover={{ y: -6 }}
           transition={{ type: "spring", stiffness: 400 }}
         >
-          <TrendingUp className="w-10 h-10" />
+          <Rocket className="w-10 h-10 text-primary-container" />
         </motion.div>
       )}
 
@@ -113,14 +118,14 @@ export default function Services() {
   return (
     <section id="services" className="py-32 bg-surface relative overflow-hidden">
       <div className="max-w-screen-2xl mx-auto px-8">
-        <div ref={ref} className="mb-20">
+        <div ref={ref} className="mb-12">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
             className="text-sm font-label uppercase tracking-[0.2em] text-primary-container font-bold mb-4 block"
           >
-            Our Expertise
+            Our Systemized Approach
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -130,6 +135,16 @@ export default function Services() {
           >
             What We Do.
           </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-4 text-on-surface-variant text-lg max-w-xl"
+          >
+            We design systems that{" "}
+            <strong className="text-on-surface">build, attract, track, and optimize</strong>{" "}
+            continuously. No silos, just results.
+          </motion.p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
