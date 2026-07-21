@@ -7,6 +7,88 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 
+/* ── Founder's Vision Hero ────────────── */
+function FoundersVisionHero() {
+  return (
+    <section className="relative pt-36 pb-28 px-8 max-w-screen-xl mx-auto overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[38rem] h-[38rem] rounded-full bg-primary-container/10 blur-3xl" />
+      </div>
+
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="lg:col-span-7"
+        >
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xs font-label uppercase tracking-[0.22em] text-primary-container font-bold mb-6 block"
+          >
+            Founder's Vision
+          </motion.span>
+
+          <h1 className="text-[clamp(3rem,8vw,6.2rem)] font-headline font-black leading-[0.97] tracking-tighter text-glow">
+            We help startups
+            <br />
+            <span
+              className="text-primary-container"
+              style={{ textShadow: "0 0 24px rgba(0, 240, 255, 0.45)" }}
+            >
+              build, scale, and compete.
+            </span>
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.35 }}
+            className="mt-8 text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl"
+          >
+            CovianLab is a B2B tech services company engineered to give growing
+            startups access to the same elite engineering, data, and marketing
+            talent that enterprise companies take for granted.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.55 }}
+          className="lg:col-span-5 lg:pt-16"
+        >
+          <blockquote className="relative bg-surface-container-low/80 border border-primary-container/25 p-8 md:p-10 rounded-sm shadow-[0_0_35px_rgba(0,240,255,0.12)]">
+            <span className="absolute -left-3 top-8 h-20 w-1.5 bg-primary-container shadow-[0_0_14px_rgba(0,240,255,0.7)]" />
+            <p className="text-base md:text-lg text-on-surface-variant leading-relaxed">
+              After years spanning data engineering, software development, and
+              B2B consulting, I watched great startup ideas stall due to poor
+              technical execution. CovianLab was built to be the partner I
+              wished those startups had: a focused, senior team that moves
+              fast, communicates clearly, and takes absolute ownership of
+              outcomes.
+            </p>
+            <footer className="mt-8 text-right text-lg font-headline font-bold text-primary-container text-glow">
+              — Balmukund
+            </footer>
+          </blockquote>
+        </motion.div>
+      </div>
+
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.65, delay: 0.75 }}
+        className="relative z-10 mt-16 text-xl md:text-2xl font-headline font-extrabold tracking-tight text-on-surface"
+      >
+        Our Services: Everything a startup needs to execute.
+      </motion.p>
+    </section>
+  );
+}
+
 /* ── Hero ─────────────────────────────── */
 function Hero() {
   return (
@@ -213,6 +295,7 @@ export default function ServicesPage() {
   return (
     <main className="bg-surface min-h-screen">
       <Navbar />
+      <FoundersVisionHero />
       <Hero />
       <section className="pb-8 px-8 max-w-screen-xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
