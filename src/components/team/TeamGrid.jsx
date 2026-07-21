@@ -62,7 +62,7 @@ function MemberCard({ member, delay = 0 }) {
         <div className="flex flex-col flex-1">
           <div className="flex justify-between items-start">
             <div>
-              <h3 className="font-headline font-bold text-white text-lg group-hover:text-cyan-400 transition-colors">{member.name}</h3>
+              <h3 className="font-headline font-bold text-white text-lg group-hover:text-white transition-colors">{member.name}</h3>
               <span className="text-xs font-label uppercase tracking-widest text-cyan-400 font-bold block mt-1">{member.role}</span>
             </div>
             <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors mt-1" />

@@ -44,16 +44,16 @@ const leaders = [
 ];
 
 const cardVariants = {
-  hidden: { opacity: 0, scale: 0.8, rotateX: 30, y: 100 },
+  hidden: { opacity: 0, scale: 0.8, y: 50 },
   visible: {
-    opacity: 1, scale: 1, rotateX: 0, y: 0,
+    opacity: 1, scale: 1, y: 0,
     transition: { type: "spring", stiffness: 100, damping: 12, mass: 1 },
   },
 };
 
 export default function Leadership() {
   return (
-    <section className="py-20 bg-[#0B0F17] text-white perspective-[2000px]">
+    <section className="py-20 bg-[#0B0F17] text-white">
       <div className="max-w-screen-xl mx-auto px-8">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -82,21 +82,19 @@ export default function Leadership() {
                 key={leader.name}
                 variants={cardVariants}
                 whileHover={{
-                  scale: 1.05,
-                  y: -10,
-                  rotateY: i === 0 ? 5 : i === 2 ? -5 : 0,
-                  rotateX: 5,
-                  boxShadow: "0 20px 40px -10px rgba(34, 211, 238, 0.3)",
+                  scale: 1.02,
+                  y: -6,
                 }}
-                className="flex flex-col group cursor-pointer relative"
+                className="flex flex-col group cursor-pointer relative p-2 rounded-2xl transition-all duration-300"
               >
-                <div className="w-full aspect-[4/3] bg-[#161f30]/80 backdrop-blur-md rounded-xl flex items-center justify-center mb-5 relative overflow-hidden border border-white/5 group-hover:border-cyan-400/50 transition-colors duration-500">
+                {/* Clean Image Container with smooth border highlight instead of box-shadow box */}
+                <div className="w-full aspect-[4/3] bg-[#131B2E] rounded-xl flex items-center justify-center mb-5 relative overflow-hidden border border-cyan-500/20 group-hover:border-cyan-400 group-hover:shadow-[0_0_25px_rgba(34,211,238,0.25)] transition-all duration-300">
                   {/* Shimmer */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none" />
                   
                   {/* Floating Icon */}
                   <motion.div 
-                    animate={{ y: [-8, 8, -8] }}
+                    animate={{ y: [-6, 6, -6] }}
                     transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: i * 0.2 }}
                     className="w-36 h-36 opacity-85 group-hover:scale-110 group-hover:opacity-100 transition-all duration-500 drop-shadow-[0_0_8px_rgba(34,211,238,0.3)] group-hover:drop-shadow-[0_0_20px_rgba(34,211,238,0.8)]"
                   >
@@ -104,8 +102,8 @@ export default function Leadership() {
                   </motion.div>
                 </div>
                 
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300">
+                <div className="px-1">
+                  <h3 className="text-xl font-bold text-white mb-1 group-hover:text-white transition-colors duration-300">
                     {leader.name}
                   </h3>
                   <p className="text-xs font-bold text-cyan-400 uppercase tracking-widest leading-relaxed">

@@ -1,6 +1,6 @@
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
-import LiveBackground from "@/components/team/LiveBackground"; // Adjust path if your folder structure differs
+import CircuitBackground from "@/components/CircuitBackground";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,10 +26,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.variable} ${manrope.variable} bg-surface text-on-surface font-body relative min-h-screen overflow-x-hidden`}
       >
-        {/* Global Live Wallpaper Background */}
-        <LiveBackground />
+        {/* Global Digital Circuit Background */}
+        <CircuitBackground />
 
-        {/* Main Application Pages */}
+        {/* Global Application Pages */}
         {children}
       </body>
     </html>
