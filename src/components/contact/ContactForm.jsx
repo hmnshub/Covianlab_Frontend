@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Mail, Globe, ArrowRight } from "lucide-react";
+import { Mail, Phone, ArrowRight } from "lucide-react";
 
 const services = [
   "Data Strategy",
@@ -136,15 +136,15 @@ export default function ContactForm() {
         >
           <div>
             <span className="text-xs font-label uppercase tracking-widest text-primary-container font-bold block mb-6">
-              Global HQ
+              Headquarters
             </span>
             <h2 className="text-4xl font-headline font-black text-on-surface mb-3">
-              San Francisco
+              Bangalore
             </h2>
             <p className="text-on-surface-variant text-sm mb-8">
-              101 Architecture Way, Suite 500
+              Karnataka
               <br />
-              California, 94103
+              India
             </p>
 
             <div className="space-y-5">
@@ -154,34 +154,37 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <span className="text-xs font-label uppercase tracking-widest text-on-surface-variant block mb-1">
-                    General Inquiries
+                    Support
                   </span>
                   <a
-                    href="mailto:hello@covianlab.tech"
+                    href="mailto:support@covianlab.com"
                     className="text-sm font-bold text-primary-container hover:text-primary transition-colors"
                   >
-                    hello@covianlab.tech
+                    support@covianlab.com
                   </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <div className="w-8 h-8 bg-primary-container/10 rounded-sm flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Globe className="w-4 h-4 text-primary-container" />
+                  <Phone className="w-4 h-4 text-primary-container" />
                 </div>
                 <div>
                   <span className="text-xs font-label uppercase tracking-widest text-on-surface-variant block mb-1">
-                    Global Reach
+                    Direct Contact
                   </span>
-                  <span className="text-sm font-bold text-on-surface">
-                    London • Tokyo • Berlin
-                  </span>
+                  <a
+                    href="tel:+919981013564"
+                    className="text-sm font-bold text-on-surface hover:text-primary-container transition-colors"
+                  >
+                    +91 9981013564
+                  </a>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Decorative world map dots */}
+          {/* Decorative network dots */}
           <div className="mt-10 relative h-28 overflow-hidden opacity-30">
             <div
               className="w-full h-full"
