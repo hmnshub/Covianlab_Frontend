@@ -103,7 +103,7 @@ const projects = [
 ];
 
 /* ========================================================
-    UPGRADED HIGH-FIDELITY VISUALIZERS 
+    HIGH-FIDELITY ANIMATED VISUALIZERS 
 ======================================================== */
 
 const TerminalVisual = () => (
@@ -120,9 +120,13 @@ const TerminalVisual = () => (
       <div className="text-white">[OK] Kubernetes pods spun up (12/12)</div>
       <div className="text-white">[OK] WebSocket tunnels established.</div>
       <div className="text-yellow-400 font-bold">[WARN] Traffic spike detected. Auto-scaling.</div>
-      <div className="text-emerald-400 font-black text-xs md:text-base mt-1">
+      <motion.div 
+        animate={{ opacity: [0.4, 1, 0.4] }} 
+        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+        className="text-emerald-400 font-black text-xs md:text-base mt-1"
+      >
         {">"} SYSTEM ONLINE: 2,041,892 events/sec
-      </div>
+      </motion.div>
     </div>
     <div className="absolute bottom-0 right-0 w-32 md:w-64 h-32 md:h-64 bg-cyan-500/20 blur-[80px] pointer-events-none" />
   </div>
@@ -142,8 +146,20 @@ const DesignSystemVisual = () => (
         <div className="text-[10px] md:text-xs text-slate-400">Primary interactive component.</div>
       </div>
       <div className="bg-slate-800/50 border border-white/10 rounded-xl p-3 md:p-6 flex items-center justify-center gap-3">
-        <button className="px-4 py-1.5 md:px-6 md:py-2.5 bg-cyan-400 text-slate-950 font-bold text-xs rounded shadow-md">Primary</button>
-        <button className="px-4 py-1.5 md:px-6 md:py-2.5 border border-slate-600 text-slate-200 font-bold text-xs rounded">Secondary</button>
+        <motion.button 
+          whileHover={{ scale: 1.08 }} 
+          whileTap={{ scale: 0.95 }}
+          className="px-4 py-1.5 md:px-6 md:py-2.5 bg-cyan-400 text-slate-950 font-bold text-xs rounded shadow-[0_0_15px_rgba(34,211,238,0.4)]"
+        >
+          Primary
+        </motion.button>
+        <motion.button 
+          whileHover={{ scale: 1.08 }} 
+          whileTap={{ scale: 0.95 }}
+          className="px-4 py-1.5 md:px-6 md:py-2.5 border border-slate-600 text-slate-200 font-bold text-xs rounded"
+        >
+          Secondary
+        </motion.button>
       </div>
       <div className="bg-[#050505] border border-white/10 rounded-lg p-3 font-mono text-[9px] overflow-hidden">
         <span className="text-pink-400">import <span className="text-white">{"{ Button }"}</span> from <span className="text-emerald-400">'@aura/ui'</span>;</span>
@@ -161,54 +177,97 @@ const DashboardMobileVisual = () => (
         <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-indigo-500 to-cyan-400" />
       </div>
       <div className="px-4 py-2">
-        <div className="w-full h-24 md:h-32 bg-gradient-to-br from-indigo-600 to-cyan-600 rounded-xl p-3 flex flex-col justify-between shadow-lg">
+        <motion.div 
+          animate={{ scale: [0.98, 1, 0.98] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="w-full h-24 md:h-32 bg-gradient-to-br from-indigo-600 to-cyan-600 rounded-xl p-3 flex flex-col justify-between shadow-lg relative overflow-hidden"
+        >
           <div className="w-12 h-2 bg-white/40 rounded-full" />
           <div className="w-24 h-5 bg-white rounded-md" />
-        </div>
+        </motion.div>
       </div>
       <div className="flex-1 px-4 py-2 flex flex-col gap-2">
         {[1, 2].map((i) => (
-          <div key={i} className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-slate-800" />
+          <motion.div 
+            key={i} 
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.2 }}
+            className="flex items-center gap-3"
+          >
+            <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
+              <div className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
+            </div>
             <div className="flex-1 flex flex-col gap-1.5">
               <div className="w-full h-2 bg-slate-300 rounded-full" />
               <div className="w-1/2 h-1.5 bg-slate-600 rounded-full" />
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
   </div>
 );
 
+// 4. AI / Network Data Visual (High-Contrast Opaque Dark Scanner with Bright Red Nodes)
 const NetworkVisual = () => (
   <div className="w-full h-full bg-[#020617] relative overflow-hidden flex items-center justify-center">
-    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:30px_30px]" />
+    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:30px_30px]" />
+    
     <svg className="absolute inset-0 w-full h-full z-0">
-      <path d="M 20% 30% L 50% 50% L 80% 40% L 70% 80% L 30% 70% Z" stroke="rgba(34, 211, 238, 0.6)" strokeWidth="2" fill="none" />
+      <motion.path 
+        animate={{ opacity: [0.4, 0.9, 0.4] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        d="M 20% 30% L 50% 50% L 80% 40% L 70% 80% L 30% 70% Z" 
+        stroke="rgba(239, 68, 68, 0.9)" 
+        strokeWidth="2.5" 
+        fill="none" 
+      />
     </svg>
+
     {[
-      { top: "30%", left: "20%", color: "cyan" },
-      { top: "50%", left: "50%", color: "indigo", size: "large" },
-      { top: "40%", left: "80%", color: "cyan" },
-      { top: "70%", left: "30%", color: "cyan" },
+      { top: "30%", left: "20%" },
+      { top: "50%", left: "50%" },
+      { top: "40%", left: "80%" },
+      { top: "70%", left: "30%" },
     ].map((node, i) => (
-      <div key={i} className="absolute z-10 flex items-center justify-center" style={{ top: node.top, left: node.left, width: '24px', height: '24px', backgroundColor: 'rgba(34,211,238,0.2)', transform: 'translate(-50%, -50%)', borderRadius: '50%' }}>
-        <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+      <div key={i} className="absolute z-10 flex items-center justify-center" style={{ top: node.top, left: node.left, width: '28px', height: '28px', transform: 'translate(-50%, -50%)' }}>
+        <motion.div 
+          animate={{ scale: [1, 1.6, 1] }}
+          transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.3 }}
+          className="w-3.5 h-3.5 rounded-full bg-red-600 shadow-[0_0_18px_#dc2626]" 
+        />
       </div>
     ))}
+
+    {/* Highly Opaque, Bold Dark Crimson Scanning Radar Beam */}
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-20 flex items-center justify-center">
+      <motion.div 
+        animate={{ rotate: 360 }} 
+        transition={{ duration: 4, repeat: Infinity, ease: "linear" }} 
+        className="absolute w-[300%] h-[300%] border-l-[4px] border-red-600 bg-gradient-to-tr from-red-900/70 via-red-950/30 to-transparent origin-center" 
+      />
+    </div>
   </div>
 );
 
 const BiometricVisual = () => (
   <div className="w-full h-full bg-[#030712] relative overflow-hidden flex flex-col justify-center p-4 md:p-8">
     <div className="absolute top-4 left-4 flex items-center gap-2 z-10 bg-rose-950/50 p-2 rounded-lg border border-rose-500/30">
-      <Heart className="text-rose-500 w-5 h-5 animate-ping" />
+      <Heart className="text-rose-500 w-5 h-5 animate-bounce" />
       <span className="text-rose-400 font-mono font-bold text-sm md:text-xl">BPM: 72</span>
     </div>
     <div className="relative w-full h-24 md:h-40 flex items-center justify-center z-10 mt-6">
-      <svg viewBox="0 0 200 60" className="w-full h-24 md:h-40 overflow-visible">
-        <path d="M 0 30 L 40 30 L 50 5 L 60 55 L 70 30 L 130 30 L 140 15 L 150 40 L 160 30 L 200 30" fill="none" stroke="#f43f5e" strokeWidth="2.5" />
+      <svg viewBox="0 0 200 60" className="w-full h-24 md:h-40 overflow-visible drop-shadow-[0_0_10px_rgba(244,63,94,0.8)]">
+        <motion.path
+          d="M 0 30 L 40 30 L 50 5 L 60 55 L 70 30 L 130 30 L 140 15 L 150 40 L 160 30 L 200 30"
+          fill="none"
+          stroke="#f43f5e"
+          strokeWidth="2.5"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+        />
       </svg>
     </div>
   </div>
@@ -218,6 +277,11 @@ const EcommerceVisual = () => (
   <div className="w-full h-full bg-[#0a0f1c] flex items-center justify-center p-4 relative overflow-hidden">
     <div className="w-full max-w-[260px] md:max-w-[300px] bg-slate-900/90 border border-white/20 rounded-xl p-4 flex flex-col gap-4 shadow-2xl relative z-10">
       <div className="w-full aspect-video bg-slate-800 rounded-lg relative overflow-hidden">
+        <motion.div 
+          animate={{ x: ["-100%", "200%"] }} 
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }} 
+          className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/15 to-transparent skew-x-12" 
+        />
         <div className="absolute bottom-2 right-2 w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
           <ShoppingCart className="w-4 h-4 text-white" />
         </div>
@@ -226,8 +290,13 @@ const EcommerceVisual = () => (
         <div className="w-1/2 h-4 bg-white/90 rounded" />
         <div className="w-1/4 h-4 bg-emerald-400 rounded" />
       </div>
-      <div className="w-full h-10 bg-emerald-500 rounded-lg flex items-center justify-center text-white font-bold text-xs uppercase tracking-wider">
-        Processing
+      <div className="w-full h-10 bg-slate-800 rounded-lg relative overflow-hidden flex items-center justify-center border border-white/10">
+        <motion.div 
+          animate={{ width: ["0%", "100%", "0%"] }} 
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} 
+          className="absolute top-0 left-0 h-full bg-emerald-500/80 shadow-[0_0_15px_#10b981]" 
+        />
+        <span className="relative z-10 text-white font-bold text-xs uppercase tracking-wider">Processing</span>
       </div>
     </div>
   </div>
@@ -274,16 +343,22 @@ export default function PortfolioGrid() {
 
         {/* Natural Scrolling Container */}
         <AnimatePresence mode="wait">
-          <motion.div key={activeFilter} className="flex flex-col gap-12 md:gap-32">
-            {filtered.map((project) => {
+          <motion.div 
+            key={activeFilter} 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="flex flex-col gap-12 md:gap-32"
+          >
+            {filtered.map((project, i) => {
               const Icon = project.icon;
               return (
                 <motion.div
                   key={project.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
                   className="relative overflow-hidden bg-surface-container border border-white/10 rounded-sm p-5 md:p-12 lg:p-16 shadow-xl group hover:border-primary-container/40 transition-colors"
                 >
                   <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
@@ -349,7 +424,7 @@ export default function PortfolioGrid() {
                     </div>
 
                     {/* Right Column: Dynamic Visualizer (Fixed Height for Mobile Single-Frame View) */}
-                    <div className="relative h-[280px] sm:h-[340px] lg:h-[550px] rounded-lg overflow-hidden border border-white/10 shadow-lg">
+                    <div className="relative h-[280px] sm:h-[340px] lg:h-[550px] rounded-lg overflow-hidden border border-white/10 shadow-lg flex items-center justify-center">
                       {project.visualType === "terminal" && <TerminalVisual />}
                       {project.visualType === "design-system" && <DesignSystemVisual />}
                       {project.visualType === "dashboard-mobile" && <DashboardMobileVisual />}
