@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Layers } from "lucide-react";
+import { ArrowRight, Layers, Cpu } from "lucide-react";
 
 export default function PortfolioCTA() {
   return (
@@ -21,8 +21,8 @@ export default function PortfolioCTA() {
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* CTA Headline & Description */}
-            <div className="lg:col-span-8">
+            {/* Left Side: CTA Headline & Description */}
+            <div className="lg:col-span-7">
               <div className="flex items-center gap-2 mb-4">
                 <Layers className="w-4 h-4 text-primary-container" />
                 <span className="text-xs font-label uppercase tracking-widest text-primary-container font-bold">
@@ -67,23 +67,50 @@ export default function PortfolioCTA() {
               </div>
             </div>
 
-            {/* Glowing Graphic Accent */}
-            <div className="lg:col-span-4 hidden lg:flex items-center justify-center">
-              <div className="relative w-64 h-64 flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full border border-primary-container/20 animate-ping opacity-25" />
-                <div className="absolute inset-4 rounded-full border border-primary-container/30" />
-                <div className="absolute inset-10 rounded-full border border-white/10" />
-                <div className="absolute inset-16 rounded-full bg-primary-container/10 blur-xl" />
+            {/* Right Side: Animated Dynamic Data Core */}
+            <div className="lg:col-span-5 hidden lg:flex items-center justify-center">
+              <div className="relative w-72 h-72 flex items-center justify-center">
                 
-                {/* Center Core Badge */}
-                <div className="relative z-10 text-center p-6 bg-surface/90 border border-white/10 backdrop-blur-md rounded-full w-40 h-40 flex flex-col items-center justify-center">
-                  <span className="text-2xl font-headline font-black text-primary-container">
-                    100%
-                  </span>
-                  <span className="text-[9px] font-label uppercase tracking-widest text-on-surface-variant font-bold mt-1">
-                    Custom Built
-                  </span>
-                </div>
+                {/* Core Deep Glow */}
+                <div className="absolute inset-0 bg-primary-container/20 blur-[70px] rounded-full pointer-events-none" />
+
+                {/* Outer Dashed Orbit (Rotates Clockwise) */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 rounded-full border border-dashed border-primary-container/30"
+                />
+
+                {/* Inner Solid Orbit with Accent (Rotates Counter-Clockwise) */}
+                <motion.div
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-6 rounded-full border border-white/10"
+                  style={{ borderTopColor: "rgba(34, 211, 238, 0.8)", borderWidth: "2px" }}
+                />
+
+                {/* Satellite Data Node (Orbits on the middle ring) */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-12"
+                >
+                  <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-primary-container rounded-full shadow-[0_0_15px_rgba(34,211,238,1)]" />
+                </motion.div>
+
+                {/* Central Pulsing Glassmorphism Core */}
+                <motion.div
+                  animate={{ scale: [1, 1.08, 1] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative z-10 w-32 h-32 bg-surface/80 backdrop-blur-xl border border-primary-container/50 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(34,211,238,0.2)] overflow-hidden"
+                >
+                  {/* Internal Core Glow */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-primary-container/30 to-blue-600/30" />
+                  
+                  {/* Tech Icon inside the Core */}
+                  <Cpu className="w-10 h-10 text-primary-container relative z-10" />
+                </motion.div>
+
               </div>
             </div>
 

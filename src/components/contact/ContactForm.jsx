@@ -132,9 +132,9 @@ export default function ContactForm() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="bg-surface-container border border-white/5 rounded-sm p-10 flex flex-col justify-between"
+          className="bg-surface-container border border-white/5 rounded-sm p-10 flex flex-col justify-between overflow-hidden relative"
         >
-          <div>
+          <div className="relative z-10">
             <span className="text-xs font-label uppercase tracking-widest text-primary-container font-bold block mb-6">
               Headquarters
             </span>
@@ -184,17 +184,38 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {/* Decorative network dots */}
-          <div className="mt-10 relative h-28 overflow-hidden opacity-30">
-            <div
-              className="w-full h-full"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle, rgba(0,240,255,0.5) 1px, transparent 1px)",
-                backgroundSize: "18px 18px",
-              }}
-            />
+          {/* Handmade Tech Blueprint Graphic */}
+          <div className="absolute bottom-0 left-0 right-0 h-40 opacity-40 flex items-end pointer-events-none">
+            <svg
+              viewBox="0 0 300 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-full text-primary-container translate-y-4"
+            >
+              {/* Hand-drawn style curving connection lines */}
+              <path d="M10,80 Q50,20 100,50 T200,40 T290,70" stroke="currentColor" strokeWidth="1.5" className="opacity-50" strokeLinecap="round" />
+              <path d="M20,90 Q70,40 120,70 T220,20 T300,60" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="opacity-30" strokeLinecap="round" />
+              
+              {/* Connecting Nodes */}
+              <circle cx="100" cy="50" r="4" fill="currentColor" className="opacity-80" />
+              <circle cx="200" cy="40" r="3" fill="currentColor" className="opacity-80" />
+              
+              {/* Hand-sketched aesthetic crosshairs */}
+              <path d="M96,46 L104,54 M96,54 L104,46" stroke="currentColor" strokeWidth="1" className="opacity-70" />
+              
+              {/* Tech Blueprint Monospace text */}
+              <text x="112" y="54" fill="currentColor" fontSize="8" fontFamily="monospace" className="opacity-60 tracking-widest">NODE_01</text>
+              <text x="210" y="38" fill="currentColor" fontSize="8" fontFamily="monospace" className="opacity-60 tracking-widest">SYS_REQ</text>
+              
+              {/* Architectural Base Grid Lines */}
+              <line x1="0" y1="90" x2="300" y2="90" stroke="currentColor" strokeWidth="0.5" className="opacity-20" />
+              <line x1="100" y1="90" x2="100" y2="85" stroke="currentColor" strokeWidth="1" className="opacity-30" />
+              <line x1="200" y1="90" x2="200" y2="85" stroke="currentColor" strokeWidth="1" className="opacity-30" />
+            </svg>
+            
+            {/* Fades to blend the graphic smoothly into the card corners */}
             <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-surface-container via-transparent to-surface-container opacity-80" />
           </div>
         </motion.div>
       </div>
