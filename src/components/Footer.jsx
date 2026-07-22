@@ -25,8 +25,7 @@ export default function Footer() {
           <div className="mt-2 text-xs text-slate-600 uppercase tracking-widest space-y-1">
             <div>Business &amp; Growth</div>
             <div className="text-slate-400 font-semibold">Balmukund kumar</div>
-            <div className="text-slate-600">CTO</div>
-            <div className="text-slate-400 font-semibold">Vijay Gaurav</div>
+            
           </div>
         </div>
 

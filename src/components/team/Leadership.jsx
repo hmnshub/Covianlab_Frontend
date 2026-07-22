@@ -39,7 +39,7 @@ const MegaphoneArrowIcon = () => (
 
 const leaders = [
   { name: "Balmukund kumar", role: "BUSINESS & GROWTH HEAD", Graphic: GraphGlobeIcon },
-  { name: "Vijay Gaurav", role: "CTO / TECH HEAD", Graphic: GearCircuitIcon },
+ 
   { name: "Ashutosh kumar Das", role: "HEAD OF MARKETING AND SALES GROWTH", Graphic: MegaphoneArrowIcon },
 ];
 
