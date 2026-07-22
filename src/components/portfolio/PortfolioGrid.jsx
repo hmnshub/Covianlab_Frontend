@@ -280,10 +280,10 @@ export default function PortfolioGrid() {
               return (
                 <motion.div
                   key={project.id}
-                  initial={{ opacity: 0, y: 50, scale: 0.96 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.4 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
                   className="relative overflow-hidden bg-surface-container border border-white/10 rounded-sm p-5 md:p-12 lg:p-16 shadow-xl group hover:border-primary-container/40 transition-colors"
                 >
                   <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
