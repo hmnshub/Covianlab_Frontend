@@ -23,7 +23,7 @@ export default function Footer() {
             Engineering end-to-end growth systems for the next generation of business leaders.
           </p>
           <div className="mt-2 text-xs text-slate-600 uppercase tracking-widest space-y-1">
-            <div>Business &amp; Growth</div>
+            <div>Founder &amp; CEO</div>
             <div className="text-slate-400 font-semibold">Balmukund kumar</div>
             
           </div>
@@ -74,7 +74,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="px-12 py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
         <span className="text-slate-500 text-xs font-label tracking-widest uppercase">
-          © 2024 CovianLab. Engineered for Growth.
+          © 2026 CovianLab. Engineered for Growth.
         </span>
         <div className="flex gap-8">
           <Link href="#" className="text-slate-500 hover:text-cyan-400 text-xs uppercase tracking-widest transition-colors">Terms</Link>

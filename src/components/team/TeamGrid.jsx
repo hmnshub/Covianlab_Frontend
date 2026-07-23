@@ -14,29 +14,13 @@ const TechLeadIcon = () => (
   </svg>
 );
 
-const FullStackIcon = () => (
-  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <rect x="12" y="16" width="40" height="32" rx="2" stroke="white" strokeWidth="2"/>
-    <path d="M12 26h40" stroke="white" strokeWidth="2"/>
-    <circle cx="18" cy="21" r="1.5" fill="#22d3ee"/><circle cx="24" cy="21" r="1.5" fill="#22d3ee"/>
-    <path d="M20 36l4 4-4 4M28 44h6" stroke="#22d3ee" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const InternIcon = () => (
-  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <path d="M26 22l-10 10 10 10M38 22l10 10-10 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M36 16l-8 32" stroke="#22d3ee" strokeWidth="2" strokeLinecap="round"/>
-  </svg>
-);
-
 const technical = [
-  { name: "Raviranjan Mahto", role: "Tech Lead", desc: "Directing the architectural vision and technical excellence of our digital products.", Graphic: TechLeadIcon },
-  { name: "Amit Atihya", role: "Full Stack Dev", desc: "Building seamless end-to-end experiences across the entire technology stack.", Graphic: FullStackIcon },
-];
-
-const risingTalent = [
-  { name: "Sagar kumar", role: "Developer Intern", desc: "Contributing fresh perspectives and growing with our engineering team.", Graphic: InternIcon },
+  { 
+    name: "Himanshu Kumar Singh", 
+    role: "Tech Analyst", 
+    desc: "Analyzing technical systems, optimizing platform performance, and supporting core software operations.", 
+    Graphic: TechLeadIcon 
+  },
 ];
 
 const cardVariants = {
@@ -44,7 +28,7 @@ const cardVariants = {
   visible: { opacity: 1, scale: 1, rotateX: 0, y: 0, transition: { type: "spring", stiffness: 100, damping: 12 } },
 };
 
-function MemberCard({ member, delay = 0 }) {
+function MemberCard({ member }) {
   const GraphicComponent = member.Graphic;
   return (
     <motion.div
@@ -80,7 +64,7 @@ function MemberCard({ member, delay = 0 }) {
 export default function TeamGrid() {
   return (
     <section className="py-20 bg-[#0B0F17] perspective-[2000px]">
-      <div className="max-w-screen-xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="max-w-screen-md mx-auto px-8">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={{ visible: { transition: { staggerChildren: 0.2 } } }}>
           <div className="flex items-center gap-3 mb-6">
             <span className="w-1 h-6 bg-cyan-400 rounded-full drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
@@ -88,16 +72,6 @@ export default function TeamGrid() {
           </div>
           <div className="space-y-4">
             {technical.map((m) => <MemberCard key={m.name} member={m} />)}
-          </div>
-        </motion.div>
-
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={{ visible: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } } }}>
-          <div className="flex items-center gap-3 mb-6">
-            <span className="w-1 h-6 bg-cyan-400 rounded-full drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
-            <h2 className="text-base font-headline font-black uppercase tracking-wider text-white">Rising Talent</h2>
-          </div>
-          <div className="space-y-4">
-            {risingTalent.map((m) => <MemberCard key={m.name} member={m} />)}
           </div>
         </motion.div>
       </div>

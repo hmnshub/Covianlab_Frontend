@@ -27,6 +27,18 @@ const GearCircuitIcon = () => (
   </svg>
 );
 
+const TechAnalystIcon = () => (
+  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+    <rect x="10" y="14" width="44" height="36" rx="3" stroke="white" strokeWidth="2"/>
+    <path d="M10 24h44" stroke="white" strokeWidth="2"/>
+    <circle cx="16" cy="19" r="1.5" fill="#22d3ee"/>
+    <circle cx="22" cy="19" r="1.5" fill="#22d3ee"/>
+    <path d="M18 36l5 5-5 5M26 46h8" stroke="#22d3ee" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M40 42v-8M46 42v-14" stroke="#22d3ee" strokeWidth="2" strokeLinecap="round"/>
+    <circle cx="46" cy="24" r="2" fill="white"/>
+  </svg>
+);
+
 const MegaphoneArrowIcon = () => (
   <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
     <path d="M14 38l16-8 14 4v-16l-14 4-16-8v24z" stroke="white" strokeWidth="2" strokeLinejoin="round"/>
@@ -38,9 +50,27 @@ const MegaphoneArrowIcon = () => (
 );
 
 const leaders = [
-  { name: "Balmukund kumar", role: "BUSINESS & GROWTH HEAD", Graphic: GraphGlobeIcon },
- 
-  { name: "Ashutosh kumar Das", role: "HEAD OF MARKETING AND SALES GROWTH", Graphic: MegaphoneArrowIcon },
+  { 
+    name: "Balmukund Sharma", 
+    role: "FOUNDER & CEO", 
+    badge: "Ex-TCS | CGI",
+    Graphic: GraphGlobeIcon 
+  },
+  { 
+    name: "Sunil Kumar Sharma", 
+    role: "CTO - TECH HEAD", 
+    Graphic: GearCircuitIcon 
+  },
+  { 
+    name: "Himanshu Kumar Singh", 
+    role: "TECH ANALYST", 
+    Graphic: TechAnalystIcon 
+  },
+  { 
+    name: "Ashutosh Kumar Das", 
+    role: "CHIEF MARKETING OFFICER", 
+    Graphic: MegaphoneArrowIcon 
+  },
 ];
 
 const cardVariants = {
@@ -73,7 +103,7 @@ export default function Leadership() {
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           variants={{ visible: { transition: { staggerChildren: 0.2 } } }}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {leaders.map((leader, i) => {
             const GraphicComponent = leader.Graphic;
@@ -87,12 +117,9 @@ export default function Leadership() {
                 }}
                 className="flex flex-col group cursor-pointer relative p-2 rounded-2xl transition-all duration-300"
               >
-                {/* Clean Image Container with smooth border highlight instead of box-shadow box */}
                 <div className="w-full aspect-[4/3] bg-[#131B2E] rounded-xl flex items-center justify-center mb-5 relative overflow-hidden border border-cyan-500/20 group-hover:border-cyan-400 group-hover:shadow-[0_0_25px_rgba(34,211,238,0.25)] transition-all duration-300">
-                  {/* Shimmer */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none" />
                   
-                  {/* Floating Icon */}
                   <motion.div 
                     animate={{ y: [-6, 6, -6] }}
                     transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: i * 0.2 }}
@@ -109,6 +136,11 @@ export default function Leadership() {
                   <p className="text-xs font-bold text-cyan-400 uppercase tracking-widest leading-relaxed">
                     {leader.role}
                   </p>
+                  {leader.badge && (
+                    <p className="text-[11px] font-semibold text-slate-400 tracking-wider mt-1 uppercase">
+                      {leader.badge}
+                    </p>
+                  )}
                 </div>
               </motion.div>
             );

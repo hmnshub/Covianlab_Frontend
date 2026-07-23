@@ -28,7 +28,7 @@ export default function CTA() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="text-lg text-on-surface-variant max-w-2xl mx-auto mb-14 leading-relaxed"
         >
-          We are currently accepting high-growth partners for late 2024. Secure
+          We are currently accepting high-growth partners for late 2026. Secure
           your spot in our next development cycle.
         </motion.p>
 
