@@ -127,7 +127,7 @@ ${form.message}
     };
 
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:5000/api/contact", true);
+   xhr.open("POST", "https://covianlab-backend.vercel.app/api/contact", true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Accept", "application/json");
 
