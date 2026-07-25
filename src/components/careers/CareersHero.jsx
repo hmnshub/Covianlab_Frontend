@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 
 export default function CareersHero() {
   return (
-    <header className="relative min-h-screen flex items-center pt-24 pb-20 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 z-0">
+    <header className="relative w-full min-h-[85vh] sm:min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
+      {/* Background with adjusted mobile rendering */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-surface-container-lowest via-surface to-surface" />
-        <div className="absolute top-[-15%] right-[-5%] w-[55%] h-[70%] bg-primary-container/8 blur-[140px] rounded-full" />
-        <div className="absolute bottom-0 left-[-10%] w-[40%] h-[50%] bg-primary-container/5 blur-[100px] rounded-full" />
+        <div className="absolute top-[-10%] right-[-10%] sm:right-[-5%] w-[80%] sm:w-[55%] h-[50%] sm:h-[70%] bg-primary-container/8 blur-[100px] sm:blur-[140px] rounded-full" />
+        <div className="absolute bottom-0 left-[-10%] w-[60%] sm:w-[40%] h-[40%] sm:h-[50%] bg-primary-container/5 blur-[80px] sm:blur-[100px] rounded-full" />
         <div
           className="w-full h-full opacity-10"
           style={{
@@ -19,24 +19,24 @@ export default function CareersHero() {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-8 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="mb-6 flex items-center gap-3"
+          transition={{ delay: 0.2, duration: 0.4 }}
+          className="mb-4 sm:mb-6 flex items-center gap-3"
         >
-          <span className="w-10 h-[2px] bg-primary-container" />
-          <span className="text-xs font-label uppercase tracking-widest text-primary-container font-bold">
+          <span className="w-8 sm:w-10 h-[2px] bg-primary-container" />
+          <span className="text-[11px] sm:text-xs font-label uppercase tracking-widest text-primary-container font-bold">
             Open Opportunities
           </span>
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45, duration: 0.7 }}
-          className="text-[clamp(3.2rem,9vw,6.5rem)] font-headline font-black leading-[1.05] tracking-tighter max-w-4xl text-glow"
+          transition={{ delay: 0.35, duration: 0.6 }}
+          className="text-[clamp(2.5rem,8vw,6.5rem)] font-headline font-black leading-[1.08] tracking-tighter max-w-4xl text-glow"
         >
           Join the Architects
           <br />
@@ -44,12 +44,12 @@ export default function CareersHero() {
         </motion.h1>
 
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -15 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.65, duration: 0.6 }}
-          className="mt-10 pl-6 border-l-2 border-primary-container/50 max-w-xl"
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="mt-6 sm:mt-10 pl-4 sm:pl-6 border-l-2 border-primary-container/50 max-w-xl"
         >
-          <p className="text-lg text-on-surface-variant leading-relaxed">
+          <p className="text-sm sm:text-lg text-on-surface-variant leading-relaxed">
             We operate at the bleeding edge of technology, marketing, and
             predictive analytics. CovianLab isn't just a studio; it's a
             collective for those who find beauty in complex data and clean code.

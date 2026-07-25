@@ -61,7 +61,6 @@ export default function CurrentDeployments() {
             j.category === activeFilter.toLowerCase()
         );
 
-  // 👉 Directs applicant to the standalone application page with URL params
   const handleApplyClick = (job) => {
     const query = new URLSearchParams({
       role: job.title,
@@ -72,8 +71,8 @@ export default function CurrentDeployments() {
   };
 
   return (
-    <section className="py-32 bg-surface-container-lowest">
-      <div className="max-w-screen-xl mx-auto px-8">
+    <section className="py-20 sm:py-32 bg-surface-container-lowest overflow-hidden">
+      <div className="max-w-screen-xl mx-auto px-5 sm:px-8">
         {/* Header */}
         <div className="mb-4">
           <motion.h2
@@ -81,7 +80,7 @@ export default function CurrentDeployments() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-2xl font-headline font-black tracking-widest uppercase text-on-surface"
+            className="text-xl sm:text-2xl font-headline font-black tracking-widest uppercase text-on-surface"
           >
             Current Deployments
           </motion.h2>
@@ -93,13 +92,13 @@ export default function CurrentDeployments() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="flex flex-wrap gap-2 mb-10"
+          className="flex flex-wrap gap-2 mb-8 sm:mb-10"
         >
           {filters.map((f) => (
             <button
               key={f}
               onClick={() => setActiveFilter(f)}
-              className={`text-xs font-label uppercase tracking-wider px-4 py-1.5 rounded-sm border transition-all cursor-pointer ${
+              className={`text-xs font-label uppercase tracking-wider px-3.5 py-2 sm:px-4 sm:py-1.5 rounded-sm border transition-all cursor-pointer ${
                 activeFilter === f
                   ? "border-primary-container text-primary-container bg-primary-container/10"
                   : "border-white/10 text-on-surface-variant hover:border-white/20"
@@ -124,16 +123,16 @@ export default function CurrentDeployments() {
               variants={rowVariants}
               whileHover={{ x: 4, borderColor: "rgba(0,240,255,0.2)" }}
               onClick={() => handleApplyClick(job)}
-              className="bg-surface-container border border-white/5 rounded-sm p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-all group cursor-pointer"
+              className="bg-surface-container border border-white/5 rounded-sm p-5 sm:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-all group cursor-pointer"
             >
               <div>
                 <span className="text-xs font-label text-primary-container uppercase tracking-widest font-bold block mb-1">
                   {job.dept}
                 </span>
-                <h3 className="text-lg font-headline font-bold text-on-surface">
+                <h3 className="text-base sm:text-lg font-headline font-bold text-on-surface">
                   {job.title}
                 </h3>
-                <div className="flex items-center gap-5 mt-2">
+                <div className="flex flex-wrap items-center gap-4 sm:gap-5 mt-2">
                   <span className="flex items-center gap-1.5 text-xs text-on-surface-variant">
                     <MapPin className="w-3 h-3 text-primary-container/70" />
                     {job.location}
@@ -145,7 +144,7 @@ export default function CurrentDeployments() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-sm font-label font-bold text-primary-container group-hover:gap-4 transition-all">
+              <div className="flex items-center gap-2 text-sm font-label font-bold text-primary-container group-hover:gap-4 transition-all pt-2 md:pt-0 border-t md:border-t-0 border-white/5">
                 Apply Now
                 <ArrowRight className="w-4 h-4" />
               </div>

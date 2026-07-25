@@ -38,15 +38,15 @@ const cardVariants = {
 
 export default function LabEcosystem() {
   return (
-    <section className="py-32 bg-surface">
-      <div className="max-w-screen-xl mx-auto px-8">
-        <div className="text-center mb-16">
+    <section className="py-20 sm:py-32 bg-surface overflow-hidden">
+      <div className="max-w-screen-xl mx-auto px-5 sm:px-8">
+        <div className="text-center mb-12 sm:mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55 }}
-            className="text-4xl font-headline font-black tracking-tight text-on-surface"
+            className="text-3xl sm:text-4xl font-headline font-black tracking-tight text-on-surface"
           >
             The Lab Ecosystem
           </motion.h2>
@@ -55,7 +55,7 @@ export default function LabEcosystem() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="mt-4 text-on-surface-variant text-sm"
+            className="mt-4 text-on-surface-variant text-sm px-4"
           >
             Engineered to support the high-performance digital artisan.
           </motion.p>
@@ -75,7 +75,7 @@ export default function LabEcosystem() {
                 key={b.title}
                 variants={cardVariants}
                 whileHover={{ y: -4, borderColor: "rgba(0,240,255,0.25)" }}
-                className="bg-surface-container border border-white/5 rounded-sm p-8 transition-all"
+                className="bg-surface-container border border-white/5 rounded-sm p-6 sm:p-8 transition-all"
               >
                 <div className="mb-5 w-10 h-10 rounded-sm bg-primary-container/10 flex items-center justify-center">
                   <Icon className="w-5 h-5 text-primary-container" />

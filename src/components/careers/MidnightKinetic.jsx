@@ -33,17 +33,17 @@ const cardVariants = {
 
 export default function MidnightKinetic() {
   return (
-    <section className="py-32 bg-surface-container-lowest">
-      <div className="max-w-7xl mx-auto px-8">
+    <section className="py-20 sm:py-32 bg-surface-container-lowest overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 sm:mb-16 gap-6">
           <div>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55 }}
-              className="text-3xl font-headline font-black tracking-tight uppercase text-on-surface"
+              className="text-2xl sm:text-3xl font-headline font-black tracking-tight uppercase text-on-surface"
             >
               Midnight Kinetic
             </motion.h2>
@@ -52,7 +52,7 @@ export default function MidnightKinetic() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="mt-3 text-on-surface-variant text-sm max-w-md"
+              className="mt-3 text-on-surface-variant text-sm max-w-md leading-relaxed"
             >
               Our philosophy is built on three immutable pillars. We don't
               follow trends; we architect the infrastructure they sit on.
@@ -64,7 +64,7 @@ export default function MidnightKinetic() {
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
             href="#"
-            className="text-xs font-label uppercase tracking-widest text-primary-container hover:text-primary transition-colors"
+            className="text-xs font-label uppercase tracking-widest text-primary-container hover:text-primary transition-colors inline-block"
           >
             » Live at CovianLab
           </motion.a>
@@ -84,7 +84,7 @@ export default function MidnightKinetic() {
               <motion.div
                 key={pillar.title}
                 variants={cardVariants}
-                className="glass-panel border border-white/5 p-8 rounded-sm group hover:border-primary-container/20 transition-colors"
+                className="glass-panel border border-white/5 p-6 sm:p-8 rounded-sm group hover:border-primary-container/20 transition-colors"
               >
                 <div className="mb-6 w-10 h-10 text-primary-container">
                   <Icon className="w-8 h-8" />

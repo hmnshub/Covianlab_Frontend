@@ -84,7 +84,6 @@ function ApplyFormContent() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  // 👉 USING CLEAN JSON PAYLOAD WITH BASE64 RESUME TO MATCH EXPRESS JSON PARSER
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -127,7 +126,7 @@ ${form.message}
     };
 
     const xhr = new XMLHttpRequest();
-   xhr.open("POST", "https://covianlab-backend.vercel.app/api/contact", true);
+    xhr.open("POST", "https://covianlab-backend.vercel.app/api/contact", true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Accept", "application/json");
 
@@ -161,7 +160,7 @@ ${form.message}
       setLoading(false);
       setStatus({
         type: "error",
-        text: "Could not connect to Port 5000. Ensure your backend server is online.",
+        text: "Could not connect to backend server. Ensure connection is active.",
       });
     };
 
@@ -169,34 +168,34 @@ ${form.message}
   };
 
   return (
-    <div className="max-w-screen-xl mx-auto px-8 py-16">
+    <div className="max-w-screen-xl mx-auto px-5 sm:px-8 py-10 sm:py-16">
       <button
         onClick={() => router.back()}
-        className="flex items-center gap-2 text-xs font-label uppercase tracking-widest text-on-surface-variant hover:text-primary-container transition-colors mb-12 cursor-pointer"
+        className="flex items-center gap-2 text-xs font-label uppercase tracking-widest text-on-surface-variant hover:text-primary-container transition-colors mb-8 sm:mb-12 cursor-pointer"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Deployments
       </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         
-        {/* Left Column: Sidebar */}
-        <div className="lg:col-span-5 space-y-8 bg-surface-container border border-white/5 p-8 rounded-sm sticky top-12">
+        {/* Left Column: Sidebar (Removed sticky class on mobile to fix scrolling trap) */}
+        <div className="lg:col-span-5 space-y-6 sm:space-y-8 bg-surface-container border border-white/5 p-6 sm:p-8 rounded-sm lg:sticky lg:top-12">
           <div>
             <span className="text-xs font-label uppercase tracking-widest text-primary-container font-bold block mb-2">
               Join The Cohort
             </span>
-            <h1 className="text-3xl font-headline font-black text-on-surface uppercase tracking-wide">
+            <h1 className="text-2xl sm:text-3xl font-headline font-black text-on-surface uppercase tracking-wide">
               Remote Internship Program
             </h1>
-            <p className="text-on-surface-variant text-sm mt-3 leading-relaxed">
+            <p className="text-on-surface-variant text-xs sm:text-sm mt-3 leading-relaxed">
               We don't do busywork. As an intern at Covian Lab, you will ship production code, architect real cloud pipelines, and build systems used by live clients.
             </p>
           </div>
 
           <hr className="border-white/5" />
 
-          <div className="space-y-6">
+          <div className="space-y-5 sm:space-y-6">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 bg-primary-container/10 rounded-sm flex items-center justify-center flex-shrink-0 mt-0.5 border border-primary-container/20">
                 <Terminal className="w-5 h-5 text-primary-container" />
@@ -253,10 +252,10 @@ ${form.message}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="lg:col-span-7 bg-surface-container border border-white/5 rounded-sm p-10 space-y-8"
+          className="lg:col-span-7 bg-surface-container border border-white/5 rounded-sm p-6 sm:p-10 space-y-6 sm:space-y-8"
         >
           <div className="border-b border-white/5 pb-4">
-            <h3 className="text-xl font-headline font-bold text-on-surface uppercase tracking-wider">
+            <h3 className="text-lg sm:text-xl font-headline font-bold text-on-surface uppercase tracking-wider">
               Applicant Credentials
             </h3>
             <p className="text-xs text-on-surface-variant mt-1">
@@ -273,7 +272,7 @@ ${form.message}
                 name="role"
                 value={form.role}
                 onChange={handleChange}
-                className="w-full bg-surface border border-white/10 rounded-sm p-3 text-on-surface outline-none text-sm focus:border-primary-container transition-colors cursor-pointer"
+                className="w-full bg-surface border border-white/10 rounded-sm p-3 text-on-surface outline-none text-base sm:text-sm focus:border-primary-container transition-colors cursor-pointer"
               >
                 {roles.map((r) => (
                   <option key={r} value={r} className="bg-surface-container">
@@ -291,7 +290,7 @@ ${form.message}
                 name="availability"
                 value={form.availability}
                 onChange={handleChange}
-                className="w-full bg-surface border border-white/10 rounded-sm p-3 text-on-surface outline-none text-sm focus:border-primary-container transition-colors cursor-pointer"
+                className="w-full bg-surface border border-white/10 rounded-sm p-3 text-on-surface outline-none text-base sm:text-sm focus:border-primary-container transition-colors cursor-pointer"
               >
                 <option value="Immediate (3 Months)" className="bg-surface-container">Immediate (3 Months)</option>
                 <option value="Immediate (6 Months)" className="bg-surface-container">Immediate (6 Months)</option>
@@ -313,7 +312,7 @@ ${form.message}
                 placeholder="Alex Mercer"
                 value={form.fullName}
                 onChange={handleChange}
-                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-sm focus:border-primary-container transition-colors"
+                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-base sm:text-sm focus:border-primary-container transition-colors"
               />
             </div>
 
@@ -328,7 +327,7 @@ ${form.message}
                 placeholder="alex@domain.com"
                 value={form.email}
                 onChange={handleChange}
-                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-sm focus:border-primary-container transition-colors"
+                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-base sm:text-sm focus:border-primary-container transition-colors"
               />
             </div>
 
@@ -343,7 +342,7 @@ ${form.message}
                 placeholder="+91 98765 43210"
                 value={form.phone}
                 onChange={handleChange}
-                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-sm focus:border-primary-container transition-colors"
+                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-base sm:text-sm focus:border-primary-container transition-colors"
               />
             </div>
           </div>
@@ -360,7 +359,7 @@ ${form.message}
                 placeholder="Indian Institute of Technology / MIT / VIT..."
                 value={form.college}
                 onChange={handleChange}
-                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-sm focus:border-primary-container transition-colors"
+                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-base sm:text-sm focus:border-primary-container transition-colors"
               />
             </div>
 
@@ -372,7 +371,7 @@ ${form.message}
                 name="gradYear"
                 value={form.gradYear}
                 onChange={handleChange}
-                className="w-full bg-surface border border-white/10 rounded-sm p-2 text-on-surface outline-none text-sm focus:border-primary-container transition-colors cursor-pointer mt-1"
+                className="w-full bg-surface border border-white/10 rounded-sm p-2 text-on-surface outline-none text-base sm:text-sm focus:border-primary-container transition-colors cursor-pointer mt-1"
               >
                 <option value="2025" className="bg-surface-container">2025</option>
                 <option value="2026" className="bg-surface-container">2026</option>
@@ -393,7 +392,7 @@ ${form.message}
               placeholder="e.g. React, Next.js, Node.js, MongoDB, Figma, Python, SQL, Docker"
               value={form.skills}
               onChange={handleChange}
-              className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-sm focus:border-primary-container transition-colors"
+              className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-base sm:text-sm focus:border-primary-container transition-colors"
             />
             <span className="text-[10px] text-on-surface-variant/70 mt-1 block">
               List the core languages, frameworks, or design software you are most confident building with.
@@ -412,7 +411,7 @@ ${form.message}
                 placeholder="https://github.com/username or your portfolio"
                 value={form.githubUrl}
                 onChange={handleChange}
-                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-sm focus:border-primary-container transition-colors"
+                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-base sm:text-sm focus:border-primary-container transition-colors"
               />
             </div>
 
@@ -426,7 +425,7 @@ ${form.message}
                 placeholder="https://linkedin.com/in/username"
                 value={form.linkedinUrl}
                 onChange={handleChange}
-                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-sm focus:border-primary-container transition-colors"
+                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-base sm:text-sm focus:border-primary-container transition-colors"
               />
             </div>
           </div>
@@ -447,7 +446,7 @@ ${form.message}
             {!resume ? (
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full border-2 border-dashed border-white/10 hover:border-primary-container/50 bg-surface/50 hover:bg-primary-container/5 rounded-sm p-8 text-center transition-all cursor-pointer group flex flex-col items-center justify-center gap-3"
+                className="w-full border-2 border-dashed border-white/10 hover:border-primary-container/50 bg-surface/50 hover:bg-primary-container/5 rounded-sm p-6 sm:p-8 text-center transition-all cursor-pointer group flex flex-col items-center justify-center gap-3"
               >
                 <div className="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container group-hover:scale-110 transition-transform">
                   <UploadCloud className="w-6 h-6" />
@@ -504,7 +503,7 @@ ${form.message}
               placeholder="Tell us about your hardest technical bug, a project you're proud of, or why you want to build systems with our team..."
               value={form.message}
               onChange={handleChange}
-              className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-sm resize-none focus:border-primary-container transition-colors"
+              className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-base sm:text-sm resize-none focus:border-primary-container transition-colors"
             />
           </div>
 
@@ -530,7 +529,7 @@ ${form.message}
             )}
           </AnimatePresence>
 
-          <div className="flex items-center justify-between pt-4 border-t border-white/5">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/5">
             <div className="flex items-center gap-2">
               <span className={`w-2 h-2 rounded-full animate-pulse ${status.type === "success" ? "bg-emerald-400" : "bg-primary-container"}`} />
               <span className="text-xs font-label text-on-surface-variant uppercase tracking-wider">
@@ -546,7 +545,7 @@ ${form.message}
                 boxShadow: loading ? "none" : "0 0 25px rgba(0,240,255,0.4)",
               }}
               whileTap={{ scale: loading ? 1 : 0.97 }}
-              className={`signature-gradient text-on-primary-fixed px-8 py-3.5 rounded-sm font-headline font-bold text-xs uppercase tracking-widest flex items-center gap-2 ${
+              className={`w-full sm:w-auto signature-gradient text-on-primary-fixed px-8 py-3.5 rounded-sm font-headline font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 ${
                 loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
               }`}
             >
@@ -562,7 +561,7 @@ ${form.message}
 
 export default function ApplyPage() {
   return (
-    <section className="min-h-screen bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-fixed">
+    <section className="min-h-screen bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-fixed overflow-x-hidden">
       <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-xs uppercase tracking-widest text-primary-container">Loading Application Engine...</div>}>
         <ApplyFormContent />
       </Suspense>
