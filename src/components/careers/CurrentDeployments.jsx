@@ -3,34 +3,35 @@
 import { motion } from "framer-motion";
 import { MapPin, Clock, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const jobs = [
   {
     dept: "Engineering",
-    title: "Senior Full-Stack Engineer",
+    title: "Full Stack Developer Intern",
     location: "Remote",
-    type: "Full-time",
+    type: "Internship",
     category: "engineering",
   },
   {
-    dept: "Data Science",
-    title: "Predictive Data Scientist",
-    location: "London / Remote",
-    type: "Full-time",
+    dept: "Data Engineering",
+    title: "Data Engineer Intern",
+    location: "Remote",
+    type: "Internship",
     category: "data",
   },
   {
     dept: "Design",
-    title: "Creative Director",
-    location: "In Studio / Remote",
-    type: "Full-time",
+    title: "UI/UX Developer Intern",
+    location: "Remote",
+    type: "Internship",
     category: "design",
   },
   {
-    dept: "Strategy",
-    title: "Marketing Strategist",
+    dept: "Marketing",
+    title: "Marketing Intern",
     location: "Remote",
-    type: "Full-time",
+    type: "Internship",
     category: "marketing",
   },
 ];
@@ -49,15 +50,26 @@ const rowVariants = {
 
 export default function CurrentDeployments() {
   const [activeFilter, setActiveFilter] = useState("All Departments");
+  const router = useRouter();
 
   const filtered =
     activeFilter === "All Departments"
       ? jobs
       : jobs.filter(
           (j) =>
-            j.dept.toLowerCase() === activeFilter.toLowerCase() ||
+            j.dept.toLowerCase().includes(activeFilter.toLowerCase()) ||
             j.category === activeFilter.toLowerCase()
         );
+
+  // 👉 Directs applicant to the standalone application page with URL params
+  const handleApplyClick = (job) => {
+    const query = new URLSearchParams({
+      role: job.title,
+      dept: job.dept,
+    }).toString();
+    
+    router.push(`/apply?${query}`);
+  };
 
   return (
     <section className="py-32 bg-surface-container-lowest">
@@ -111,6 +123,7 @@ export default function CurrentDeployments() {
               key={job.title}
               variants={rowVariants}
               whileHover={{ x: 4, borderColor: "rgba(0,240,255,0.2)" }}
+              onClick={() => handleApplyClick(job)}
               className="bg-surface-container border border-white/5 rounded-sm p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-all group cursor-pointer"
             >
               <div>
@@ -122,17 +135,18 @@ export default function CurrentDeployments() {
                 </h3>
                 <div className="flex items-center gap-5 mt-2">
                   <span className="flex items-center gap-1.5 text-xs text-on-surface-variant">
-                    <MapPin className="w-3 h-3" />
+                    <MapPin className="w-3 h-3 text-primary-container/70" />
                     {job.location}
                   </span>
                   <span className="flex items-center gap-1.5 text-xs text-on-surface-variant">
-                    <Clock className="w-3 h-3" />
+                    <Clock className="w-3 h-3 text-primary-container/70" />
                     {job.type}
                   </span>
                 </div>
               </div>
+
               <div className="flex items-center gap-2 text-sm font-label font-bold text-primary-container group-hover:gap-4 transition-all">
-                View Role
+                Apply Now
                 <ArrowRight className="w-4 h-4" />
               </div>
             </motion.div>
