@@ -63,7 +63,7 @@ const leaders = [
   },
   { 
     name: "Himanshu Kumar Singh", 
-    role: "TECH ANALYST", 
+    role: "Lead Software Engineer", 
     Graphic: TechAnalystIcon 
   },
   { 
