@@ -68,24 +68,24 @@ export default function CurrentDeployments() {
   };
 
   return (
-    <section className="py-24 bg-transparent relative z-10">
-      <div className="max-w-screen-xl mx-auto px-6 lg:px-8">
+    <section className="py-16 md:py-24 bg-transparent relative z-10">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="mb-8">
-          <h2 className="text-3xl font-bold tracking-tight text-white">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
             Current Deployments
           </h2>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex flex-wrap gap-2 mb-16">
+        <div className="flex flex-wrap gap-2 mb-10 md:mb-16">
           {filters.map((f) => (
             <button
               key={f}
               onClick={() => setActiveFilter(f)}
-              className={`text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full transition-all ${
+              className={`text-xs font-semibold uppercase tracking-wider px-4 sm:px-5 py-2.5 rounded-full transition-all cursor-pointer ${
                 activeFilter === f
-                  ? "bg-white text-black"
+                  ? "bg-white text-black shadow-md"
                   : "bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:bg-white/10"
               }`}
             >
@@ -94,51 +94,51 @@ export default function CurrentDeployments() {
           ))}
         </div>
 
-        {/* Stacking Cards Container with Black Base & Orange Accents */}
-        <div className="relative flex flex-col gap-6 md:gap-12 pb-24">
+        {/* Stacking Cards Container */}
+        <div className="relative flex flex-col gap-6 md:gap-12 pb-16 md:pb-24">
           {filtered.length > 0 ? (
             filtered.map((job, index) => (
               <motion.div
                 key={job.title}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                // 👉 STICKY STACKING WITH TRUE BLACK & SUBTLE ORANGE BORDER ACCENT
-                className="sticky w-full rounded-[2.5rem] bg-[#09090b] border border-[#d94814]/40 hover:border-[#d94814] transition-colors p-8 lg:p-14 shadow-2xl flex flex-col lg:flex-row gap-10 lg:gap-16 items-center justify-between"
-                style={{ top: `calc(12vh + ${index * 35}px)` }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                // 👉 DISABLED STICKY ON MOBILE TO PREVENT OVERFLOW, ACTIVE ON MD+ SCREENS
+                className="static md:sticky w-full rounded-3xl md:rounded-[2.5rem] bg-[#09090b] border border-[#d94814]/40 hover:border-[#d94814] transition-colors p-6 sm:p-8 lg:p-14 shadow-2xl flex flex-col lg:flex-row gap-8 lg:gap-16 items-center justify-between"
+                style={{ top: `calc(10vh + ${index * 30}px)` }}
               >
                 
                 {/* Left Column: Job Details & Requirements */}
                 <div className="flex-1 w-full flex flex-col justify-between h-full">
                   <div>
-                    <div className="flex items-center gap-4 mb-6">
-                      <span className="text-4xl font-black text-[#d94814]">
+                    <div className="flex items-center gap-4 mb-4 sm:mb-6">
+                      <span className="text-3xl sm:text-4xl font-black text-[#d94814]">
                         {job.index}
                       </span>
-                      <span className="text-xs uppercase tracking-widest font-bold border border-[#d94814]/30 px-4 py-1.5 rounded-full text-[#d94814] bg-[#d94814]/10">
+                      <span className="text-[10px] sm:text-xs uppercase tracking-widest font-bold border border-[#d94814]/30 px-3.5 py-1 rounded-full text-[#d94814] bg-[#d94814]/10">
                         {job.dept}
                       </span>
                     </div>
 
-                    <h3 className="text-3xl lg:text-5xl font-bold tracking-tighter leading-tight text-white mb-6">
+                    <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold tracking-tighter leading-tight text-white mb-4 sm:mb-6">
                       {job.title}
                     </h3>
-                    <p className="text-base lg:text-lg text-neutral-400 leading-relaxed mb-8 max-w-lg">
+                    <p className="text-sm sm:text-base lg:text-lg text-neutral-400 leading-relaxed mb-6 sm:mb-8 max-w-lg">
                       {job.desc}
                     </p>
 
-                    <div className="flex flex-wrap items-center gap-6 mb-8">
-                      <span className="flex items-center gap-2 text-sm text-neutral-300 font-medium">
+                    <div className="flex flex-wrap items-center gap-4 sm:gap-6 mb-6 sm:mb-8">
+                      <span className="flex items-center gap-2 text-xs sm:text-sm text-neutral-300 font-medium">
                         <MapPin className="w-4 h-4 text-[#d94814]" /> {job.location}
                       </span>
-                      <span className="flex items-center gap-2 text-sm text-neutral-300 font-medium">
+                      <span className="flex items-center gap-2 text-xs sm:text-sm text-neutral-300 font-medium">
                         <Clock className="w-4 h-4 text-[#d94814]" /> {job.type}
                       </span>
                     </div>
                   </div>
 
-                  <div className="pt-8 border-t border-white/10">
+                  <div className="pt-6 sm:pt-8 border-t border-white/10">
                     <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold block mb-3">
                       Key Stack / Requirements
                     </span>
@@ -153,25 +153,25 @@ export default function CurrentDeployments() {
                 </div>
 
                 {/* Right Column: Action Card */}
-                <div className="w-full lg:w-[40%] aspect-square rounded-2xl overflow-hidden bg-black/60 border border-white/10 p-8 flex flex-col justify-between shadow-inner relative">
-                  <div className="absolute top-0 right-0 w-48 h-48 bg-[#d94814]/10 blur-[60px] pointer-events-none" />
+                <div className="w-full lg:w-[40%] rounded-2xl overflow-hidden bg-black/60 border border-white/10 p-6 sm:p-8 flex flex-col justify-between shadow-inner relative">
+                  <div className="absolute top-0 right-0 w-36 h-36 bg-[#d94814]/10 blur-[50px] pointer-events-none" />
                   
-                  <div>
+                  <div className="mb-6">
                     <span className="text-xs uppercase tracking-widest text-neutral-500 font-bold block mb-2">
                       Deployment Status
                     </span>
-                    <div className="text-xl font-bold text-white">
+                    <div className="text-lg sm:text-xl font-bold text-white">
                       Active Application
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <p className="text-sm text-neutral-400 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
                       Ready to build systems that scale? Submit your portfolio and join our core engineering rotation.
                     </p>
                     <button
                       onClick={() => handleApplyClick(job)}
-                      className="w-full flex items-center justify-center gap-2 bg-[#d94814] text-white px-8 py-4 rounded-full font-bold text-sm uppercase tracking-wider hover:bg-[#b83b0f] transition-colors shadow-xl cursor-pointer"
+                      className="w-full flex items-center justify-center gap-2 bg-[#d94814] text-white px-6 py-3.5 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider hover:bg-[#b83b0f] transition-colors shadow-xl cursor-pointer"
                     >
                       Apply Now <ArrowRight className="w-4 h-4" />
                     </button>
@@ -181,7 +181,7 @@ export default function CurrentDeployments() {
               </motion.div>
             ))
           ) : (
-            <div className="bg-[#09090b] border border-dashed border-white/10 rounded-[2.5rem] p-16 flex flex-col items-center justify-center text-center gap-4">
+            <div className="bg-[#09090b] border border-dashed border-white/10 rounded-3xl p-12 sm:p-16 flex flex-col items-center justify-center text-center gap-4">
               <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-neutral-500">
                 <Briefcase className="w-6 h-6" />
               </div>
