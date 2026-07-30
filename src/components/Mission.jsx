@@ -23,8 +23,18 @@ const corePillars = [
 
 export default function Mission() {
   return (
-    <section className="py-28 px-6 max-w-screen-xl mx-auto bg-transparent text-white relative z-10">
+    <section id="mission" className="pt-4 md:pt-12 pb-20 px-6 max-w-screen-xl mx-auto bg-transparent text-white relative z-10">
       
+      {/* Section Header Shifted Up */}
+      <div className="mb-10 text-center md:text-left max-w-xl">
+        <span className="text-[10px] md:text-xs font-bold tracking-widest text-[#d94814] uppercase bg-[#d94814]/10 border border-[#d94814]/30 px-4 py-1.5 rounded-full inline-block mb-3">
+          Core Philosophy
+        </span>
+        <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-white">
+          Engineered for velocity and scale.
+        </h2>
+      </div>
+
       {/* Top 3 Core Pillars Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {corePillars.map((item, i) => {
