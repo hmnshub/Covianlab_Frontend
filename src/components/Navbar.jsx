@@ -8,7 +8,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+    <nav className="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
       <div className="max-w-screen-xl mx-auto px-6 h-20 flex items-center justify-between">
         
         {/* Brand Logo */}
@@ -18,8 +18,11 @@ export default function Navbar() {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-8 text-sm text-neutral-400">
-          <Link href="#mission" className="hover:text-white transition-colors">Mission</Link>
-          <Link href="#services" className="hover:text-white transition-colors">Services</Link>
+          <Link href="/#mission" className="hover:text-white transition-colors">Mission</Link>
+          <Link href="/#services" className="hover:text-white transition-colors">Services</Link>
+          <Link href="/portfolio" className="hover:text-white transition-colors">Portfolio</Link>
+          <Link href="/careers" className="hover:text-white transition-colors">Careers</Link>
+          <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
           <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
         </div>
 
@@ -44,20 +47,41 @@ export default function Navbar() {
 
       {/* Mobile Dropdown Menu Overlay */}
       {isOpen && (
-        <div className="md:hidden bg-black border-b border-white/10 px-6 py-6 space-y-4 shadow-2xl">
+        <div className="md:hidden bg-black border-b border-white/10 px-6 py-8 space-y-5 shadow-2xl">
           <Link
-            href="#mission"
+            href="/#mission"
             onClick={() => setIsOpen(false)}
             className="block text-neutral-300 hover:text-white text-base font-medium transition-colors"
           >
             Mission
           </Link>
           <Link
-            href="#services"
+            href="/#services"
             onClick={() => setIsOpen(false)}
             className="block text-neutral-300 hover:text-white text-base font-medium transition-colors"
           >
             Services
+          </Link>
+          <Link
+            href="/portfolio"
+            onClick={() => setIsOpen(false)}
+            className="block text-neutral-300 hover:text-white text-base font-medium transition-colors"
+          >
+            Portfolio
+          </Link>
+          <Link
+            href="/careers"
+            onClick={() => setIsOpen(false)}
+            className="block text-neutral-300 hover:text-white text-base font-medium transition-colors"
+          >
+            Careers
+          </Link>
+          <Link
+            href="/privacy"
+            onClick={() => setIsOpen(false)}
+            className="block text-neutral-300 hover:text-white text-base font-medium transition-colors"
+          >
+            Privacy
           </Link>
           <Link
             href="/contact"
@@ -67,7 +91,7 @@ export default function Navbar() {
             Contact
           </Link>
           
-          <div className="pt-4">
+          <div className="pt-4 border-t border-white/10">
             <Link href="/contact" onClick={() => setIsOpen(false)}>
               <button className="w-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-black py-3 rounded-full text-sm font-bold shadow-md">
                 Get Started
