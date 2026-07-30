@@ -1,55 +1,64 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { Zap, MessageSquare, Target } from "lucide-react";
+
+const corePillars = [
+  {
+    icon: Zap,
+    title: "Momentum over Policy",
+    desc: "We move fast, break barriers, and prioritize execution over bureaucracy.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Building over Talking",
+    desc: "We are a shop of makers. We let the shipping cycle do the talking.",
+  },
+  {
+    icon: Target,
+    title: "Outcomes over Activity",
+    desc: "Every line of code and ad spend is measured strictly by ROI.",
+  },
+];
 
 export default function Mission() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section ref={ref} className="py-32 bg-surface-container-low">
-      <div className="max-w-screen-xl mx-auto px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="border-l-4 border-primary-container pl-12"
-          >
-            <h2 className="text-4xl lg:text-5xl font-headline font-bold leading-tight">
-              One Stop Solution for{" "}
-              <span className="text-primary-container italic">
-                End-to-End Growth.
-              </span>
-            </h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="space-y-6"
-          >
-            <p className="text-lg text-on-surface-variant leading-relaxed">
-              Covianlab helps startups and businesses build end-to-end growth
-              systems by combining development, performance marketing, data and
-              AI solutions under one roof. We eliminate the friction between
-              departments to focus on what matters: your bottom line.
-            </p>
-            <div className="flex items-center gap-4 text-primary">
-              <motion.div
-                animate={{ scale: [1, 1.5, 1] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-                className="w-2 h-2 rounded-full bg-primary-container"
-              />
-              <span className="text-sm font-label font-bold uppercase tracking-widest">
-                Active Development Cycle
-              </span>
-            </div>
-          </motion.div>
-        </div>
+    <section className="py-28 px-6 max-w-screen-xl mx-auto bg-transparent text-white relative z-10">
+      
+      {/* Top 3 Core Pillars Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {corePillars.map((item, i) => {
+          const Icon = item.icon;
+          return (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              whileHover={{
+                scale: 1.03,
+                y: -8,
+                boxShadow: "0 25px 50px -15px rgba(0, 0, 0, 0.9)",
+              }}
+              className="bg-[#12141a] border border-white/10 hover:border-white/30 rounded-3xl p-8 transition-all duration-300 flex flex-col justify-between cursor-pointer group"
+            >
+              <div>
+                <div className="mb-6 w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:scale-110 transition-transform shadow-inner">
+                  <Icon className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3 tracking-tight">
+                  {item.title}
+                </h3>
+              </div>
+              <p className="text-sm text-neutral-400 leading-relaxed">
+                {item.desc}
+              </p>
+            </motion.div>
+          );
+        })}
       </div>
+
     </section>
   );
 }

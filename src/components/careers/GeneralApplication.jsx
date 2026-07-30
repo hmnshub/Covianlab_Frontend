@@ -1,36 +1,36 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Mail, ArrowRight } from "lucide-react";
 
 export default function GeneralApplication() {
   return (
-    <section className="py-32 bg-surface-container">
-      <div className="max-w-screen-xl mx-auto px-8">
+    <section className="py-24 bg-black text-white text-center relative z-10">
+      <div className="max-w-screen-md mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto"
+          className="bg-[#12141a] border border-white/10 rounded-[2.5rem] p-12 md:p-16 shadow-2xl relative overflow-hidden"
         >
-          <h2 className="text-4xl font-headline font-black tracking-tight text-on-surface mb-6">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-amber-500/10 blur-[60px] pointer-events-none" />
+
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
             Don't see your role?
           </h2>
-          <p className="text-on-surface-variant leading-relaxed mb-10">
-            We're always looking for exceptional talent in unexpected places.
-            Send us your portfolio or GitHub, and let's start a conversation
-            about what you can bring to the void.
+          
+          <p className="text-sm md:text-base text-neutral-400 leading-relaxed mb-8 max-w-lg mx-auto">
+            We're always looking for exceptional talent in unexpected places. Send us your portfolio or GitHub, and let's start a conversation about what you can bring to the void.
           </p>
-          <motion.button
-            whileHover={{
-              scale: 1.04,
-              boxShadow: "0 0 30px rgba(0,240,255,0.35)",
-            }}
-            whileTap={{ scale: 0.96 }}
-            className="signature-gradient text-on-primary-fixed px-10 py-3.5 rounded-sm font-headline font-bold text-sm cursor-pointer uppercase tracking-wider"
+
+          {/* 👉 Direct Clickable Mailto Link */}
+          <a
+            href="mailto:support@covianlab.com"
+            className="inline-flex items-center justify-center gap-2 bg-amber-400 text-black px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-amber-300 hover:scale-105 transition-all shadow-[0_0_20px_rgba(250,204,21,0.3)] cursor-pointer"
           >
-            General Application
-          </motion.button>
+            <Mail className="w-4 h-4" /> General Application <ArrowRight className="w-4 h-4" />
+          </a>
         </motion.div>
       </div>
     </section>

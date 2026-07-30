@@ -5,28 +5,29 @@ import { useState } from "react";
 import { Mail, Phone, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
 
 const services = [
-  "Data Strategy",
-  "Cloud Systems",
-  "Web Engineering",
-  "Marketing Tech",
-  "Full Audit",
+  "Data Engineering & Analytics",
+  "AI & Machine Learning Integration",
+  "Full-Stack Web Development",
+  "Cloud Architecture & DevOps",
+  "B2B Growth & Marketing Tech",
+  "UI/UX Design Systems",
+  "Enterprise IT Consulting",
+  "Other (Specify)",
 ];
 
 export default function ContactForm() {
   const [form, setForm] = useState({
     fullName: "",
     email: "",
-    service: "Data Strategy",
+    service: "Data Engineering & Analytics",
+    customService: "",
     message: "",
   });
 
   const [loading, setLoading] = useState(false);
-  
-  // 👉 NEW: Professional UI state instead of browser alert()
   const [status, setStatus] = useState({ type: "", text: "" });
 
   const handleChange = (e) => {
-    // Clear any previous error/success banners when the user starts typing again
     if (status.text) setStatus({ type: "", text: "" });
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -34,42 +35,33 @@ export default function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setStatus({ type: "", text: "" }); // Reset status on new submission
+    setStatus({ type: "", text: "" });
+
+    const finalService = form.service === "Other (Specify)" ? form.customService : form.service;
 
     const payload = {
       fullName: form.fullName,
       email: form.email,
-      serviceInterest: form.service,
+      serviceInterest: finalService,
       message: form.message,
     };
 
     try {
       const response = await fetch("http://localhost:5000/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // 👉 Show sleek success banner right inside the form
         setStatus({
           type: "success",
           text: data.message || "Request dispatched successfully! Our team will get in touch soon.",
         });
-        
-        // Clear form fields
-        setForm({
-          fullName: "",
-          email: "",
-          service: "Data Strategy",
-          message: "",
-        });
+        setForm({ fullName: "", email: "", service: "Data Engineering & Analytics", customService: "", message: "" });
       } else {
-        // 👉 Show professional error banner
         setStatus({
           type: "error",
           text: data.message || "Failed to dispatch request. Please check your inputs.",
@@ -87,101 +79,113 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="py-20 bg-surface">
-      <div className="max-w-screen-xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <section className="py-20 px-6 max-w-screen-xl mx-auto bg-black text-white">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Form Container */}
-        <motion.form
+        <form
           onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="bg-surface-container border border-white/5 rounded-sm p-10 flex flex-col justify-between"
+          className="bg-[#12141a] border border-white/10 rounded-3xl p-8 md:p-10 flex flex-col justify-between shadow-2xl"
         >
           <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {/* Full Name */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <div>
-                <label className="text-xs font-label uppercase tracking-widest text-on-surface-variant block mb-3">
+                <label className="text-xs uppercase tracking-widest text-neutral-400 font-semibold block mb-2">
                   Full Name
                 </label>
                 <input
                   type="text"
                   name="fullName"
                   required
-                  placeholder="John Doe"
+                  placeholder="Alex Chen"
                   value={form.fullName}
                   onChange={handleChange}
-                  className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-sm focus:border-primary-container transition-colors"
+                  className="w-full bg-transparent border-b border-white/20 pb-2 text-white placeholder-neutral-500 outline-none text-sm focus:border-amber-400 transition-colors"
                 />
               </div>
-              {/* Email */}
               <div>
-                <label className="text-xs font-label uppercase tracking-widest text-on-surface-variant block mb-3">
+                <label className="text-xs uppercase tracking-widest text-neutral-400 font-semibold block mb-2">
                   Email Address
                 </label>
                 <input
                   type="email"
                   name="email"
                   required
-                  placeholder="john@company.com"
+                  placeholder="alex@enterprise.com"
                   value={form.email}
                   onChange={handleChange}
-                  className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-sm focus:border-primary-container transition-colors"
+                  className="w-full bg-transparent border-b border-white/20 pb-2 text-white placeholder-neutral-500 outline-none text-sm focus:border-amber-400 transition-colors"
                 />
               </div>
             </div>
 
-            {/* Service Interest */}
             <div className="mb-8">
-              <label className="text-xs font-label uppercase tracking-widest text-on-surface-variant block mb-3">
+              <label className="text-xs uppercase tracking-widest text-neutral-400 font-semibold block mb-2">
                 Service Interest
               </label>
-              <div className="relative border-b border-outline-variant/50 pb-2">
+              <div className="relative border-b border-white/20 pb-2">
                 <select
                   name="service"
                   value={form.service}
                   onChange={handleChange}
-                  className="w-full bg-transparent text-on-surface outline-none text-sm appearance-none cursor-pointer"
+                  className="w-full bg-transparent text-white outline-none text-sm appearance-none cursor-pointer"
                 >
                   {services.map((s) => (
-                    <option key={s} value={s} className="bg-surface-container">
+                    <option key={s} value={s} className="bg-neutral-900 text-white">
                       {s}
                     </option>
                   ))}
                 </select>
-                <span className="absolute right-0 top-0 text-on-surface-variant pointer-events-none">
-                  ▾
+                <span className="absolute right-0 top-0 text-neutral-400 pointer-events-none">
+                  ▼
                 </span>
               </div>
             </div>
 
-            {/* Message */}
+            {/* Conditional Input if "Other" is selected */}
+            <AnimatePresence>
+              {form.service === "Other (Specify)" && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mb-8 overflow-hidden"
+                >
+                  <label className="text-xs uppercase tracking-widest text-amber-400 font-semibold block mb-2">
+                    Specify Your Interest
+                  </label>
+                  <input
+                    type="text"
+                    name="customService"
+                    required
+                    placeholder="e.g., Custom Blockchain Integration"
+                    value={form.customService}
+                    onChange={handleChange}
+                    className="w-full bg-transparent border-b border-amber-400/50 pb-2 text-white placeholder-neutral-500 outline-none text-sm focus:border-amber-400 transition-colors"
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div className="mb-8">
-              <label className="text-xs font-label uppercase tracking-widest text-on-surface-variant block mb-3">
+              <label className="text-xs uppercase tracking-widest text-neutral-400 font-semibold block mb-2">
                 Message
               </label>
               <textarea
                 name="message"
                 required
-                placeholder="Tell us about your project goals..."
+                placeholder="Describe your project scope, architecture requirements, or timeline goals..."
                 value={form.message}
                 onChange={handleChange}
                 rows={4}
-                className="w-full bg-transparent border-b border-outline-variant/50 pb-2 text-on-surface placeholder-slate-600 outline-none text-sm resize-none focus:border-primary-container transition-colors"
+                className="w-full bg-transparent border-b border-white/20 pb-2 text-white placeholder-neutral-500 outline-none text-sm resize-none focus:border-amber-400 transition-colors"
               />
             </div>
 
-            {/* 👉 NEW: Animated Inline Status Banner */}
             <AnimatePresence>
               {status.text && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0, y: -10 }}
-                  animate={{ opacity: 1, height: "auto", y: 0 }}
-                  exit={{ opacity: 0, height: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className={`p-4 rounded-sm mb-8 flex items-start gap-3 text-sm font-medium border ${
+                <div
+                  className={`p-4 rounded-2xl mb-8 flex items-start gap-3 text-sm font-medium border ${
                     status.type === "success"
                       ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
                       : "bg-rose-500/10 border-rose-500/20 text-rose-400"
@@ -193,70 +197,57 @@ export default function ContactForm() {
                     <AlertCircle className="w-5 h-5 flex-shrink-0 text-rose-400 mt-0.5" />
                   )}
                   <span className="leading-relaxed">{status.text}</span>
-                </motion.div>
+                </div>
               )}
             </AnimatePresence>
           </div>
 
-          {/* Submit */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between pt-6 border-t border-white/10">
             <div className="flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full animate-pulse ${status.type === "success" ? "bg-emerald-400" : "bg-primary-container"}`} />
-              <span className="text-xs font-label text-on-surface-variant uppercase tracking-wider">
+              <span className={`w-2.5 h-2.5 rounded-full ${status.type === "success" ? "bg-emerald-400" : "bg-amber-400 shadow-[0_0_10px_rgba(250,204,21,0.8)]"}`} />
+              <span className="text-xs text-neutral-300 uppercase tracking-wider font-semibold">
                 {loading ? "Syncing..." : status.type === "success" ? "Dispatched" : "Ready to Sync"}
               </span>
             </div>
-            <motion.button
+            
+            <button
               type="submit"
               disabled={loading}
-              whileHover={{
-                scale: loading ? 1 : 1.04,
-                boxShadow: loading ? "none" : "0 0 25px rgba(0,240,255,0.4)",
-              }}
-              whileTap={{ scale: loading ? 1 : 0.96 }}
-              className={`signature-gradient text-on-primary-fixed px-8 py-3 rounded-sm font-headline font-bold text-xs uppercase tracking-widest flex items-center gap-2 ${
+              className={`bg-amber-400 text-black px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-amber-300 hover:scale-105 transition-all shadow-[0_0_20px_rgba(250,204,21,0.3)] ${
                 loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
               }`}
             >
               {loading ? "Dispatching..." : "Dispatch Request"}
               <ArrowRight className="w-4 h-4" />
-            </motion.button>
+            </button>
           </div>
-        </motion.form>
+        </form>
 
         {/* HQ Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="bg-surface-container border border-white/5 rounded-sm p-10 flex flex-col justify-between overflow-hidden relative"
-        >
+        <div className="bg-[#12141a] border border-white/10 rounded-3xl p-8 md:p-10 flex flex-col justify-between overflow-hidden relative shadow-2xl">
           <div className="relative z-10">
-            <span className="text-xs font-label uppercase tracking-widest text-primary-container font-bold block mb-6">
+            <span className="text-xs uppercase tracking-widest text-neutral-400 font-semibold block mb-4">
               Headquarters
             </span>
-            <h2 className="text-4xl font-headline font-black text-on-surface mb-3">
+            <h2 className="text-4xl font-bold text-white mb-2 tracking-tight">
               Bangalore
             </h2>
-            <p className="text-on-surface-variant text-sm mb-8">
-              Karnataka
-              <br />
-              India
+            <p className="text-neutral-400 text-sm mb-8">
+              Karnataka, India
             </p>
 
-            <div className="space-y-5">
+            <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-primary-container/10 rounded-sm flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Mail className="w-4 h-4 text-primary-container" />
+                <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-white">
+                  <Mail className="w-4 h-4 text-amber-400" />
                 </div>
                 <div>
-                  <span className="text-xs font-label uppercase tracking-widest text-on-surface-variant block mb-1">
+                  <span className="text-xs uppercase tracking-widest text-neutral-400 font-semibold block mb-1">
                     Support
                   </span>
                   <a
                     href="mailto:support@covianlab.com"
-                    className="text-sm font-bold text-primary-container hover:text-primary transition-colors"
+                    className="text-sm font-bold text-white hover:text-amber-400 transition-colors"
                   >
                     support@covianlab.com
                   </a>
@@ -264,16 +255,16 @@ export default function ContactForm() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-primary-container/10 rounded-sm flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Phone className="w-4 h-4 text-primary-container" />
+                <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-white">
+                  <Phone className="w-4 h-4 text-amber-400" />
                 </div>
                 <div>
-                  <span className="text-xs font-label uppercase tracking-widest text-on-surface-variant block mb-1">
+                  <span className="text-xs uppercase tracking-widest text-neutral-400 font-semibold block mb-1">
                     Direct Contact
                   </span>
                   <a
                     href="tel:+919981013564"
-                    className="text-sm font-bold text-on-surface hover:text-primary-container transition-colors"
+                    className="text-sm font-bold text-white hover:text-amber-400 transition-colors"
                   >
                     +91 9981013564
                   </a>
@@ -281,30 +272,8 @@ export default function ContactForm() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Handmade Tech Blueprint Graphic */}
-          <div className="absolute bottom-0 left-0 right-0 h-40 opacity-40 flex items-end pointer-events-none">
-            <svg
-              viewBox="0 0 300 100"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full text-primary-container translate-y-4"
-            >
-              <path d="M10,80 Q50,20 100,50 T200,40 T290,70" stroke="currentColor" strokeWidth="1.5" className="opacity-50" strokeLinecap="round" />
-              <path d="M20,90 Q70,40 120,70 T220,20 T300,60" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="opacity-30" strokeLinecap="round" />
-              <circle cx="100" cy="50" r="4" fill="currentColor" className="opacity-80" />
-              <circle cx="200" cy="40" r="3" fill="currentColor" className="opacity-80" />
-              <path d="M96,46 L104,54 M96,54 L104,46" stroke="currentColor" strokeWidth="1" className="opacity-70" />
-              <text x="112" y="54" fill="currentColor" fontSize="8" fontFamily="monospace" className="opacity-60 tracking-widest">NODE_01</text>
-              <text x="210" y="38" fill="currentColor" fontSize="8" fontFamily="monospace" className="opacity-60 tracking-widest">SYS_REQ</text>
-              <line x1="0" y1="90" x2="300" y2="90" stroke="currentColor" strokeWidth="0.5" className="opacity-20" />
-              <line x1="100" y1="90" x2="100" y2="85" stroke="currentColor" strokeWidth="1" className="opacity-30" />
-              <line x1="200" y1="90" x2="200" y2="85" stroke="currentColor" strokeWidth="1" className="opacity-30" />
-            </svg>
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-surface-container via-transparent to-surface-container opacity-80" />
-          </div>
-        </motion.div>
       </div>
     </section>
   );

@@ -3,77 +3,45 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
-// --- CUSTOM SVG GRAPHICS ---
-const TechLeadIcon = () => (
-  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <rect x="16" y="12" width="32" height="12" rx="2" stroke="white" strokeWidth="2"/>
-    <rect x="16" y="28" width="32" height="12" rx="2" stroke="white" strokeWidth="2"/>
-    <rect x="16" y="44" width="32" height="12" rx="2" stroke="white" strokeWidth="2"/>
-    <circle cx="24" cy="18" r="2" fill="#22d3ee"/><circle cx="24" cy="34" r="2" fill="#22d3ee"/><circle cx="24" cy="50" r="2" fill="#22d3ee"/>
-    <path d="M42 18h4M42 34h4M42 50h4" stroke="#22d3ee" strokeWidth="2" strokeLinecap="round"/>
-  </svg>
-);
-
-const technical = [
-  { 
-    name: "Himanshu Kumar Singh", 
-    role: "Tech Analyst", 
-    desc: "Analyzing technical systems, optimizing platform performance, and supporting core software operations.", 
-    Graphic: TechLeadIcon 
-  },
-];
-
-const cardVariants = {
-  hidden: { opacity: 0, scale: 0.8, rotateX: 20, y: 50 },
-  visible: { opacity: 1, scale: 1, rotateX: 0, y: 0, transition: { type: "spring", stiffness: 100, damping: 12 } },
-};
-
-function MemberCard({ member }) {
-  const GraphicComponent = member.Graphic;
-  return (
-    <motion.div
-      variants={cardVariants}
-      whileHover={{ scale: 1.03, y: -5, boxShadow: "0 15px 30px -10px rgba(34, 211, 238, 0.2)", borderColor: "rgba(34, 211, 238, 0.5)" }}
-      className="group relative flex flex-col p-6 bg-[#161f30]/90 backdrop-blur-sm border border-white/5 rounded-xl shadow-lg transition-colors duration-500 overflow-hidden cursor-pointer"
-    >
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
-      <div className="flex items-center gap-4 relative z-10">
-        <div className="flex-shrink-0 w-16 h-16 p-3 rounded-xl bg-slate-800 border border-white/10 group-hover:border-cyan-400/80 group-hover:bg-cyan-950 transition-colors duration-300">
-          <motion.div animate={{ rotate: [0, 5, -5, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}>
-            <GraphicComponent />
-          </motion.div>
-        </div>
-        <div className="flex flex-col flex-1">
-          <div className="flex justify-between items-start">
-            <div>
-              <h3 className="font-headline font-bold text-white text-lg group-hover:text-white transition-colors">{member.name}</h3>
-              <span className="text-xs font-label uppercase tracking-widest text-cyan-400 font-bold block mt-1">{member.role}</span>
-            </div>
-            <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors mt-1" />
-          </div>
-        </div>
-      </div>
-      <p className="mt-5 text-sm text-slate-400 leading-relaxed relative z-10">{member.desc}</p>
-      <div className="mt-5 pt-4 border-t border-white/5 flex items-center gap-1.5 text-xs font-label uppercase tracking-widest text-slate-400 group-hover:text-cyan-400 transition-colors w-fit relative z-10">
-        LinkedIn <ExternalLink className="w-3 h-3" />
-      </div>
-    </motion.div>
-  );
-}
-
 export default function TeamGrid() {
+  const technical = [
+    {
+      name: "Himanshu Kumar Singh",
+      role: "Tech Analyst",
+      desc: "Analyzing technical systems, optimizing platform performance, and supporting core software operations.",
+    },
+  ];
+
   return (
-    <section className="py-20 bg-[#0B0F17] perspective-[2000px]">
-      <div className="max-w-screen-md mx-auto px-8">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={{ visible: { transition: { staggerChildren: 0.2 } } }}>
-          <div className="flex items-center gap-3 mb-6">
-            <span className="w-1 h-6 bg-cyan-400 rounded-full drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
-            <h2 className="text-base font-headline font-black uppercase tracking-wider text-white">Technical Core</h2>
-          </div>
-          <div className="space-y-4">
-            {technical.map((m) => <MemberCard key={m.name} member={m} />)}
-          </div>
-        </motion.div>
+    <section className="py-24 bg-transparent border-t border-white/5 relative z-10">
+      <div className="max-w-3xl mx-auto px-6 lg:px-8">
+        <div className="flex items-center gap-3 mb-12">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-neutral-300">
+            Technical Core
+          </h2>
+        </div>
+
+        <div className="space-y-4">
+          {technical.map((m) => (
+            <motion.div
+              key={m.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white/[0.02] border border-white/10 rounded-3xl p-8 hover:bg-white/[0.04] transition-colors"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-white tracking-tight">{m.name}</h3>
+                  <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block mt-1">{m.role}</span>
+                </div>
+                <ExternalLink className="w-4 h-4 text-neutral-500" />
+              </div>
+              <p className="text-sm text-neutral-400 leading-relaxed">{m.desc}</p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

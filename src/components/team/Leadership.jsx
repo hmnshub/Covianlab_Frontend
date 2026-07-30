@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 
-// --- CUSTOM SVG GRAPHICS ---
+// --- ROLE-SPECIFIC CUSTOM SVG GRAPHICS ---
+
 const GraphGlobeIcon = () => (
   <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
     <path d="M10 10v40h32" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -63,7 +64,7 @@ const leaders = [
   },
   { 
     name: "Himanshu Kumar Singh", 
-    role: "Lead Software Engineer", 
+    role: "LEAD SOFTWARE ENGINEER", 
     Graphic: TechAnalystIcon 
   },
   { 
@@ -73,71 +74,55 @@ const leaders = [
   },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, scale: 0.8, y: 50 },
-  visible: {
-    opacity: 1, scale: 1, y: 0,
-    transition: { type: "spring", stiffness: 100, damping: 12, mass: 1 },
-  },
-};
-
 export default function Leadership() {
   return (
-    <section className="py-20 bg-[#0B0F17] text-white">
-      <div className="max-w-screen-xl mx-auto px-8">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", bounce: 0.5, duration: 1 }}
-          className="flex items-center gap-3 mb-10"
-        >
-          <span className="w-1 h-6 bg-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
-          <h2 className="text-lg font-headline font-black uppercase tracking-widest text-white">
+    <section className="py-24 bg-transparent border-t border-white/5 relative z-10">
+      <div className="max-w-screen-xl mx-auto px-6 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="flex items-center gap-3 mb-12">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-neutral-300">
             Leadership
           </h2>
-        </motion.div>
+        </div>
 
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={{ visible: { transition: { staggerChildren: 0.2 } } }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
+        {/* Leadership Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {leaders.map((leader, i) => {
             const GraphicComponent = leader.Graphic;
+            
             return (
               <motion.div
                 key={leader.name}
-                variants={cardVariants}
-                whileHover={{
-                  scale: 1.02,
-                  y: -6,
-                }}
-                className="flex flex-col group cursor-pointer relative p-2 rounded-2xl transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="bg-[#09090b] border border-white/10 hover:border-white/20 rounded-3xl p-8 flex flex-col justify-between transition-all group"
               >
-                <div className="w-full aspect-[4/3] bg-[#131B2E] rounded-xl flex items-center justify-center mb-5 relative overflow-hidden border border-cyan-500/20 group-hover:border-cyan-400 group-hover:shadow-[0_0_25px_rgba(34,211,238,0.25)] transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none" />
-                  
+                {/* SVG Graphic Box */}
+                <div className="w-full aspect-square bg-white/[0.02] border border-white/10 rounded-2xl flex items-center justify-center mb-6 relative overflow-hidden group-hover:border-cyan-400/40 transition-colors">
+                  <div className="absolute inset-0 bg-cyan-500/5 blur-[30px] pointer-events-none" />
                   <motion.div 
-                    animate={{ y: [-6, 6, -6] }}
+                    animate={{ y: [-4, 4, -4] }}
                     transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: i * 0.2 }}
-                    className="w-36 h-36 opacity-85 group-hover:scale-110 group-hover:opacity-100 transition-all duration-500 drop-shadow-[0_0_8px_rgba(34,211,238,0.3)] group-hover:drop-shadow-[0_0_20px_rgba(34,211,238,0.8)]"
+                    className="w-24 h-24 text-white opacity-85 group-hover:scale-110 transition-transform duration-500"
                   >
                     <GraphicComponent />
                   </motion.div>
                 </div>
                 
-                <div className="px-1">
-                  <h3 className="text-xl font-bold text-white mb-1 group-hover:text-white transition-colors duration-300">
+                {/* Text Details */}
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-2 tracking-tight">
                     {leader.name}
                   </h3>
-                  <p className="text-xs font-bold text-cyan-400 uppercase tracking-widest leading-relaxed">
+                  <p className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-1">
                     {leader.role}
                   </p>
                   {leader.badge && (
-                    <p className="text-[11px] font-semibold text-slate-400 tracking-wider mt-1 uppercase">
+                    <p className="text-[11px] text-neutral-500 uppercase tracking-widest font-medium">
                       {leader.badge}
                     </p>
                   )}
@@ -145,9 +130,9 @@ export default function Leadership() {
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
+
       </div>
-      <style dangerouslySetInnerHTML={{__html: `@keyframes shimmer { 100% { transform: translateX(100%); } }`}} />
     </section>
   );
 }

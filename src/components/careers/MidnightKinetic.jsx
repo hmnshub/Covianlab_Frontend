@@ -21,84 +21,52 @@ const pillars = [
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.15 } },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55 } },
-};
-
 export default function MidnightKinetic() {
   return (
-    <section className="py-20 sm:py-32 bg-surface-container-lowest overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+    <section className="py-24 bg-transparent border-t border-white/5 relative z-10">
+      <div className="max-w-screen-xl mx-auto px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 sm:mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
           <div>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55 }}
-              className="text-2xl sm:text-3xl font-headline font-black tracking-tight uppercase text-on-surface"
-            >
-              Midnight Kinetic
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="mt-3 text-on-surface-variant text-sm max-w-md leading-relaxed"
-            >
+            <span className="text-xs font-semibold uppercase tracking-widest text-neutral-500 block mb-3">
+              Core Principles
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">
+              Midnight Kinetic.
+            </h2>
+            <p className="mt-4 text-neutral-400 text-lg max-w-xl leading-relaxed">
               Our philosophy is built on three immutable pillars. We don't
               follow trends; we architect the infrastructure they sit on.
-            </motion.p>
+            </p>
           </div>
-          <motion.a
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            href="#"
-            className="text-xs font-label uppercase tracking-widest text-primary-container hover:text-primary transition-colors inline-block"
-          >
-            » Live at CovianLab
-          </motion.a>
         </div>
 
-        {/* Pillars */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
-        >
-          {pillars.map((pillar) => {
+        {/* Pillars Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {pillars.map((pillar, i) => {
             const Icon = pillar.icon;
             return (
               <motion.div
                 key={pillar.title}
-                variants={cardVariants}
-                className="glass-panel border border-white/5 p-6 sm:p-8 rounded-sm group hover:border-primary-container/20 transition-colors"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="bg-white/[0.02] border border-white/10 p-8 md:p-10 rounded-3xl hover:bg-white/[0.04] transition-colors"
               >
-                <div className="mb-6 w-10 h-10 text-primary-container">
-                  <Icon className="w-8 h-8" />
+                <div className="mb-8 w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                  <Icon className="w-6 h-6 text-neutral-300" />
                 </div>
-                <h3 className="text-base font-headline font-bold text-on-surface mb-3">
+                <h3 className="text-xl font-bold text-white mb-3">
                   {pillar.title}
                 </h3>
-                <p className="text-sm text-on-surface-variant leading-relaxed">
+                <p className="text-neutral-400 text-base leading-relaxed">
                   {pillar.desc}
                 </p>
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

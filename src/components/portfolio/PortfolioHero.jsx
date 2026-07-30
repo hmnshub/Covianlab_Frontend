@@ -4,42 +4,38 @@ import { motion } from "framer-motion";
 
 export default function PortfolioHero() {
   return (
-    <header className="relative pt-36 pb-16 overflow-hidden bg-surface">
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-[-15%] right-[-5%] w-[45%] h-[70%] bg-primary-container/6 blur-[120px] rounded-full" />
-      </div>
-
-      <div className="relative z-10 max-w-screen-xl mx-auto px-8">
+    <header className="relative pt-36 pb-16 overflow-hidden bg-transparent z-10">
+      <div className="relative z-10 max-w-screen-xl mx-auto px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
           className="mb-6 flex items-center gap-3"
         >
-          <span className="w-10 h-[2px] bg-primary-container" />
-          <span className="text-xs font-label uppercase tracking-widest text-primary-container font-bold">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+          <span className="text-[11px] font-medium uppercase tracking-widest text-neutral-400">
             Success Stories
           </span>
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45, duration: 0.7 }}
-          className="text-[clamp(2.8rem,7vw,5.5rem)] font-headline font-black leading-[1.05] tracking-tighter text-glow max-w-3xl"
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="text-[clamp(3rem,7vw,5.5rem)] font-bold leading-[1.05] tracking-tighter text-white max-w-3xl"
         >
-          End-to-End Growth
-          <br />
-          Systems
+          End-to-End Growth <br />
+          <span className="text-neutral-500">Systems.</span>
         </motion.h1>
 
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: 0.7, duration: 0.5, ease: "easeOut" }}
-          style={{ originX: 0 }}
-          className="mt-4 w-20 h-1 signature-gradient rounded-full"
-        />
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="mt-6 text-lg text-neutral-400 max-w-xl leading-relaxed"
+        >
+          Explore how we engineer high-performance platforms, autonomous data pipelines, and scalable architectures for our partners.
+        </motion.p>
       </div>
     </header>
   );

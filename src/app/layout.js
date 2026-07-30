@@ -22,9 +22,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${manrope.variable} bg-surface text-on-surface font-body relative min-h-screen overflow-x-hidden`}
+        suppressHydrationWarning
       >
         {/* Global Digital Circuit Background */}
         <CircuitBackground />

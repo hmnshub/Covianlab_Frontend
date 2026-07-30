@@ -24,122 +24,86 @@ const features = [
     title: "Measurable outcomes",
     desc: "Obsessive focus on ROI, lead generation, and tangible business impact.",
   },
+  {
+    icon: Zap,
+    title: "Fast, lean, impact-driven delivery",
+    desc: "We cut the bloat and deliver high-frequency value in every sprint cycle.",
+  },
 ];
 
 export default function ContactHero() {
   return (
     <>
-      <header className="relative pt-32 pb-16 overflow-hidden bg-surface">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[80%] bg-primary-container/6 blur-[120px] rounded-full" />
-        </div>
-
-        <div className="relative z-10 max-w-screen-xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <header className="relative pt-36 pb-20 px-6 max-w-screen-xl mx-auto bg-black text-white">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="mb-6 flex items-center gap-3"
-            >
-              <span className="w-10 h-[2px] bg-primary-container" />
-              <span className="text-xs font-label uppercase tracking-widest text-primary-container font-bold">
+            <div className="mb-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.02]">
+              <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(250,204,21,0.8)]" />
+              <span className="text-[11px] font-medium uppercase tracking-widest text-neutral-300">
                 Connect with our Architects
               </span>
-            </motion.div>
+            </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45, duration: 0.7 }}
-              className="text-[clamp(2.8rem,7vw,5rem)] font-headline font-black leading-[1.1] tracking-tighter text-glow"
-            >
-              Let's Build{" "}
-              <span className="text-primary-container">Something Great</span>{" "}
-              Together
-            </motion.h1>
+            <h1 className="text-[clamp(2.8rem,7vw,5rem)] font-bold leading-[1.05] tracking-tighter text-white">
+              Let's Build <br />
+              <span className="text-neutral-500">Something Great</span> Together
+            </h1>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="pl-0 lg:pl-10 lg:border-l border-outline-variant/30"
-          >
-            <p className="text-lg text-on-surface-variant leading-relaxed">
+          <div className="pl-0 lg:pl-10 lg:border-l border-white/10">
+            <p className="text-lg text-neutral-400 leading-relaxed">
               We transform complex data landscapes into architectural
               masterpieces. Reach out to start your digital evolution.
             </p>
-          </motion.div>
+          </div>
         </div>
       </header>
 
-      {/* Why Choose Us */}
-      <section className="py-16 bg-surface">
-        <div className="max-w-screen-xl mx-auto px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
-            className="mb-10"
-          >
-            <h2 className="text-3xl font-headline font-black text-on-surface">
-              Why you choose{" "}
-              <span className="text-primary-container">Covianlab?</span>
-            </h2>
-            <p className="mt-3 text-on-surface-variant text-sm max-w-sm">
-              We aren't just consultants; we are your strategic execution
-              partners in the digital void.
-            </p>
-          </motion.div>
+      {/* Why Choose Us - Spacious, Dynamic & Interactive */}
+      <section className="py-24 px-6 max-w-screen-xl mx-auto bg-black text-white">
+        <div className="mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-3">
+            Why choose <span className="text-neutral-500">Covianlab?</span>
+          </h2>
+          <p className="text-neutral-400 text-base max-w-lg">
+            We aren't just consultants; we are your strategic execution
+            partners in the digital void.
+          </p>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {features.map((feat, i) => {
-              const Icon = feat.icon;
-              return (
-                <motion.div
-                  key={feat.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="bg-surface-container border border-white/5 rounded-sm p-7 hover:border-primary-container/20 transition-all"
-                >
-                  <div className="mb-4 w-9 h-9 bg-primary-container/10 rounded-sm flex items-center justify-center">
-                    <Icon className="w-4 h-4 text-primary-container" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feat, i) => {
+            const Icon = feat.icon;
+            return (
+              <motion.div
+                key={feat.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                // 👉 Dynamic Pop-out Hover Animation
+                whileHover={{
+                  scale: 1.03,
+                  y: -8,
+                  borderColor: "rgba(250, 204, 21, 0.4)",
+                  boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.9)",
+                }}
+                className="bg-[#12141a] border border-white/10 rounded-3xl p-10 transition-colors duration-300 flex flex-col justify-between cursor-pointer"
+              >
+                <div>
+                  <div className="mb-8 w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-amber-400 shadow-inner">
+                    <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="font-headline font-bold text-on-surface mb-2">
+                  <h3 className="font-bold text-white text-xl mb-3 tracking-tight">
                     {feat.title}
                   </h3>
-                  <p className="text-sm text-on-surface-variant leading-relaxed">
-                    {feat.desc}
-                  </p>
-                </motion.div>
-              );
-            })}
-
-            {/* Full-width card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="md:col-span-2 bg-surface-container border border-white/5 rounded-sm p-7 hover:border-primary-container/20 transition-all flex gap-5 items-start"
-            >
-              <div className="w-9 h-9 bg-primary-container/10 rounded-sm flex items-center justify-center flex-shrink-0">
-                <Zap className="w-4 h-4 text-primary-container" />
-              </div>
-              <div>
-                <h3 className="font-headline font-bold text-on-surface mb-2">
-                  Fast, lean, impact-driven delivery
-                </h3>
-                <p className="text-sm text-on-surface-variant leading-relaxed">
-                  We cut the bloat and deliver high-frequency value in every sprint cycle.
+                </div>
+                <p className="text-sm text-neutral-400 leading-relaxed">
+                  {feat.desc}
                 </p>
-              </div>
-            </motion.div>
-          </div>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
     </>

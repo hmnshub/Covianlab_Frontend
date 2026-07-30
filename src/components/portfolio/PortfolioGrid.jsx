@@ -1,454 +1,275 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import {
-  TrendingUp,
-  BarChart2,
-  ShoppingCart,
-  Heart,
-  ArrowUpRight,
-  ShieldCheck,
-  Cpu,
-  Zap,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { Activity, Cpu, ShieldCheck, Zap, Heart, ShoppingCart } from "lucide-react";
 
-const filters = ["All Works", "Web", "Apps", "Data"];
+/* ========================================================
+   UNIQUE BESPOKE VISUALIZERS (High-End & Lightweight)
+======================================================== */
+
+const NexusVisual = () => (
+  <div className="relative w-full h-full bg-[#030712] flex items-center justify-center overflow-hidden">
+    <div className="absolute inset-0 bg-cyan-900/20 blur-[80px]" />
+    <div className="relative flex items-end gap-2 md:gap-3 h-32 md:h-48 z-10">
+      {[40, 75, 45, 95, 60, 85, 50].map((h, i) => (
+        <motion.div
+          key={i}
+          animate={{ height: [`${h}%`, `${h + 15}%`, `${h}%`] }}
+          transition={{ duration: 2, repeat: Infinity, delay: i * 0.15, ease: "easeInOut" }}
+          className="w-4 md:w-6 bg-gradient-to-t from-cyan-600 to-cyan-400 rounded-t-md shadow-[0_0_15px_rgba(34,211,238,0.5)]"
+        />
+      ))}
+    </div>
+  </div>
+);
+
+const AuraVisual = () => (
+  <div className="relative w-full h-full bg-[#020617] flex items-center justify-center overflow-hidden">
+    <div className="absolute inset-0 bg-teal-900/20 blur-[80px]" />
+    {/* Floating Glass Components */}
+    <motion.div 
+      animate={{ y: [-10, 10, -10] }} 
+      transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute w-40 md:w-56 h-24 md:h-32 bg-teal-500/10 backdrop-blur-xl border border-teal-400/30 rounded-2xl -translate-x-12 -translate-y-8 md:-translate-x-16 md:-translate-y-12 shadow-[0_0_30px_rgba(45,212,191,0.15)] flex flex-col p-4 gap-3"
+    >
+      <div className="w-1/2 h-3 bg-teal-400/40 rounded-full" />
+      <div className="w-3/4 h-3 bg-teal-400/20 rounded-full" />
+    </motion.div>
+    <motion.div 
+      animate={{ y: [10, -10, 10] }} 
+      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute w-48 md:w-64 h-20 md:h-28 bg-white/[0.05] backdrop-blur-2xl border border-white/20 rounded-2xl translate-x-8 translate-y-12 flex items-center justify-between p-4 md:p-6 shadow-2xl z-10"
+    >
+      <div className="w-1/2 h-4 md:h-6 bg-white/20 rounded-full" />
+      <div className="w-10 h-6 md:w-16 md:h-8 bg-teal-400 rounded-full shadow-[0_0_15px_rgba(45,212,191,0.6)]" />
+    </motion.div>
+  </div>
+);
+
+const ZenithVisual = () => (
+  <div className="relative w-full h-full bg-[#050511] flex items-center justify-center overflow-hidden">
+    <div className="absolute inset-0 bg-indigo-900/20 blur-[80px]" />
+    {/* Floating Fintech Card */}
+    <motion.div 
+      animate={{ y: [-8, 8, -8], rotateY: [-5, 5, -5] }} 
+      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      className="w-64 md:w-80 h-40 md:h-48 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-2xl p-5 md:p-6 flex flex-col justify-between shadow-[0_20px_50px_rgba(79,70,229,0.4)] border border-white/30 relative overflow-hidden z-10"
+    >
+      <div className="absolute inset-0 bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.2)_25%,transparent_30%)]" />
+      <div className="w-10 h-8 md:w-12 md:h-10 bg-yellow-400/90 rounded-md shadow-inner" />
+      <div className="flex justify-between items-end">
+        <div className="w-32 md:w-40 h-4 bg-white/50 rounded-full" />
+        <ShieldCheck className="w-6 h-6 md:w-8 md:h-8 text-white/80" />
+      </div>
+    </motion.div>
+  </div>
+);
+
+const VoidVisual = () => (
+  <div className="relative w-full h-full bg-[#110505] flex items-center justify-center overflow-hidden">
+    <div className="absolute inset-0 bg-rose-900/20 blur-[80px]" />
+    {/* AI Radar Ping */}
+    <motion.div animate={{ scale: [1, 2.5], opacity: [0.8, 0] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }} className="absolute w-24 h-24 border-2 border-rose-500 rounded-full" />
+    <motion.div animate={{ scale: [1, 2.5], opacity: [0.8, 0] }} transition={{ duration: 2.5, repeat: Infinity, delay: 1.25, ease: "easeOut" }} className="absolute w-24 h-24 border-2 border-rose-500 rounded-full" />
+    
+    <div className="relative z-10 w-6 h-6 bg-rose-500 rounded-full shadow-[0_0_30px_rgba(244,63,94,1)] flex items-center justify-center">
+      <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+    </div>
+  </div>
+);
+
+const VitalPulseVisual = () => (
+  <div className="relative w-full h-full bg-[#020d08] flex items-center justify-center overflow-hidden">
+    <div className="absolute inset-0 bg-emerald-900/20 blur-[80px]" />
+    <svg viewBox="0 0 200 100" className="w-[80%] h-32 md:h-48 drop-shadow-[0_0_15px_rgba(16,185,129,0.8)] z-10">
+      <motion.path
+        d="M 0 50 L 50 50 L 65 20 L 90 90 L 110 50 L 200 50"
+        fill="none" stroke="#10b981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
+        initial={{ pathLength: 0 }} 
+        animate={{ pathLength: 1 }} 
+        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+      />
+    </svg>
+  </div>
+);
+
+const LuxeStoreVisual = () => (
+  <div className="relative w-full h-full bg-[#140d02] flex items-center justify-center overflow-hidden">
+    <div className="absolute inset-0 bg-amber-900/20 blur-[80px]" />
+    {/* High-End Checkout Bar */}
+    <div className="w-56 md:w-72 h-14 md:h-16 bg-amber-500/10 border border-amber-500/30 rounded-full p-1.5 flex items-center relative overflow-hidden z-10 backdrop-blur-md shadow-[0_0_30px_rgba(245,158,11,0.15)]">
+      <motion.div 
+        animate={{ width: ["15%", "100%", "15%"] }} 
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-amber-600/40 to-amber-400/80 rounded-full"
+      />
+      <div className="w-10 h-10 md:w-12 md:h-12 bg-amber-500 rounded-full flex items-center justify-center z-20 shadow-lg">
+        <ShoppingCart className="w-5 h-5 text-black" />
+      </div>
+      <span className="text-amber-400 font-bold text-xs md:text-sm uppercase tracking-widest z-20 ml-6 md:ml-8">Processing</span>
+    </div>
+  </div>
+);
+
+
+/* ========================================================
+   PROJECT DATA & STACKING GRID
+======================================================== */
 
 const projects = [
   {
     id: 1,
     index: "01",
-    category: "data",
     dept: "Data Engineering",
     title: "Nexus Analytics Engine",
     desc: "Real-time data processing pipeline designed for global logistics enterprise, handling over 2M events per second with sub-millisecond latency.",
-    metric: "40%",
-    metricLabel: "Infra Cost Reduction",
-    status: "Production Deployment",
-    stack: ["Go", "Apache Kafka", "Redis", "AWS Kinesis"],
-    visualType: "terminal",
-    icon: BarChart2,
+    impact: "40%",
+    impactLabel: "Infra Cost Reduction",
+    theme: {
+      accentText: "text-cyan-400",
+      accentBorder: "border-cyan-400/30",
+      accentBg: "bg-cyan-400/10",
+    },
+    visual: <NexusVisual />,
   },
   {
     id: 2,
     index: "02",
-    category: "web",
     dept: "Web Architecture",
     title: "Aura Design System",
     desc: "Architected and engineered a scalable multi-platform design system and component architecture for a Fortune 500 fintech platform.",
-    metric: "95%",
-    metricLabel: "Developer Adoption Rate",
-    status: "Multi-Squad Rollout",
-    stack: ["React", "TypeScript", "Tailwind CSS", "Figma API"],
-    visualType: "design-system",
-    icon: Cpu,
+    impact: "95%",
+    impactLabel: "Developer Adoption Rate",
+    theme: {
+      accentText: "text-teal-400",
+      accentBorder: "border-teal-400/30",
+      accentBg: "bg-teal-400/10",
+    },
+    visual: <AuraVisual />,
   },
   {
     id: 3,
     index: "03",
-    category: "apps",
     dept: "Mobile Systems",
     title: "Zenith Fintech App",
     desc: "Ultra-low latency mobile banking architecture featuring native end-to-end hardware encryption and real-time ledger sync.",
-    metric: "500K+",
-    metricLabel: "Active Users (Q1)",
-    status: "Live on iOS & Android",
-    stack: ["Flutter", "Rust Native", "GraphQL", "AES-256"],
-    visualType: "dashboard-mobile",
-    icon: ShieldCheck,
+    impact: "500K+",
+    impactLabel: "Active Users (Q1)",
+    theme: {
+      accentText: "text-indigo-400",
+      accentBorder: "border-indigo-400/30",
+      accentBg: "bg-indigo-400/10",
+    },
+    visual: <ZenithVisual />,
   },
   {
     id: 4,
     index: "04",
-    category: "data",
     dept: "Predictive AI",
     title: "Void Intelligence Platform",
     desc: "Autonomous predictive maintenance engine utilizing machine learning models to anticipate mission-critical hardware failures before downtime.",
-    metric: "$2.4M",
-    metricLabel: "Annual Downtime Saved",
-    status: "Enterprise Scaled",
-    stack: ["Python", "PyTorch", "Kubernetes", "TimeScaleDB"],
-    visualType: "network",
-    icon: Zap,
+    impact: "$2.4M",
+    impactLabel: "Annual Downtime Saved",
+    theme: {
+      accentText: "text-rose-400",
+      accentBorder: "border-rose-400/30",
+      accentBg: "bg-rose-400/10",
+    },
+    visual: <VoidVisual />,
   },
   {
     id: 5,
     index: "05",
-    category: "apps",
     dept: "Biometric IoT",
     title: "VitalPulse Health Ecosystem",
     desc: "Clinical-grade health monitoring system connecting wearable IoT hardware to a real-time biometric feedback loop for medical specialists.",
-    metric: "300%",
-    metricLabel: "Patient Engagement Boost",
-    status: "HIPAA Compliant",
-    stack: ["React Native", "WebSockets", "Bluetooth LE", "Node.js"],
-    visualType: "biometric",
-    icon: Heart,
+    impact: "300%",
+    impactLabel: "Patient Engagement Boost",
+    theme: {
+      accentText: "text-emerald-400",
+      accentBorder: "border-emerald-400/30",
+      accentBg: "bg-emerald-400/10",
+    },
+    visual: <VitalPulseVisual />,
   },
   {
     id: 6,
     index: "06",
-    category: "web",
-    dept: "E-Commerce Infrastructure",
+    dept: "E-Commerce",
     title: "LuxeStore Global Platform",
     desc: "Headless e-commerce system built for high-throughput luxury retail, optimized for instant global edge delivery and localized checkouts.",
-    metric: "+22%",
-    metricLabel: "Checkout Conversion",
-    status: "Global Multi-Region",
-    stack: ["Next.js", "Shopify Storefront API", "Vercel Edge", "Stripe"],
-    visualType: "ecommerce",
-    icon: ShoppingCart,
+    impact: "+22%",
+    impactLabel: "Checkout Conversion",
+    theme: {
+      accentText: "text-amber-400",
+      accentBorder: "border-amber-400/30",
+      accentBg: "bg-amber-400/10",
+    },
+    visual: <LuxeStoreVisual />,
   },
 ];
 
-/* ========================================================
-    HIGH-FIDELITY ANIMATED VISUALIZERS 
-======================================================== */
-
-const TerminalVisual = () => (
-  <div className="w-full h-full bg-[#050914] p-4 md:p-6 flex flex-col font-mono text-[10px] md:text-sm text-cyan-400 overflow-hidden relative shadow-inner">
-    <div className="flex gap-2 mb-3 pb-3 border-b border-white/10 w-full items-center">
-      <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#ff5f56]" />
-      <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#ffbd2e]" />
-      <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#27c93f]" />
-      <div className="ml-4 text-slate-400 text-[10px] hidden sm:block">root@nexus-core:~</div>
-    </div>
-    <div className="flex flex-col gap-1.5 md:gap-2 relative z-10">
-      <div className="text-emerald-400">➜ <span className="text-blue-400">~</span> ./start_data_pipeline.sh</div>
-      <div className="text-slate-300">[INITIALIZING] Memory allocation: 128GB...</div>
-      <div className="text-white">[OK] Kubernetes pods spun up (12/12)</div>
-      <div className="text-white">[OK] WebSocket tunnels established.</div>
-      <div className="text-yellow-400 font-bold">[WARN] Traffic spike detected. Auto-scaling.</div>
-      <motion.div 
-        animate={{ opacity: [0.4, 1, 0.4] }} 
-        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        className="text-emerald-400 font-black text-xs md:text-base mt-1"
-      >
-        {">"} SYSTEM ONLINE: 2,041,892 events/sec
-      </motion.div>
-    </div>
-    <div className="absolute bottom-0 right-0 w-32 md:w-64 h-32 md:h-64 bg-cyan-500/20 blur-[80px] pointer-events-none" />
-  </div>
-);
-
-const DesignSystemVisual = () => (
-  <div className="w-full h-full bg-[#0b1121] flex relative overflow-hidden text-slate-300 font-sans">
-    <div className="w-1/3 max-w-[120px] md:max-w-[150px] h-full border-r border-white/10 bg-slate-900/90 p-3 md:p-4 flex flex-col gap-2 z-10 text-[9px] md:text-xs">
-      <div className="text-slate-500 font-mono mb-1 uppercase tracking-widest text-[8px]">Components</div>
-      <div className="py-1.5 px-2 md:py-2 md:px-3 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 font-bold">Buttons</div>
-      <div className="py-1.5 px-2 md:py-2 md:px-3 rounded text-slate-400 opacity-60">Typography</div>
-      <div className="py-1.5 px-2 md:py-2 md:px-3 rounded text-slate-400 opacity-60">Color System</div>
-    </div>
-    <div className="flex-1 p-3 md:p-6 flex flex-col gap-3 relative z-10 overflow-hidden">
-      <div className="border-b border-white/10 pb-2">
-        <div className="text-sm md:text-lg font-bold text-white tracking-tight">Button</div>
-        <div className="text-[10px] md:text-xs text-slate-400">Primary interactive component.</div>
-      </div>
-      <div className="bg-slate-800/50 border border-white/10 rounded-xl p-3 md:p-6 flex items-center justify-center gap-3">
-        <motion.button 
-          whileHover={{ scale: 1.08 }} 
-          whileTap={{ scale: 0.95 }}
-          className="px-4 py-1.5 md:px-6 md:py-2.5 bg-cyan-400 text-slate-950 font-bold text-xs rounded shadow-[0_0_15px_rgba(34,211,238,0.4)]"
-        >
-          Primary
-        </motion.button>
-        <motion.button 
-          whileHover={{ scale: 1.08 }} 
-          whileTap={{ scale: 0.95 }}
-          className="px-4 py-1.5 md:px-6 md:py-2.5 border border-slate-600 text-slate-200 font-bold text-xs rounded"
-        >
-          Secondary
-        </motion.button>
-      </div>
-      <div className="bg-[#050505] border border-white/10 rounded-lg p-3 font-mono text-[9px] overflow-hidden">
-        <span className="text-pink-400">import <span className="text-white">{"{ Button }"}</span> from <span className="text-emerald-400">'@aura/ui'</span>;</span>
-      </div>
-    </div>
-  </div>
-);
-
-const DashboardMobileVisual = () => (
-  <div className="w-full h-full bg-[#0a0f1c] flex items-center justify-center p-2 md:p-6 relative overflow-hidden">
-    <div className="w-[220px] md:w-[260px] h-[360px] md:h-[460px] border-[6px] md:border-[8px] border-slate-800 rounded-[2.5rem] bg-[#020617] relative overflow-hidden shadow-2xl z-10 flex flex-col">
-      <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-4 bg-black rounded-full z-20" />
-      <div className="px-4 pt-10 pb-2 flex justify-between items-center bg-slate-900/50">
-        <div className="w-16 h-3 bg-white rounded-full" />
-        <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-indigo-500 to-cyan-400" />
-      </div>
-      <div className="px-4 py-2">
-        <motion.div 
-          animate={{ scale: [0.98, 1, 0.98] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="w-full h-24 md:h-32 bg-gradient-to-br from-indigo-600 to-cyan-600 rounded-xl p-3 flex flex-col justify-between shadow-lg relative overflow-hidden"
-        >
-          <div className="w-12 h-2 bg-white/40 rounded-full" />
-          <div className="w-24 h-5 bg-white rounded-md" />
-        </motion.div>
-      </div>
-      <div className="flex-1 px-4 py-2 flex flex-col gap-2">
-        {[1, 2].map((i) => (
-          <motion.div 
-            key={i} 
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.2 }}
-            className="flex items-center gap-3"
-          >
-            <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
-              <div className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
-            </div>
-            <div className="flex-1 flex flex-col gap-1.5">
-              <div className="w-full h-2 bg-slate-300 rounded-full" />
-              <div className="w-1/2 h-1.5 bg-slate-600 rounded-full" />
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  </div>
-);
-
-// 4. AI / Network Data Visual (High-Contrast Opaque Dark Scanner with Bright Red Nodes)
-const NetworkVisual = () => (
-  <div className="w-full h-full bg-[#020617] relative overflow-hidden flex items-center justify-center">
-    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:30px_30px]" />
-    
-    <svg className="absolute inset-0 w-full h-full z-0">
-      <motion.path 
-        animate={{ opacity: [0.4, 0.9, 0.4] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        d="M 20% 30% L 50% 50% L 80% 40% L 70% 80% L 30% 70% Z" 
-        stroke="rgba(239, 68, 68, 0.9)" 
-        strokeWidth="2.5" 
-        fill="none" 
-      />
-    </svg>
-
-    {[
-      { top: "30%", left: "20%" },
-      { top: "50%", left: "50%" },
-      { top: "40%", left: "80%" },
-      { top: "70%", left: "30%" },
-    ].map((node, i) => (
-      <div key={i} className="absolute z-10 flex items-center justify-center" style={{ top: node.top, left: node.left, width: '28px', height: '28px', transform: 'translate(-50%, -50%)' }}>
-        <motion.div 
-          animate={{ scale: [1, 1.6, 1] }}
-          transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.3 }}
-          className="w-3.5 h-3.5 rounded-full bg-red-600 shadow-[0_0_18px_#dc2626]" 
-        />
-      </div>
-    ))}
-
-    {/* Highly Opaque, Bold Dark Crimson Scanning Radar Beam */}
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-20 flex items-center justify-center">
-      <motion.div 
-        animate={{ rotate: 360 }} 
-        transition={{ duration: 4, repeat: Infinity, ease: "linear" }} 
-        className="absolute w-[300%] h-[300%] border-l-[4px] border-red-600 bg-gradient-to-tr from-red-900/70 via-red-950/30 to-transparent origin-center" 
-      />
-    </div>
-  </div>
-);
-
-const BiometricVisual = () => (
-  <div className="w-full h-full bg-[#030712] relative overflow-hidden flex flex-col justify-center p-4 md:p-8">
-    <div className="absolute top-4 left-4 flex items-center gap-2 z-10 bg-rose-950/50 p-2 rounded-lg border border-rose-500/30">
-      <Heart className="text-rose-500 w-5 h-5 animate-bounce" />
-      <span className="text-rose-400 font-mono font-bold text-sm md:text-xl">BPM: 72</span>
-    </div>
-    <div className="relative w-full h-24 md:h-40 flex items-center justify-center z-10 mt-6">
-      <svg viewBox="0 0 200 60" className="w-full h-24 md:h-40 overflow-visible drop-shadow-[0_0_10px_rgba(244,63,94,0.8)]">
-        <motion.path
-          d="M 0 30 L 40 30 L 50 5 L 60 55 L 70 30 L 130 30 L 140 15 L 150 40 L 160 30 L 200 30"
-          fill="none"
-          stroke="#f43f5e"
-          strokeWidth="2.5"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-        />
-      </svg>
-    </div>
-  </div>
-);
-
-const EcommerceVisual = () => (
-  <div className="w-full h-full bg-[#0a0f1c] flex items-center justify-center p-4 relative overflow-hidden">
-    <div className="w-full max-w-[260px] md:max-w-[300px] bg-slate-900/90 border border-white/20 rounded-xl p-4 flex flex-col gap-4 shadow-2xl relative z-10">
-      <div className="w-full aspect-video bg-slate-800 rounded-lg relative overflow-hidden">
-        <motion.div 
-          animate={{ x: ["-100%", "200%"] }} 
-          transition={{ duration: 2, repeat: Infinity, ease: "linear" }} 
-          className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/15 to-transparent skew-x-12" 
-        />
-        <div className="absolute bottom-2 right-2 w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
-          <ShoppingCart className="w-4 h-4 text-white" />
-        </div>
-      </div>
-      <div className="flex justify-between items-center">
-        <div className="w-1/2 h-4 bg-white/90 rounded" />
-        <div className="w-1/4 h-4 bg-emerald-400 rounded" />
-      </div>
-      <div className="w-full h-10 bg-slate-800 rounded-lg relative overflow-hidden flex items-center justify-center border border-white/10">
-        <motion.div 
-          animate={{ width: ["0%", "100%", "0%"] }} 
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} 
-          className="absolute top-0 left-0 h-full bg-emerald-500/80 shadow-[0_0_15px_#10b981]" 
-        />
-        <span className="relative z-10 text-white font-bold text-xs uppercase tracking-wider">Processing</span>
-      </div>
-    </div>
-  </div>
-);
-
-/* ========================================================
-   MAIN COMPONENT GRID
-======================================================== */
-
 export default function PortfolioGrid() {
-  const [activeFilter, setActiveFilter] = useState("All Works");
-
-  const filterKey = activeFilter === "All Works" ? "all" : activeFilter.toLowerCase();
-  const filtered = filterKey === "all" ? projects : projects.filter((p) => p.category === filterKey);
-
   return (
-    <section className="pb-20 md:pb-40 pt-8 md:pt-12 bg-surface relative">
-      <div className="max-w-screen-xl mx-auto px-4 md:px-10">
+    <section className="pb-32 pt-12 bg-transparent relative z-10">
+      <div className="max-w-screen-xl mx-auto px-4 md:px-8">
         
-        {/* Category Filter Bar */}
-        <div className="sticky top-4 z-50 mb-12 md:mb-20 py-3 md:py-5 bg-surface/90 backdrop-blur-xl border border-white/10 rounded-sm px-4 md:px-8 flex items-center justify-between gap-4 flex-wrap shadow-2xl">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-primary-container animate-ping" />
-            <span className="text-xs md:text-sm font-label uppercase tracking-widest text-on-surface-variant font-bold">
-              Showcase ({filtered.length})
-            </span>
-          </div>
-          <div className="flex gap-2 md:gap-3 flex-wrap">
-            {filters.map((f) => (
-              <button
-                key={f}
-                onClick={() => setActiveFilter(f)}
-                className={`text-xs md:text-sm font-label font-bold uppercase tracking-wider px-3 md:px-6 py-2 md:py-3 rounded-sm transition-all cursor-pointer ${
-                  activeFilter === f
-                    ? "signature-gradient text-on-primary-fixed shadow-[0_0_20px_rgba(34,211,238,0.4)]"
-                    : "bg-surface-container border border-white/10 text-on-surface-variant hover:text-on-surface"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
+        {/* The Stacking Container */}
+        <div className="relative flex flex-col gap-6 md:gap-12 pb-24">
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              // 👉 STICKY STACKING LOGIC
+              className="sticky w-full rounded-[2rem] md:rounded-[2.5rem] bg-[#09090b] border border-white/5 p-6 lg:p-12 shadow-2xl flex flex-col lg:flex-row gap-10 lg:gap-16 items-center justify-between"
+              style={{ top: `calc(12vh + ${index * 35}px)` }}
+            >
+              
+              {/* Left Column: Sharp Typography & Metrics */}
+              <div className="flex-1 w-full flex flex-col justify-center">
+                <div className="flex items-center gap-4 mb-6 md:mb-8">
+                  <span className={`text-4xl md:text-5xl font-black ${project.theme.accentText}`}>
+                    {project.index}
+                  </span>
+                  <span className={`text-[10px] md:text-xs uppercase tracking-widest font-bold border px-4 py-1.5 rounded-full ${project.theme.accentText} ${project.theme.accentBorder} ${project.theme.accentBg}`}>
+                    {project.dept}
+                  </span>
+                </div>
+
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter leading-[1.1] text-white mb-6">
+                  {project.title}
+                </h2>
+                <p className="text-base md:text-lg text-neutral-400 leading-relaxed mb-10 max-w-lg">
+                  {project.desc}
+                </p>
+
+                <div className="pt-8 border-t border-white/10">
+                  <div>
+                    <span className="text-[10px] md:text-xs uppercase tracking-widest text-neutral-500 font-bold block mb-1">
+                      Key Impact
+                    </span>
+                    <div className="text-3xl md:text-4xl font-black text-white tracking-tight">
+                      {project.impact}
+                    </div>
+                    <div className={`text-xs md:text-sm font-bold mt-1 ${project.theme.accentText}`}>
+                      {project.impactLabel}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: High-End Bespoke Visualizers */}
+              <div className="w-full lg:w-[45%] aspect-square md:aspect-video lg:aspect-square rounded-2xl overflow-hidden shadow-2xl relative border border-white/5 bg-[#030303]">
+                {project.visual}
+              </div>
+
+            </motion.div>
+          ))}
         </div>
 
-        {/* Natural Scrolling Container */}
-        <AnimatePresence mode="wait">
-          <motion.div 
-            key={activeFilter} 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="flex flex-col gap-12 md:gap-32"
-          >
-            {filtered.map((project, i) => {
-              const Icon = project.icon;
-              return (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
-                  className="relative overflow-hidden bg-surface-container border border-white/10 rounded-sm p-5 md:p-12 lg:p-16 shadow-xl group hover:border-primary-container/40 transition-colors"
-                >
-                  <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                    
-                    {/* Left Column: System Details */}
-                    <div className="flex flex-col justify-between h-full">
-                      <div>
-                        <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-8">
-                          <div className="flex items-center gap-3">
-                            <span className="text-3xl md:text-6xl font-headline font-black text-primary-container">
-                              {project.index}
-                            </span>
-                            <span className="text-[10px] md:text-xs font-label uppercase tracking-widest text-primary-container font-bold bg-primary-container/10 border border-primary-container/20 px-3 py-1.5 rounded-sm">
-                              {project.dept}
-                            </span>
-                          </div>
-                          <span className="text-[10px] md:text-xs font-label uppercase tracking-widest text-on-surface-variant font-bold border border-white/5 bg-surface/80 px-3 py-1.5 rounded-sm flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                            {project.status}
-                          </span>
-                        </div>
-
-                        <h3 className="text-2xl md:text-4xl lg:text-5xl font-headline font-black text-on-surface mb-4 md:mb-6 leading-tight">
-                          {project.title}
-                        </h3>
-                        <p className="text-on-surface-variant text-sm md:text-lg leading-relaxed mb-6 md:mb-10 max-w-xl">
-                          {project.desc}
-                        </p>
-                      </div>
-
-                      <div className="pt-6 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-end">
-                        <div className="p-4 md:p-6 rounded-sm bg-surface/80 border border-white/5">
-                          <div className="flex items-center gap-2 mb-1">
-                            <TrendingUp className="w-4 h-4 text-primary-container" />
-                            <span className="text-[10px] md:text-xs font-label uppercase tracking-wider text-on-surface-variant font-bold">
-                              Key Impact
-                            </span>
-                          </div>
-                          <div className="text-2xl md:text-4xl font-headline font-black text-on-surface tracking-tight mt-1">
-                            {project.metric}
-                          </div>
-                          <div className="text-xs md:text-sm text-primary-container font-bold mt-1">
-                            {project.metricLabel}
-                          </div>
-                        </div>
-
-                        <div>
-                          <span className="text-[10px] md:text-xs font-label uppercase tracking-widest text-on-surface-variant font-bold block mb-2 md:mb-4">
-                            Architecture
-                          </span>
-                          <div className="flex flex-wrap gap-2">
-                            {project.stack.map((tech) => (
-                              <span
-                                key={tech}
-                                className="text-[10px] md:text-xs font-mono font-bold text-on-surface/90 bg-white/5 px-3 py-1.5 rounded-sm border border-white/10"
-                              >
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Right Column: Dynamic Visualizer (Fixed Height for Mobile Single-Frame View) */}
-                    <div className="relative h-[280px] sm:h-[340px] lg:h-[550px] rounded-lg overflow-hidden border border-white/10 shadow-lg flex items-center justify-center">
-                      {project.visualType === "terminal" && <TerminalVisual />}
-                      {project.visualType === "design-system" && <DesignSystemVisual />}
-                      {project.visualType === "dashboard-mobile" && <DashboardMobileVisual />}
-                      {project.visualType === "network" && <NetworkVisual />}
-                      {project.visualType === "biometric" && <BiometricVisual />}
-                      {project.visualType === "ecommerce" && <EcommerceVisual />}
-
-                      {Icon && (
-                        <div className="absolute top-4 right-4 p-3 rounded-lg bg-slate-900/95 backdrop-blur-xl border border-white/20 text-primary-container shadow-xl z-30">
-                          <Icon className="w-5 h-5 md:w-6 md:h-6" />
-                        </div>
-                      )}
-
-                      <div className="absolute bottom-4 right-4 hidden md:flex items-center gap-2 bg-primary-container text-on-primary-fixed px-5 py-2.5 rounded-sm font-headline font-bold text-xs uppercase tracking-wider opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all shadow-xl cursor-pointer z-30">
-                        View Case Study <ArrowUpRight className="w-4 h-4" />
-                      </div>
-                    </div>
-
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </AnimatePresence>
       </div>
     </section>
   );
