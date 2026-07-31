@@ -47,7 +47,12 @@ export default function ContactForm() {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/contact", {
+      // 🔥 THE FIX: Automatically switches between local and live backend
+      const API_URL = window.location.hostname === "localhost"
+        ? "http://localhost:5000/api/contact"
+        : "https://covianlab-backend.vercel.app/api/contact";
+
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -71,7 +76,7 @@ export default function ContactForm() {
       console.error("Dispatch Error:", error);
       setStatus({
         type: "error",
-        text: "Could not reach the server on Port 5000. Please ensure the backend is actively running.",
+        text: "Could not reach the server. Please ensure the backend is actively running.",
       });
     } finally {
       setLoading(false);
