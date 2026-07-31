@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-white/5 pt-20 pb-12 relative z-10 text-white">
+    <footer suppressHydrationWarning className="bg-black border-t border-white/5 pt-20 pb-12 relative z-10 text-white">
       <div className="max-w-screen-xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
         
         {/* Brand Column */}
@@ -46,7 +46,6 @@ export default function Footer() {
           <ul className="space-y-3 text-sm text-neutral-400">
             <li><Link href="/portfolio" className="hover:text-white transition-colors">Portfolio</Link></li>
             <li><Link href="/careers" className="hover:text-white transition-colors">Careers</Link></li>
-           
           </ul>
         </div>
 
@@ -55,7 +54,7 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="max-w-screen-xl mx-auto px-6 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-neutral-500">
         <p>© 2026 CovianLab. Engineered for Growth.</p>
-        <Link href="/contact" className="hover:text-white transition-colors mt-4 md:mt-0">
+        <Link href="/#contact" className="hover:text-white transition-colors mt-4 md:mt-0">
           Contact
         </Link>
       </div>

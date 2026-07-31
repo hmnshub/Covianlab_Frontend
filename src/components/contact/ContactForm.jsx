@@ -47,7 +47,6 @@ export default function ContactForm() {
     };
 
     try {
-      // 🔥 THE FIX: Automatically switches between local and live backend
       const API_URL = window.location.hostname === "localhost"
         ? "http://localhost:5000/api/contact"
         : "https://covianlab-backend.vercel.app/api/contact";
@@ -84,7 +83,8 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="py-20 px-6 max-w-screen-xl mx-auto bg-black text-white">
+    // 👉 ADDED id="contact" HERE SO NAVBAR BUTTONS CAN TARGET IT
+    <section id="contact" className="py-20 px-6 max-w-screen-xl mx-auto bg-black text-white">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Form Container */}
@@ -259,7 +259,7 @@ export default function ContactForm() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
+              <div className="flex items-state gap-4">
                 <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center flex-shrink-0 text-white">
                   <Phone className="w-4 h-4 text-amber-400" />
                 </div>

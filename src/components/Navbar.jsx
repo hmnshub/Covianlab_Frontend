@@ -13,6 +13,7 @@ const navLinks = [
   { name: "Products", href: "/products" },
   { name: "Careers", href: "/careers" },
   { name: "Team", href: "/team" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
@@ -25,10 +26,9 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // If scrolling down and past 80px, hide navbar. If scrolling up, show navbar.
       if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
         setHidden(true);
-        setIsOpen(false); // Close mobile menu on scroll
+        setIsOpen(false);
       } else {
         setHidden(false);
       }
@@ -41,7 +41,6 @@ export default function Navbar() {
 
   return (
     <motion.header
-      // 👉 Hide on scroll down, reveal on scroll up
       animate={{ y: hidden ? -120 : 0 }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
       className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
@@ -92,10 +91,11 @@ export default function Navbar() {
 
         {/* Right CTA Button (Desktop Only) */}
         <div className="hidden md:block">
-          <Link href="/contact">
-            <button className="bg-white text-black px-6 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#d94814] hover:text-white transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_20px_rgba(217,72,20,0.6)] cursor-pointer">
-              Get in Touch
-            </button>
+          <Link 
+            href="/contact"
+            className="bg-white text-black px-6 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#d94814] hover:text-white transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_20px_rgba(217,72,20,0.6)] cursor-pointer inline-block"
+          >
+            Get in Touch
           </Link>
         </div>
 
@@ -138,10 +138,12 @@ export default function Navbar() {
           </div>
 
           <div className="pt-2 border-t border-white/10">
-            <Link href="/contact" onClick={() => setIsOpen(false)}>
-              <button className="w-full bg-white text-black py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#d94814] hover:text-white transition-all shadow-md">
-                Get in Touch
-              </button>
+            <Link 
+              href="/contact" 
+              onClick={() => setIsOpen(false)}
+              className="w-full bg-white text-black py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#d94814] hover:text-white transition-all shadow-md cursor-pointer block text-center"
+            >
+              Get in Touch
             </Link>
           </div>
         </motion.div>
