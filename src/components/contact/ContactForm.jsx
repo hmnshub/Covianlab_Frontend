@@ -268,10 +268,11 @@ export default function ContactForm() {
                     Direct Contact
                   </span>
                   <a
-                    href="tel:+919981013564"
+                    href="tel:+918770434224"
                     className="text-sm font-bold text-white hover:text-amber-400 transition-colors"
                   >
-                    +91 9981013564
+                    +91 8770434224
+                    
                   </a>
                 </div>
               </div>
