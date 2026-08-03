@@ -1,51 +1,56 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Activity, Lightbulb, Code2, Layout, Rocket } from "lucide-react";
+import { ArrowRight, Activity } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
-// 1. Updated Animation: Animates by WORD instead of letter to fix the mobile wrapping bug
-const FadeInWord = ({ text, className, delayOffset = 0, showCursor = false }) => {
-  const words = text.split(" ");
+// Split text into characters for the premium typing effect
+const TypingText = ({ text, className, delayOffset = 0 }) => {
+  const chars = Array.from(text);
   return (
-    <span className={className}>
-      {words.map((word, i) => (
+    <motion.span
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 1 },
+        visible: {
+          opacity: 1,
+          transition: { staggerChildren: 0.04, delayChildren: delayOffset },
+        },
+      }}
+      className={className}
+    >
+      {chars.map((char, index) => (
         <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: delayOffset + i * 0.15, ease: "easeOut" }}
-          className="inline-block mr-[0.25em]"
+          key={index}
+          variants={{
+            hidden: { opacity: 0, display: "none" },
+            visible: { opacity: 1, display: "inline-block" },
+          }}
         >
-          {word}
+          {char === " " ? "\u00A0" : char}
         </motion.span>
       ))}
-      {showCursor && (
+      {/* Blinking Cursor Effect on the last line */}
+      {delayOffset > 1 && (
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: [0, 1, 0] }}
-          transition={{ duration: 0.8, repeat: Infinity, ease: "linear", delay: delayOffset + 0.5 }}
-          className="inline-block w-[0.15em] h-[0.75em] bg-[#d94814] ml-1 align-baseline"
+          transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+          className="inline-block w-1 h-[0.8em] bg-[#d94814] ml-2 align-middle"
         />
       )}
-    </span>
+    </motion.span>
   );
 };
 
-// 2. Data for our new responsive code-based Grid
-const processSteps = [
-  { title: "WE THINK", desc: "Strategy & Architecture", icon: Lightbulb, delay: 2.0 },
-  { title: "WE BUILD", desc: "Scalable Engineering", icon: Code2, delay: 2.2 },
-  { title: "WE DESIGN", desc: "Premium UI/UX", icon: Layout, delay: 2.4 },
-  { title: "WE DELIVER", desc: "Launch & Growth", icon: Rocket, delay: 2.6 }
-];
-
 export default function Hero() {
   return (
-    <section className="relative pt-32 md:pt-40 pb-20 px-6 max-w-screen-xl mx-auto overflow-hidden">
+    <section className="relative pt-40 pb-28 px-6 max-w-screen-xl mx-auto overflow-hidden">
       <div className="relative z-10 max-w-4xl">
         
-        {/* Status Pill */}
+        {/* Status Pill - Added continuous subtle pulse to the dot */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -57,50 +62,50 @@ export default function Hero() {
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]" 
           />
-          <span className="text-[10px] md:text-xs font-medium uppercase tracking-widest text-neutral-300">
+          <span className="text-xs font-medium uppercase tracking-widest text-neutral-300">
             Now Accepting New Projects
           </span>
         </motion.div>
 
-        {/* Headline - Forced Block Lines to prevent mobile breaks */}
-        <h1 className="text-[2.75rem] sm:text-6xl md:text-[6.5rem] font-bold tracking-tighter leading-[1.05] mb-8">
-          <span className="block"><FadeInWord text="Your Complete" className="text-white" delayOffset={0.2} /></span>
-          <span className="block"><FadeInWord text="Technology &" className="text-white" delayOffset={0.6} /></span>
-          <span className="block"><FadeInWord text="Software Partner." className="text-neutral-500" delayOffset={1.0} showCursor={true} /></span>
+        {/* Headline - Premium Staggered Typing Animation */}
+        <h1 className="text-[clamp(3rem,8vw,6.5rem)] font-bold tracking-tighter leading-[1.02] mb-8 flex flex-col">
+          <TypingText text="Your Complete" className="text-white" delayOffset={0.2} />
+          <TypingText text="Technology &" className="text-white" delayOffset={0.8} />
+          <TypingText text="Software Partner." className="text-neutral-500" delayOffset={1.4} />
         </h1>
 
-        {/* Subtitle */}
+        {/* Subtitle - Slides up gracefully after headline finishes */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.6, ease: "easeOut" }}
-          className="text-base md:text-xl text-neutral-400 leading-relaxed max-w-2xl mb-10"
+          transition={{ duration: 0.8, delay: 2.2, ease: "easeOut" }}
+          className="text-lg md:text-xl text-neutral-400 leading-relaxed max-w-2xl mb-12"
         >
           From high-performance websites and mobile apps to custom software and AI integrations, CovianLab provides the complete technology stack to scale your business.
         </motion.p>
 
-        {/* Action Buttons */}
+        {/* Action Buttons - Pops in with dynamic hover physics */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.8, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
+          transition={{ duration: 0.8, delay: 2.6, ease: "easeOut" }}
+          className="flex flex-wrap items-center gap-4"
         >
-          <Link href="/contact" className="w-full sm:w-auto">
+          <Link href="/contact">
             <motion.button 
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="w-full flex items-center justify-center gap-2 bg-[#d94814] text-white px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#c23d10] transition-colors shadow-[0_0_25px_rgba(217,72,20,0.3)] cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 bg-[#d94814] text-white px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#c23d10] transition-colors shadow-[0_0_25px_rgba(217,72,20,0.3)] cursor-pointer"
             >
               Start Your Project <ArrowRight className="w-4 h-4" />
             </motion.button>
           </Link>
 
-          <Link href="/services" className="w-full sm:w-auto">
+          <Link href="/services">
             <motion.button 
-              whileHover={{ scale: 1.03, backgroundColor: "rgba(255,255,255,0.05)" }}
-              whileTap={{ scale: 0.97 }}
-              className="w-full flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest transition-colors cursor-pointer"
+              whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 bg-white/5 border border-white/10 text-white px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest transition-colors cursor-pointer"
             >
               <Activity className="w-4 h-4 text-cyan-400" /> Explore Services
             </motion.button>
@@ -108,38 +113,40 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* 👉 NEW: Responsive 4-Step Grid (Replaces the static image) */}
-      <div className="relative z-20 w-full mt-16 md:mt-24 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-        
-        {/* Ambient Back Glow */}
-        <div className="absolute inset-0 bg-cyan-500/10 blur-[100px] rounded-full w-full h-full top-1/2 -translate-y-1/2 pointer-events-none" />
-
-        {processSteps.map((step, index) => {
-          const Icon = step.icon;
-          return (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: step.delay, ease: "easeOut" }}
-              whileHover={{ y: -5, borderColor: "rgba(255,255,255,0.2)" }}
-              className="group bg-[#0f1115]/80 backdrop-blur-md border border-white/5 rounded-2xl p-6 md:p-8 transition-all flex items-start gap-5 shadow-2xl"
-            >
-              <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 group-hover:text-cyan-400 group-hover:bg-cyan-400/10 transition-colors shrink-0">
-                <Icon className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-lg md:text-xl font-bold text-white tracking-tight mb-1">
-                  {step.title}
-                </h3>
-                <p className="text-sm text-neutral-500 font-medium">
-                  {step.desc}
-                </p>
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
+      {/* Image Section - Pops in and constantly floats seamlessly */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8, y: 80 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ 
+          duration: 1, 
+          delay: 2.8,
+          type: "spring", 
+          bounce: 0.4 
+        }}
+        className="relative z-20 w-full mt-16 md:mt-24"
+      >
+        {/* Continuous Floating Animation Wrapper */}
+        <motion.div
+          animate={{ y: [-8, 8, -8] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="relative"
+        >
+          {/* Ambient Glow */}
+          <div className="absolute inset-0 bg-cyan-500/20 blur-[80px] rounded-full w-3/4 h-3/4 top-1/2 -translate-y-1/2" />
+          
+          <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.9)]">
+            <Image 
+              src="/himanshuwebuild.png" 
+              alt="CovianLab Architecture" 
+              width={1200} 
+              height={675} 
+              className="w-full h-auto object-cover" 
+              priority
+              unoptimized
+            />
+          </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
