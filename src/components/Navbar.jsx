@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
@@ -53,9 +54,21 @@ export default function Navbar() {
       >
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-          <span className="text-lg font-black tracking-tighter text-white">
-            Covian<span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Lab</span>
-          </span>
+          {/* 👉 Increased width and height here (w-12 h-12 on mobile, w-16 h-16 on desktop) */}
+          <div className="relative w-12 h-12 md:w-16 md:h-16 flex-shrink-0">
+            <Image 
+              src="/clcovian.png" 
+              alt="CovianLab Logo" 
+              fill
+              className="object-contain group-hover:scale-105 transition-transform duration-300"
+              priority
+              unoptimized
+            />
+          </div>
+          <div className="text-xl md:text-2xl font-extrabold tracking-tight">
+            <span className="text-[#2a59a0]">Covian</span>
+            <span className="text-[#d94814]">Lab</span>
+          </div>
         </Link>
 
         {/* Center Nav Links (Desktop Only) */}
@@ -110,44 +123,46 @@ export default function Navbar() {
       </motion.nav>
 
       {/* Mobile Dropdown Drawer */}
-      {isOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: -10, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -10, scale: 0.95 }}
-          className="absolute top-20 left-4 right-4 bg-[#09090b]/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 shadow-2xl md:hidden space-y-4 z-40"
-        >
-          <div className="flex flex-col space-y-2">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${
-                    isActive
-                      ? "bg-gradient-to-r from-[#d94814] to-[#ff6b35] text-white shadow-[0_0_15px_rgba(217,72,20,0.4)]"
-                      : "text-neutral-300 hover:bg-white/5 hover:text-white"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            className="absolute top-20 left-4 right-4 bg-[#09090b]/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 shadow-2xl md:hidden space-y-4 z-40"
+          >
+            <div className="flex flex-col space-y-2">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${
+                      isActive
+                        ? "bg-gradient-to-r from-[#d94814] to-[#ff6b35] text-white shadow-[0_0_15px_rgba(217,72,20,0.4)]"
+                        : "text-neutral-300 hover:bg-white/5 hover:text-white"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+            </div>
 
-          <div className="pt-2 border-t border-white/10">
-            <Link 
-              href="/contact" 
-              onClick={() => setIsOpen(false)}
-              className="w-full bg-white text-black py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#d94814] hover:text-white transition-all shadow-md cursor-pointer block text-center"
-            >
-              Get in Touch
-            </Link>
-          </div>
-        </motion.div>
-      )}
+            <div className="pt-2 border-t border-white/10">
+              <Link 
+                href="/contact" 
+                onClick={() => setIsOpen(false)}
+                className="w-full bg-white text-black py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#d94814] hover:text-white transition-all shadow-md cursor-pointer block text-center"
+              >
+                Get in Touch
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }
