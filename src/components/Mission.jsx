@@ -10,10 +10,11 @@ const images = [
   "/outcome.jpg.png",
 ];
 
+// Refined animation states for maximum performance
 const slideVariants = {
   enter: { 
     x: "100%", 
-    opacity: 0.5 
+    opacity: 0 
   },
   center: { 
     x: 0, 
@@ -22,7 +23,7 @@ const slideVariants = {
   },
   exit: { 
     x: "-100%", 
-    opacity: 0.5, 
+    opacity: 0, 
     zIndex: 0 
   },
 };
@@ -33,7 +34,7 @@ export default function Mission() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 1500); 
+    }, 2000); // 2 seconds gives the mobile GPU time to breathe between frames
     return () => clearInterval(timer);
   }, []);
 
@@ -56,9 +57,7 @@ export default function Mission() {
       {/* Auto-Sliding Image Container */}
       <div className="relative w-full max-w-5xl mx-auto">
         
-        {/* 👉 Removed the backgrounds and borders here. 
-            Adjusted heights so it perfectly hugs the image on mobile without extra space. */}
-        <div className="relative w-full h-[220px] sm:h-[350px] md:h-[450px] lg:h-[500px] flex items-center justify-center">
+        <div className="relative w-full h-[220px] sm:h-[350px] md:h-[450px] lg:h-[500px] flex items-center justify-center overflow-hidden">
           
           <AnimatePresence initial={false}>
             <motion.div
@@ -67,17 +66,19 @@ export default function Mission() {
               initial="enter"
               animate="center"
               exit="exit"
+              // 👉 Custom iOS-style easing curve for buttery smoothness
               transition={{
-                x: { type: "tween", ease: "easeInOut", duration: 0.6 },
-                opacity: { duration: 0.6 }
+                x: { type: "tween", ease: [0.25, 1, 0.5, 1], duration: 0.7 },
+                opacity: { duration: 0.5, ease: "linear" }
               }}
+              // 👉 Forces the phone's GPU to pre-calculate the animation (eliminates lag)
+              style={{ willChange: "transform, opacity" }}
               className="absolute inset-0 w-full h-full flex items-center justify-center"
             >
               <Image 
                 src={images[currentIndex]} 
                 alt={`Philosophy slide ${currentIndex + 1}`} 
                 fill
-                // 👉 object-contain ensures the image NEVER crops on the sides
                 className="object-contain w-full h-full drop-shadow-2xl" 
                 unoptimized
                 priority
