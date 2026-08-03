@@ -1,74 +1,104 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Zap, MessageSquare, Target } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
-const corePillars = [
-  {
-    icon: Zap,
-    title: "Momentum over Policy",
-    desc: "We move fast, break barriers, and prioritize execution over bureaucracy.",
-  },
-  {
-    icon: MessageSquare,
-    title: "Building over Talking",
-    desc: "We are a shop of makers. We let the shipping cycle do the talking.",
-  },
-  {
-    icon: Target,
-    title: "Outcomes over Activity",
-    desc: "Every line of code and ad spend is measured strictly by ROI.",
-  },
+const images = [
+  "/momentum.jpg.png",
+  "/building.jpg.png",
+  "/outcome.jpg.png",
 ];
 
+const slideVariants = {
+  enter: { 
+    x: "100%", 
+    opacity: 0.5 
+  },
+  center: { 
+    x: 0, 
+    opacity: 1, 
+    zIndex: 1 
+  },
+  exit: { 
+    x: "-100%", 
+    opacity: 0.5, 
+    zIndex: 0 
+  },
+};
+
 export default function Mission() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 1500); 
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <section id="mission" className="pt-4 md:pt-12 pb-20 px-6 max-w-screen-xl mx-auto bg-transparent text-white relative z-10">
+    <section 
+      id="mission" 
+      className="pt-10 md:pt-16 pb-16 md:pb-24 px-3 md:px-6 max-w-screen-xl mx-auto bg-transparent text-white relative z-10 overflow-hidden"
+    >
       
-      {/* Section Header Shifted Up */}
-      <div className="mb-10 text-center md:text-left max-w-xl">
-        <span className="text-[10px] md:text-xs font-bold tracking-widest text-[#d94814] uppercase bg-[#d94814]/10 border border-[#d94814]/30 px-4 py-1.5 rounded-full inline-block mb-3">
+      {/* Section Header - Perfectly Centered */}
+      <div className="mb-8 text-center max-w-2xl mx-auto flex flex-col items-center">
+        <span className="text-[10px] md:text-xs font-bold tracking-widest text-[#d94814] uppercase bg-[#d94814]/10 border border-[#d94814]/30 px-4 py-1.5 rounded-full inline-block mb-4">
           Core Philosophy
         </span>
-        <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-white">
+        <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white leading-tight">
           Engineered for velocity and scale.
         </h2>
       </div>
 
-      {/* Top 3 Core Pillars Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {corePillars.map((item, i) => {
-          const Icon = item.icon;
-          return (
+      {/* Auto-Sliding Image Container */}
+      <div className="relative w-full max-w-5xl mx-auto">
+        
+        <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] md:h-[450px] lg:h-[500px] rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-white/10 bg-[#0b0c10]">
+          
+          <AnimatePresence initial={false}>
             <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{
-                scale: 1.03,
-                y: -8,
-                boxShadow: "0 25px 50px -15px rgba(0, 0, 0, 0.9)",
+              key={currentIndex}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "tween", ease: "easeInOut", duration: 0.6 },
+                opacity: { duration: 0.6 }
               }}
-              className="bg-[#12141a] border border-white/10 hover:border-white/30 rounded-3xl p-8 transition-all duration-300 flex flex-col justify-between cursor-pointer group"
+              className="absolute inset-0 w-full h-full"
             >
-              <div>
-                <div className="mb-6 w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:scale-110 transition-transform shadow-inner">
-                  <Icon className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3 tracking-tight">
-                  {item.title}
-                </h3>
-              </div>
-              <p className="text-sm text-neutral-400 leading-relaxed">
-                {item.desc}
-              </p>
+              <Image 
+                src={images[currentIndex]} 
+                alt={`Philosophy slide ${currentIndex + 1}`} 
+                fill
+                className="object-cover object-center w-full h-full" 
+                unoptimized
+                priority
+              />
             </motion.div>
-          );
-        })}
-      </div>
+          </AnimatePresence>
 
+        </div>
+
+        {/* Navigation Dots - Moved into normal flow with margin-top so it never touches or overlaps the next section */}
+        <div className="mt-6 flex justify-center gap-3">
+          {images.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                idx === currentIndex ? "w-8 bg-[#d94814]" : "w-2 bg-white/20 hover:bg-white/40"
+              }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+      </div>
     </section>
   );
 }
