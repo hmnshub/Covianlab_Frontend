@@ -40,10 +40,10 @@ export default function Mission() {
   return (
     <section 
       id="mission" 
-      className="pt-10 md:pt-16 pb-16 md:pb-24 px-3 md:px-6 max-w-screen-xl mx-auto bg-transparent text-white relative z-10 overflow-hidden"
+      className="pt-10 md:pt-16 pb-16 md:pb-24 px-4 md:px-6 max-w-screen-xl mx-auto bg-transparent text-white relative z-10 overflow-hidden"
     >
       
-      {/* Section Header - Perfectly Centered */}
+      {/* Section Header */}
       <div className="mb-8 text-center max-w-2xl mx-auto flex flex-col items-center">
         <span className="text-[10px] md:text-xs font-bold tracking-widest text-[#d94814] uppercase bg-[#d94814]/10 border border-[#d94814]/30 px-4 py-1.5 rounded-full inline-block mb-4">
           Core Philosophy
@@ -56,7 +56,9 @@ export default function Mission() {
       {/* Auto-Sliding Image Container */}
       <div className="relative w-full max-w-5xl mx-auto">
         
-        <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] md:h-[450px] lg:h-[500px] rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-white/10 bg-[#0b0c10]">
+        {/* 👉 Removed the backgrounds and borders here. 
+            Adjusted heights so it perfectly hugs the image on mobile without extra space. */}
+        <div className="relative w-full h-[220px] sm:h-[350px] md:h-[450px] lg:h-[500px] flex items-center justify-center">
           
           <AnimatePresence initial={false}>
             <motion.div
@@ -69,13 +71,14 @@ export default function Mission() {
                 x: { type: "tween", ease: "easeInOut", duration: 0.6 },
                 opacity: { duration: 0.6 }
               }}
-              className="absolute inset-0 w-full h-full"
+              className="absolute inset-0 w-full h-full flex items-center justify-center"
             >
               <Image 
                 src={images[currentIndex]} 
                 alt={`Philosophy slide ${currentIndex + 1}`} 
                 fill
-                className="object-cover object-center w-full h-full" 
+                // 👉 object-contain ensures the image NEVER crops on the sides
+                className="object-contain w-full h-full drop-shadow-2xl" 
                 unoptimized
                 priority
               />
@@ -84,8 +87,8 @@ export default function Mission() {
 
         </div>
 
-        {/* Navigation Dots - Moved into normal flow with margin-top so it never touches or overlaps the next section */}
-        <div className="mt-6 flex justify-center gap-3">
+        {/* Navigation Dots */}
+        <div className="mt-4 md:mt-6 flex justify-center gap-3">
           {images.map((_, idx) => (
             <button
               key={idx}
