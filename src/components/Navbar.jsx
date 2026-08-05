@@ -8,12 +8,9 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Portfolio", href: "/portfolio" },
   { name: "Services", href: "/services" },
-  { name: "Products", href: "/products" },
-  { name: "Careers", href: "/careers" },
-  { name: "Team", href: "/team" },
+  { name: "Portfolio", href: "/portfolio" },
+  { name: "Our Tech", href: "/products" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -52,22 +49,19 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="w-full max-w-screen-xl flex items-center justify-between gap-4 bg-[#09090b]/85 backdrop-blur-xl border border-white/10 px-5 sm:px-6 py-3.5 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.8)] relative"
       >
-        {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-          {/* 👉 Increased width and height here (w-12 h-12 on mobile, w-16 h-16 on desktop) */}
-          <div className="relative w-12 h-12 md:w-16 md:h-16 flex-shrink-0">
+        {/* Brand Logo - Shifted Right, Container Widened, Scale Increased */}
+        <Link href="/" className="flex items-center group cursor-pointer block">
+          {/* Added ml-2 (mobile) and ml-6 (desktop) to push it right. Widened to w-80 on desktop. */}
+          <div className="relative w-56 h-14 md:w-80 md:h-16 flex-shrink-0 ml-2 md:ml-6">
             <Image 
-              src="/clcovian.png" 
+              src="/logo.png" 
               alt="CovianLab Logo" 
               fill
-              className="object-contain group-hover:scale-105 transition-transform duration-300"
+              /* Scaled to 2x on mobile, 2.5x on desktop for maximum visibility */
+              className="object-contain object-left origin-left scale-[2] md:scale-[2.5] group-hover:scale-[2.1] md:group-hover:scale-[2.6] transition-transform duration-300"
               priority
               unoptimized
             />
-          </div>
-          <div className="text-xl md:text-2xl font-extrabold tracking-tight">
-            <span className="text-[#2a59a0]">Covian</span>
-            <span className="text-[#d94814]">Lab</span>
           </div>
         </Link>
 
@@ -108,7 +102,7 @@ export default function Navbar() {
             href="/contact"
             className="bg-white text-black px-6 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#d94814] hover:text-white transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_20px_rgba(217,72,20,0.6)] cursor-pointer inline-block"
           >
-            Get in Touch
+            Book a Call
           </Link>
         </div>
 
@@ -157,7 +151,7 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className="w-full bg-white text-black py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#d94814] hover:text-white transition-all shadow-md cursor-pointer block text-center"
               >
-                Get in Touch
+                Book a Call
               </Link>
             </div>
           </motion.div>

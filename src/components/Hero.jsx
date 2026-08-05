@@ -1,42 +1,34 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Activity } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
-// Animates by WORD to fix the mobile wrapping bug
-const FadeInWord = ({ text, className, delayOffset = 0, showCursor = false }) => {
-  const words = text.split(" ");
-  return (
-    <span className={className}>
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: delayOffset + i * 0.15, ease: "easeOut" }}
-          className="inline-block mr-[0.25em]"
-        >
-          {word}
-        </motion.span>
-      ))}
-      {showCursor && (
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 1, 0] }}
-          transition={{ duration: 0.8, repeat: Infinity, ease: "linear", delay: delayOffset + 0.5 }}
-          className="inline-block w-[0.15em] h-[0.75em] bg-[#d94814] ml-1 align-baseline"
-        />
-      )}
-    </span>
-  );
-};
+// Simplified array: Removed heavy jargon, kept it universally understandable
+const rotatingPhrases = [
+  "Digital Transformation.",
+  "Custom Websites.",
+  "Management Systems.",
+  "System Maintenance.",
+  "Mobile Apps.",
+  "Data & AI Workflows."
+];
 
 export default function Hero() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % rotatingPhrases.length);
+    }, 2800);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative pt-32 md:pt-40 pb-20 px-6 max-w-screen-xl mx-auto overflow-hidden">
-      <div className="relative z-10 max-w-4xl">
+      <div className="relative z-10 max-w-5xl">
         
         {/* Status Pill */}
         <motion.div
@@ -55,28 +47,56 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Headline - Forced Block Lines to prevent mobile breaks */}
-        <h1 className="text-[2.75rem] sm:text-6xl md:text-[6.5rem] font-bold tracking-tighter leading-[1.05] mb-8">
-          <span className="block"><FadeInWord text="Your Complete" className="text-white" delayOffset={0.2} /></span>
-          <span className="block"><FadeInWord text="Technology &" className="text-white" delayOffset={0.6} /></span>
-          <span className="block"><FadeInWord text="Software Partner." className="text-neutral-500" delayOffset={1.0} showCursor={true} /></span>
+        {/* Dynamic Headline */}
+        <h1 className="text-[2.75rem] sm:text-6xl md:text-[5.5rem] font-bold tracking-tighter leading-[1.1] mb-4 md:mb-6">
+          <motion.span 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="block text-white"
+          >
+            We engineer
+          </motion.span>
+          <motion.span 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="block text-white"
+          >
+            scalable solutions for
+          </motion.span>
+          
+          <span className="block text-[#d94814] relative mt-1 md:mt-2 h-[130px] sm:h-[80px] md:h-[120px] w-full">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={index}
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -20, opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="absolute left-0 w-full"
+              >
+                {rotatingPhrases[index]}
+              </motion.span>
+            </AnimatePresence>
+          </span>
         </h1>
 
-        {/* Subtitle */}
+        
+        {/* Modernized Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.6, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
           className="text-base md:text-xl text-neutral-400 leading-relaxed max-w-2xl mb-10"
         >
-          From high-performance websites and mobile apps to custom software and AI integrations, CovianLab provides the complete technology stack to scale your business.
+          From launching high-velocity startups to architecting scalable enterprise systems. CovianLab is the technical engine behind your growth. Built for speed, engineered for scale.
         </motion.p>
-
-        {/* Action Buttons - Stack on mobile, inline on desktop */}
+        {/* Action Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
           className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
         >
           <Link href="/contact" className="w-full sm:w-auto">
@@ -85,7 +105,7 @@ export default function Hero() {
               whileTap={{ scale: 0.97 }}
               className="w-full flex items-center justify-center gap-2 bg-[#d94814] text-white px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#c23d10] transition-colors shadow-[0_0_25px_rgba(217,72,20,0.3)] cursor-pointer"
             >
-              Start Your Project <ArrowRight className="w-4 h-4" />
+              Book Free Consultation <ArrowRight className="w-4 h-4" />
             </motion.button>
           </Link>
 
@@ -95,22 +115,17 @@ export default function Hero() {
               whileTap={{ scale: 0.97 }}
               className="w-full flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest transition-colors cursor-pointer"
             >
-              <Activity className="w-4 h-4 text-cyan-400" /> Explore Services
+              <Activity className="w-4 h-4 text-cyan-400" /> Explore Capabilities
             </motion.button>
           </Link>
         </motion.div>
       </div>
 
-      {/* Restored Image Section - Tightened top margin for mobile */}
+      {/* Hero Image Section */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8, y: 50 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ 
-          duration: 0.8, 
-          delay: 2.0, // Waits for text to finish
-          type: "spring", 
-          bounce: 0.4 
-        }}
+        transition={{ duration: 0.8, delay: 1.0, type: "spring", bounce: 0.4 }}
         className="relative z-20 w-full mt-12 md:mt-24"
       >
         <motion.div
