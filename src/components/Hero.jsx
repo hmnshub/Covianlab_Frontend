@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Activity, Code2, Smartphone, Cpu, Database, ChevronRight } from "lucide-react";
+import { ArrowRight, Activity, Code2, Smartphone, Cpu, Database } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -24,7 +24,7 @@ const capabilities = [
   },
   {
     title: "Hybrid Mobile Apps",
-    desc: "One codebase. Two platforms. High-performance iOS and Android applications engineered with Flutter.",
+    desc: "One codebase, two platforms. High-performance iOS and Android applications designed for seamless multi-device experiences.",
     icon: Smartphone,
     colSpan: "md:col-span-1",
     delay: 0.2,
@@ -200,27 +200,28 @@ export default function Hero() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: item.delay }}
                 whileHover={{ y: -5 }}
-                className={`relative bg-[#09090b]/80 backdrop-blur-md border border-white/10 hover:border-[#d94814]/50 rounded-3xl p-8 transition-all duration-300 group overflow-hidden ${item.colSpan}`}
+                className={`relative bg-[#09090b]/80 backdrop-blur-md border border-white/10 md:hover:border-[#d94814]/50 rounded-3xl p-8 transition-all duration-300 group overflow-hidden ${item.colSpan}`}
               >
-                {/* Subtle hover glow effect */}
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#d94814]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                {/* Desktop hover glow */}
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#d94814]/5 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 
-                <div className="relative z-10 h-full flex flex-col justify-between">
-                  <div>
-                    <div className="mb-8 w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:text-[#d94814] group-hover:bg-[#d94814]/10 transition-all duration-300">
-                      <Icon className="w-7 h-7" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-base text-neutral-400 leading-relaxed mb-6">
-                      {item.desc}
-                    </p>
+                {/* Mobile ambient breathing glow */}
+                <motion.div 
+                  animate={{ opacity: [0.1, 0.3, 0.1] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute inset-0 bg-gradient-to-br from-[#d94814]/10 to-transparent pointer-events-none md:hidden rounded-3xl border border-[#d94814]/30"
+                />
+                
+                <div className="relative z-10">
+                  <div className="mb-8 w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white md:group-hover:text-[#d94814] md:group-hover:bg-[#d94814]/10 transition-all duration-300">
+                    <Icon className="w-7 h-7" />
                   </div>
-                  
-                  <div className="flex items-center text-sm font-bold text-[#d94814] uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
-                    Explore <ChevronRight className="w-4 h-4 ml-1" />
-                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-base text-neutral-400 leading-relaxed">
+                    {item.desc}
+                  </p>
                 </div>
               </motion.div>
             );
