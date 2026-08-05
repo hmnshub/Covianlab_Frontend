@@ -49,24 +49,22 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="w-full max-w-screen-xl flex items-center justify-between gap-4 bg-[#09090b]/85 backdrop-blur-xl border border-white/10 px-5 sm:px-6 py-3.5 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.8)] relative"
       >
-        {/* Brand Logo - Shifted Right, Container Widened, Scale Increased */}
-        <Link href="/" className="flex items-center group cursor-pointer block">
-          {/* Added ml-2 (mobile) and ml-6 (desktop) to push it right. Widened to w-80 on desktop. */}
+        {/* Brand Logo - Added relative z-10 to keep it in the background layer */}
+        <Link href="/" className="flex items-center group cursor-pointer block relative z-10">
           <div className="relative w-56 h-14 md:w-80 md:h-16 flex-shrink-0 ml-2 md:ml-6">
             <Image 
               src="/logo.png" 
               alt="CovianLab Logo" 
               fill
-              /* Scaled to 2x on mobile, 2.5x on desktop for maximum visibility */
-              className="object-contain object-left origin-left scale-[2] md:scale-[2.5] group-hover:scale-[2.1] md:group-hover:scale-[2.6] transition-transform duration-300"
+              className="object-contain object-left origin-left scale-[2] md:scale-[2.5] group-hover:scale-[2.1] md:group-hover:scale-[2.6] transition-transform duration-300 pointer-events-none"
               priority
               unoptimized
             />
           </div>
         </Link>
 
-        {/* Center Nav Links (Desktop Only) */}
-        <div className="hidden md:flex items-center gap-1 bg-white/[0.03] border border-white/10 p-1 rounded-full">
+        {/* Center Nav Links (Desktop Only) - Boosted to z-50 so it cannot be blocked */}
+        <div className="hidden md:flex items-center gap-1 bg-white/[0.03] border border-white/10 p-1 rounded-full relative z-50">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -96,8 +94,8 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Right CTA Button (Desktop Only) */}
-        <div className="hidden md:block">
+        {/* Right CTA Button (Desktop Only) - Boosted to z-50 */}
+        <div className="hidden md:block relative z-50">
           <Link 
             href="/contact"
             className="bg-white text-black px-6 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#d94814] hover:text-white transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_20px_rgba(217,72,20,0.6)] cursor-pointer inline-block"
@@ -106,24 +104,24 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Hamburger Button */}
+        {/* Mobile Hamburger Button - Added relative z-50 to place it OVER the invisible logo box */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-white p-1.5 focus:outline-none cursor-pointer"
+          className="md:hidden text-white p-2 focus:outline-none cursor-pointer relative z-50 bg-[#09090b]/50 rounded-full border border-white/10"
           aria-label="Toggle Menu"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </motion.nav>
 
-      {/* Mobile Dropdown Drawer */}
+      {/* Mobile Dropdown Drawer - Boosted to z-[60] to sit on top of absolutely everything */}
       <AnimatePresence>
         {isOpen && (
           <motion.div 
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            className="absolute top-20 left-4 right-4 bg-[#09090b]/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 shadow-2xl md:hidden space-y-4 z-40"
+            className="absolute top-24 left-4 right-4 bg-[#09090b]/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 shadow-2xl md:hidden space-y-4 z-[60]"
           >
             <div className="flex flex-col space-y-2">
               {navLinks.map((link) => {
