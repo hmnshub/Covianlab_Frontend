@@ -54,7 +54,9 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="max-w-screen-xl mx-auto px-6 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-neutral-500">
         <p>© 2026 CovianLab. Engineered for Growth.</p>
-        <Link href="/#contact" className="hover:text-white transition-colors mt-4 md:mt-0">
+        
+        {/* 👉 UPDATED LINK HERE */}
+        <Link href="/contact#contact-form" className="hover:text-white transition-colors mt-4 md:mt-0">
           Contact
         </Link>
       </div>
