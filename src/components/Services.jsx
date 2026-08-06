@@ -1,57 +1,91 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BarChart2, Cpu, Rocket, Bot } from "lucide-react";
+import { Activity, Code2, Rocket, Repeat } from "lucide-react";
 
-const services = [
-  { title: "Data & Strategic Models", desc: "Advanced analytics and AI-powered predictive models that form the bedrock of every decision.", icon: BarChart2 },
-  { title: "Product Engine", desc: "Scalable design and high-performance development focused on acquisition and retention.", icon: Cpu },
-  { title: "Performance Growth", desc: "Aggressive marketing systems that leverage data to find your highest-value customers at scale.", icon: Rocket },
-  { title: "QA & AI Automations", desc: "Continuous improvement models through automated testing and AI workflows.", icon: Bot },
+const pipeline = [
+  {
+    step: "01",
+    title: "The Audit (Data & Strategy)",
+    desc: "We don't guess. We map your existing infrastructure and run predictive models before writing a single line of code.",
+    icon: Activity,
+  },
+  {
+    step: "02",
+    title: "The Build (Engineering)",
+    desc: "Scalable, high-performance product development engineered for maximum retention and lightning-fast load times.",
+    icon: Code2,
+  },
+  {
+    step: "03",
+    title: "The Injection (Growth)",
+    desc: "Deploying aggressive, data-backed marketing systems and conversion funnels to scale your acquisition efficiently.",
+    icon: Rocket,
+  },
+  {
+    step: "04",
+    title: "The Loop (QA & Automation)",
+    desc: "Setting up AI workflows and automated testing protocols so the system continually optimizes and improves itself.",
+    icon: Repeat,
+  },
 ];
 
-export default function Services() {
+export default function Process() {
   return (
-    <section className="py-28 px-6 max-w-screen-xl mx-auto bg-transparent text-white relative z-10">
-      
-      {/* Section Header */}
-      <div className="mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
-          Systemized <span className="text-neutral-500">Approach.</span>
-        </h2>
-      </div>
+    <section className="py-24 bg-transparent relative z-10">
+      <div className="max-w-screen-md mx-auto px-6 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="mb-16 text-center md:text-left">
+          <span className="text-xs font-semibold uppercase tracking-widest text-neutral-500 block mb-3">
+            Our Methodology
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
+            The Architecture <span className="text-neutral-500">of Growth.</span>
+          </h2>
+        </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {services.map((service, i) => {
-          const Icon = service.icon;
-          return (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{
-                scale: 1.02,
-                y: -8,
-                boxShadow: "0 25px 50px -15px rgba(212, 175, 55, 0.15)",
-              }}
-              className="relative bg-[#0b0b0b] border border-[#d4af37]/30 hover:border-[#d4af37]/70 rounded-3xl p-10 transition-all duration-300 flex flex-col justify-between cursor-pointer group overflow-hidden"
-            >
-              {/* Subtle gold ambient glow on the card background */}
-              <div className="absolute -right-20 -top-20 w-48 h-48 bg-amber-500/5 rounded-full blur-3xl pointer-events-none group-hover:bg-amber-500/10 transition-all duration-500" />
-              
-              <div className="relative z-10">
-                <div className="mb-8 w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:scale-110 transition-transform shadow-inner">
-                  <Icon className="w-7 h-7" />
+        {/* 1-by-1 Vertical Pipeline */}
+        <div className="flex flex-col gap-6">
+          {pipeline.map((phase, i) => {
+            const Icon = phase.icon;
+            
+            return (
+              <motion.div
+                key={phase.step}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group relative bg-[#09090b] border border-white/10 rounded-[2rem] p-8 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center hover:border-white/20 transition-all overflow-hidden"
+              >
+                {/* Subtle hover glow effect */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#d94814]/5 blur-[40px] pointer-events-none group-hover:bg-[#d94814]/10 transition-colors" />
+
+                {/* Massive Accent Number */}
+                <div className="flex-shrink-0">
+                  <span className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/20 to-white/0 group-hover:from-[#d94814]/40 transition-all duration-500">
+                    {phase.step}
+                  </span>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">{service.title}</h3>
-              </div>
-              <p className="relative z-10 text-sm md:text-base text-neutral-400 leading-relaxed">{service.desc}</p>
-            </motion.div>
-          );
-        })}
+
+                {/* Content Block */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Icon className="w-5 h-5 text-[#d94814]" />
+                    <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">
+                      {phase.title}
+                    </h3>
+                  </div>
+                  <p className="text-sm md:text-base text-neutral-400 leading-relaxed max-w-lg">
+                    {phase.desc}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
       </div>
     </section>
   );
