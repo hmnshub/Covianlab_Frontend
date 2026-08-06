@@ -5,8 +5,25 @@ import { Star, Send } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { getApiBaseUrl } from "@/utils/apiBaseUrl";
 
+// Hardcoded fallbacks so the UI NEVER shows a blank screen
+const fallbackReviews = [
+  {
+    _id: "1",
+    name: "Anjali Patel",
+    role: "E-Commerce Bakery Website",
+    text: "CovianLab built a beautiful custom website for our bakery. The online ordering system is incredibly smooth, and our online sales went up 30% in the first month.",
+  },
+  {
+    _id: "2",
+    name: "Rohan Desai",
+    role: "Data Intelligence & Analytics",
+    text: "They completely overhauled our data pipeline. Our monthly cloud server costs dropped by 40% within the first two weeks of deployment.",
+  },
+];
+
 export default function Testimonials() {
-  const [reviews, setReviews] = useState([]);
+  // Initialize state with fallbacks for Instant Load
+  const [reviews, setReviews] = useState(fallbackReviews);
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [text, setText] = useState("");
@@ -23,26 +40,12 @@ export default function Testimonials() {
       const res = await fetch(`${API_URL}/api/reviews?status=approved`);
       const data = await res.json();
       
+      // Only swap out the instant-load defaults if live data actually exists
       if (data && data.length > 0) {
         setReviews(data);
-      } else {
-        setReviews([
-          {
-            _id: "1",
-            name: "Anjali Patel",
-            role: "E-Commerce Bakery Website",
-            text: "CovianLab built a beautiful custom website for our bakery. The online ordering system is incredibly smooth, and our online sales went up 30% in the first month.",
-          },
-          {
-            _id: "2",
-            name: "Rohan Desai",
-            role: "Data Intelligence & Analytics",
-            text: "They completely overhauled our data pipeline. Our monthly cloud server costs dropped by 40% within the first two weeks of deployment.",
-          },
-        ]);
       }
     } catch (error) {
-      console.error("Failed to fetch reviews from backend", error);
+      console.error("Failed to fetch live reviews, keeping defaults", error);
     }
   }, [API_URL]);
 
@@ -56,7 +59,7 @@ export default function Testimonials() {
     
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % reviews.length);
-    }, 4000); // Swipes every 4 seconds
+    }, 4000); 
     
     return () => clearInterval(timer);
   }, [isPaused, reviews.length]);
@@ -65,10 +68,8 @@ export default function Testimonials() {
   const handleDragEnd = (e, { offset }) => {
     const swipeDistance = offset.x;
     if (swipeDistance < -50) {
-      // Swiped Left
       setCurrentIndex((prev) => (prev + 1) % reviews.length);
     } else if (swipeDistance > 50) {
-      // Swiped Right
       setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
     }
   };
@@ -103,8 +104,14 @@ export default function Testimonials() {
     }
   };
 
-  // Only duplicated for the desktop infinite scroll
-  const duplicatedReviews = reviews.length > 0 ? [...reviews, ...reviews] : [];
+  // --- MARQUEE MATH FIX ---
+  // 1. Force the base array to have at least 6 items to cover ultra-wide monitors
+  let baseReviews = [...reviews];
+  while (baseReviews.length < 6) {
+    baseReviews = [...baseReviews, ...reviews];
+  }
+  // 2. Duplicate it exactly once to create the two identical halves for the -50% shift
+  const marqueeReviews = [...baseReviews, ...baseReviews];
 
   return (
     <section className="py-24 bg-transparent relative z-10 overflow-hidden">
@@ -119,17 +126,17 @@ export default function Testimonials() {
 
       <div className="relative w-full mb-24">
         
-        {/* DESKTOP VIEW: Continuous Infinite Scroll (Hidden on Mobile) */}
+        {/* DESKTOP VIEW: Continuous Infinite Scroll */}
         <div className="hidden md:flex relative overflow-hidden">
           <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
           <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
           <motion.div
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ ease: "linear", duration: 30, repeat: Infinity }}
+            transition={{ ease: "linear", duration: 20, repeat: Infinity }}
             className="flex gap-6 w-max px-6"
           >
-            {duplicatedReviews.map((review, i) => (
+            {marqueeReviews.map((review, i) => (
               <div
                 key={`desktop-${review._id || review.id}-${i}`}
                 className="w-[400px] flex-shrink-0 bg-[#09090b] border border-white/10 rounded-3xl p-8 flex flex-col justify-between hover:border-white/20 transition-colors"
@@ -155,7 +162,7 @@ export default function Testimonials() {
           </motion.div>
         </div>
 
-        {/* MOBILE VIEW: Smart Swipeable Carousel (Hidden on Desktop) */}
+        {/* MOBILE VIEW: Smart Swipeable Carousel */}
         <div 
           className="md:hidden relative w-full overflow-hidden px-6"
           onTouchStart={() => setIsPaused(true)}
@@ -194,7 +201,6 @@ export default function Testimonials() {
             ))}
           </motion.div>
           
-          {/* Mobile Pagination Dots */}
           <div className="flex justify-center gap-2 mt-6">
             {reviews.map((_, idx) => (
               <button
