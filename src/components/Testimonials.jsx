@@ -12,6 +12,10 @@ export default function Testimonials() {
   const [text, setText] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  // Mobile Slider State
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
   const API_URL = getApiBaseUrl();
 
   const fetchReviews = useCallback(async () => {
@@ -43,10 +47,31 @@ export default function Testimonials() {
   }, [API_URL]);
 
   useEffect(() => {
-    // Initial load fetches server-approved reviews into the marquee.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchReviews();
   }, [fetchReviews]);
+
+  // Mobile Auto-Scroll Logic
+  useEffect(() => {
+    if (isPaused || reviews.length <= 1) return;
+    
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % reviews.length);
+    }, 4000); // Swipes every 4 seconds
+    
+    return () => clearInterval(timer);
+  }, [isPaused, reviews.length]);
+
+  // Handle Mobile Drag Snapping
+  const handleDragEnd = (e, { offset }) => {
+    const swipeDistance = offset.x;
+    if (swipeDistance < -50) {
+      // Swiped Left
+      setCurrentIndex((prev) => (prev + 1) % reviews.length);
+    } else if (swipeDistance > 50) {
+      // Swiped Right
+      setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,11 +103,12 @@ export default function Testimonials() {
     }
   };
 
+  // Only duplicated for the desktop infinite scroll
   const duplicatedReviews = reviews.length > 0 ? [...reviews, ...reviews] : [];
 
   return (
     <section className="py-24 bg-transparent relative z-10 overflow-hidden">
-      <div className="max-w-screen-xl mx-auto px-6 lg:px-8 mb-16 text-center md:text-left">
+      <div className="max-w-screen-xl mx-auto px-6 lg:px-8 mb-12 text-center md:text-left">
         <span className="text-xs font-semibold uppercase tracking-widest text-[#d94814] block mb-3">
           Proof of Execution
         </span>
@@ -91,41 +117,104 @@ export default function Testimonials() {
         </h2>
       </div>
 
-      <div className="relative w-full flex overflow-hidden mb-24">
-        <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-        <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+      <div className="relative w-full mb-24">
+        
+        {/* DESKTOP VIEW: Continuous Infinite Scroll (Hidden on Mobile) */}
+        <div className="hidden md:flex relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ ease: "linear", duration: 30, repeat: Infinity }}
-          className="flex gap-6 w-max px-6"
-        >
-          {duplicatedReviews.map((review, i) => (
-            <div
-              key={`${review._id || review.id}-${i}`}
-              className="w-[350px] md:w-[400px] flex-shrink-0 bg-[#09090b] border border-white/10 rounded-3xl p-8 flex flex-col justify-between hover:border-white/20 transition-colors"
-            >
-              <div>
-                <div className="flex gap-1 mb-6">
-                  {[...Array(5)].map((_, index) => (
-                    <Star key={index} className="w-4 h-4 fill-[#d94814] text-[#d94814]" />
-                  ))}
+          <motion.div
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ ease: "linear", duration: 30, repeat: Infinity }}
+            className="flex gap-6 w-max px-6"
+          >
+            {duplicatedReviews.map((review, i) => (
+              <div
+                key={`desktop-${review._id || review.id}-${i}`}
+                className="w-[400px] flex-shrink-0 bg-[#09090b] border border-white/10 rounded-3xl p-8 flex flex-col justify-between hover:border-white/20 transition-colors"
+              >
+                <div>
+                  <div className="flex gap-1 mb-6">
+                    {[...Array(5)].map((_, index) => (
+                      <Star key={index} className="w-4 h-4 fill-[#d94814] text-[#d94814]" />
+                    ))}
+                  </div>
+                  <p className="text-neutral-300 text-lg leading-relaxed mb-8">
+                    &ldquo;{review.text}&rdquo;
+                  </p>
                 </div>
-                <p className="text-neutral-300 text-lg leading-relaxed mb-8">
-                  &ldquo;{review.text}&rdquo;
-                </p>
+                <div>
+                  <h4 className="text-white font-bold tracking-tight">{review.name}</h4>
+                  <p className="text-[#d94814] text-xs uppercase tracking-widest font-semibold mt-1">
+                    {review.role}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h4 className="text-white font-bold tracking-tight">{review.name}</h4>
-                <p className="text-[#d94814] text-xs uppercase tracking-widest font-semibold mt-1">
-                  {review.role}
-                </p>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* MOBILE VIEW: Smart Swipeable Carousel (Hidden on Desktop) */}
+        <div 
+          className="md:hidden relative w-full overflow-hidden px-6"
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+        >
+          <motion.div
+            className="flex"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={handleDragEnd}
+            animate={{ translateX: `-${currentIndex * 100}%` }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
+            {reviews.map((review, i) => (
+              <div key={`mobile-${review._id || review.id}-${i}`} className="w-full flex-shrink-0 px-2">
+                <div className="h-full bg-[#09090b] border border-white/10 rounded-3xl p-8 flex flex-col justify-between active:scale-[0.98] transition-transform">
+                  <div>
+                    <div className="flex gap-1 mb-6">
+                      {[...Array(5)].map((_, index) => (
+                        <Star key={index} className="w-4 h-4 fill-[#d94814] text-[#d94814]" />
+                      ))}
+                    </div>
+                    <p className="text-neutral-300 text-lg leading-relaxed mb-8">
+                      &ldquo;{review.text}&rdquo;
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold tracking-tight">{review.name}</h4>
+                    <p className="text-[#d94814] text-xs uppercase tracking-widest font-semibold mt-1">
+                      {review.role}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
-        </motion.div>
+            ))}
+          </motion.div>
+          
+          {/* Mobile Pagination Dots */}
+          <div className="flex justify-center gap-2 mt-6">
+            {reviews.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  setCurrentIndex(idx);
+                  setIsPaused(true);
+                  setTimeout(() => setIsPaused(false), 5000);
+                }}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  currentIndex === idx ? "bg-[#d94814] w-6" : "bg-white/20"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
       </div>
 
+      {/* Review Submission Form */}
       <div className="max-w-2xl mx-auto px-6">
         <div className="bg-[#09090b]/80 backdrop-blur-md border border-white/10 rounded-[2rem] p-8 md:p-10 shadow-2xl relative overflow-hidden">
           <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#d94814]/10 blur-[50px] pointer-events-none" />
