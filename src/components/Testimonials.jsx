@@ -1,11 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, Send } from "lucide-react";
+import { Star, Send, MessageSquare } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { getApiBaseUrl } from "@/utils/apiBaseUrl";
 
-// Hardcoded fallbacks so the UI NEVER shows a blank screen
+// Hardcoded fallbacks so the UI NEVER shows a blank screen.
+// NOTE: these are placeholders standing in for real client reviews. Once the
+// DB has genuine reviews coming through the form below, swap these out (or
+// just delete this array — fetchReviews already prefers live data whenever
+// any exists).
 const fallbackReviews = [
   {
     _id: "1",
@@ -21,15 +25,60 @@ const fallbackReviews = [
   },
 ];
 
+// Below this many unique reviews, an infinite marquee just loops the same
+// couple of cards over and over — which reads as fake. Show a clean static
+// layout instead until there's enough real variety to loop convincingly.
+const MARQUEE_MIN_REVIEWS = 4;
+
+function ReviewCard({ review }) {
+  return (
+    <div className="w-full h-full bg-[#09090b] border border-white/10 rounded-3xl p-8 flex flex-col justify-between hover:border-white/20 transition-colors">
+      <div>
+        <div className="flex gap-1 mb-6">
+          {[...Array(5)].map((_, index) => (
+            <Star key={index} className="w-4 h-4 fill-[#d94814] text-[#d94814]" />
+          ))}
+        </div>
+        <p className="text-neutral-300 text-lg leading-relaxed mb-8">
+          &ldquo;{review.text}&rdquo;
+        </p>
+      </div>
+      <div>
+        <h4 className="text-white font-bold tracking-tight">{review.name}</h4>
+        <p className="text-[#d94814] text-xs uppercase tracking-widest font-semibold mt-1">
+          {review.role}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function InviteCard() {
+  return (
+    <a
+      href="#review-form"
+      className="w-full h-full bg-white/[0.02] border border-dashed border-white/15 rounded-3xl p-8 flex flex-col justify-center items-center text-center gap-4 hover:border-[#d94814]/40 hover:bg-white/[0.04] transition-colors"
+    >
+      <div className="w-12 h-12 rounded-xl bg-[#d94814]/10 border border-[#d94814]/20 flex items-center justify-center">
+        <MessageSquare className="w-6 h-6 text-[#d94814]" />
+      </div>
+      <div>
+        <h4 className="text-white font-bold tracking-tight mb-1">Be one of our first reviews</h4>
+        <p className="text-sm text-neutral-400 leading-relaxed">
+          We're early, and every review gets read. Tell us how the project went.
+        </p>
+      </div>
+    </a>
+  );
+}
+
 export default function Testimonials() {
-  // Initialize state with fallbacks for Instant Load
   const [reviews, setReviews] = useState(fallbackReviews);
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [text, setText] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  // Mobile Slider State
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -39,8 +88,6 @@ export default function Testimonials() {
     try {
       const res = await fetch(`${API_URL}/api/reviews?status=approved`);
       const data = await res.json();
-      
-      // Only swap out the instant-load defaults if live data actually exists
       if (data && data.length > 0) {
         setReviews(data);
       }
@@ -53,18 +100,17 @@ export default function Testimonials() {
     fetchReviews();
   }, [fetchReviews]);
 
-  // Mobile Auto-Scroll Logic
+  const hasEnoughForMarquee = reviews.length >= MARQUEE_MIN_REVIEWS;
+
+  // Mobile auto-scroll — only runs once there's enough real variety to loop
   useEffect(() => {
-    if (isPaused || reviews.length <= 1) return;
-    
+    if (!hasEnoughForMarquee || isPaused || reviews.length <= 1) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % reviews.length);
-    }, 4000); 
-    
+    }, 4000);
     return () => clearInterval(timer);
-  }, [isPaused, reviews.length]);
+  }, [isPaused, reviews.length, hasEnoughForMarquee]);
 
-  // Handle Mobile Drag Snapping
   const handleDragEnd = (e, { offset }) => {
     const swipeDistance = offset.x;
     if (swipeDistance < -50) {
@@ -104,14 +150,11 @@ export default function Testimonials() {
     }
   };
 
-  // --- MARQUEE MATH FIX ---
-  // 1. Force the base array to have at least 6 items to cover ultra-wide monitors
-  let baseReviews = [...reviews];
-  while (baseReviews.length < 6) {
-    baseReviews = [...baseReviews, ...reviews];
-  }
-  // 2. Duplicate it exactly once to create the two identical halves for the -50% shift
-  const marqueeReviews = [...baseReviews, ...baseReviews];
+  // Simple double-up for the seamless -50% marquee loop — only used once
+  // there's enough real variety that the repeat isn't obvious. (Previously
+  // this padded a 2-review array up to 6 by repeating itself, then doubled
+  // that — which is why the same 2 quotes were visibly looping ~6-7 times.)
+  const marqueeReviews = hasEnoughForMarquee ? [...reviews, ...reviews] : [];
 
   return (
     <section className="py-24 bg-transparent relative z-10 overflow-hidden">
@@ -124,107 +167,89 @@ export default function Testimonials() {
         </h2>
       </div>
 
-      <div className="relative w-full mb-24">
-        
-        {/* DESKTOP VIEW: Continuous Infinite Scroll */}
-        <div className="hidden md:flex relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-          <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+      {hasEnoughForMarquee ? (
+        <div className="relative w-full mb-24">
 
-          <motion.div
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ ease: "linear", duration: 20, repeat: Infinity }}
-            className="flex gap-6 w-max px-6"
+          {/* DESKTOP VIEW: Continuous Infinite Scroll */}
+          <div className="hidden md:flex relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ ease: "linear", duration: 20, repeat: Infinity }}
+              className="flex gap-6 w-max px-6"
+            >
+              {marqueeReviews.map((review, i) => (
+                <div key={`desktop-${review._id || review.id}-${i}`} className="w-[400px] flex-shrink-0">
+                  <ReviewCard review={review} />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* MOBILE VIEW: Smart Swipeable Carousel */}
+          <div
+            className="md:hidden relative w-full overflow-hidden px-6"
+            onTouchStart={() => setIsPaused(true)}
+            onTouchEnd={() => setIsPaused(false)}
           >
-            {marqueeReviews.map((review, i) => (
-              <div
-                key={`desktop-${review._id || review.id}-${i}`}
-                className="w-[400px] flex-shrink-0 bg-[#09090b] border border-white/10 rounded-3xl p-8 flex flex-col justify-between hover:border-white/20 transition-colors"
-              >
-                <div>
-                  <div className="flex gap-1 mb-6">
-                    {[...Array(5)].map((_, index) => (
-                      <Star key={index} className="w-4 h-4 fill-[#d94814] text-[#d94814]" />
-                    ))}
+            <motion.div
+              className="flex"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              animate={{ translateX: `-${currentIndex * 100}%` }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
+              {reviews.map((review, i) => (
+                <div key={`mobile-${review._id || review.id}-${i}`} className="w-full flex-shrink-0 px-2">
+                  <div className="active:scale-[0.98] transition-transform">
+                    <ReviewCard review={review} />
                   </div>
-                  <p className="text-neutral-300 text-lg leading-relaxed mb-8">
-                    &ldquo;{review.text}&rdquo;
-                  </p>
                 </div>
-                <div>
-                  <h4 className="text-white font-bold tracking-tight">{review.name}</h4>
-                  <p className="text-[#d94814] text-xs uppercase tracking-widest font-semibold mt-1">
-                    {review.role}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
+
+            <div className="flex justify-center gap-2 mt-6">
+              {reviews.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setCurrentIndex(idx);
+                    setIsPaused(true);
+                    setTimeout(() => setIsPaused(false), 5000);
+                  }}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    currentIndex === idx ? "bg-[#d94814] w-6" : "bg-white/30"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
         </div>
-
-        {/* MOBILE VIEW: Smart Swipeable Carousel */}
-        <div 
-          className="md:hidden relative w-full overflow-hidden px-6"
-          onTouchStart={() => setIsPaused(true)}
-          onTouchEnd={() => setIsPaused(false)}
-        >
-          <motion.div
-            className="flex"
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.2}
-            onDragEnd={handleDragEnd}
-            animate={{ translateX: `-${currentIndex * 100}%` }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          >
+      ) : (
+        // FEW REVIEWS: static grid, no fake infinite loop — plus an invite
+        // card so 1-2 real reviews still fill the row nicely.
+        <div className="max-w-5xl mx-auto px-6 mb-24">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {reviews.map((review, i) => (
-              <div key={`mobile-${review._id || review.id}-${i}`} className="w-full flex-shrink-0 px-2">
-                <div className="h-full bg-[#09090b] border border-white/10 rounded-3xl p-8 flex flex-col justify-between active:scale-[0.98] transition-transform">
-                  <div>
-                    <div className="flex gap-1 mb-6">
-                      {[...Array(5)].map((_, index) => (
-                        <Star key={index} className="w-4 h-4 fill-[#d94814] text-[#d94814]" />
-                      ))}
-                    </div>
-                    <p className="text-neutral-300 text-lg leading-relaxed mb-8">
-                      &ldquo;{review.text}&rdquo;
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="text-white font-bold tracking-tight">{review.name}</h4>
-                    <p className="text-[#d94814] text-xs uppercase tracking-widest font-semibold mt-1">
-                      {review.role}
-                    </p>
-                  </div>
-                </div>
+              <div key={`static-${review._id || review.id || i}`}>
+                <ReviewCard review={review} />
               </div>
             ))}
-          </motion.div>
-          
-          <div className="flex justify-center gap-2 mt-6">
-            {reviews.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  setCurrentIndex(idx);
-                  setIsPaused(true);
-                  setTimeout(() => setIsPaused(false), 5000);
-                }}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  currentIndex === idx ? "bg-[#d94814] w-6" : "bg-white/20"
-                }`}
-              />
-            ))}
+            {reviews.length < 3 && <InviteCard />}
           </div>
         </div>
-
-      </div>
+      )}
 
       {/* Review Submission Form */}
-      <div className="max-w-2xl mx-auto px-6">
+      <div id="review-form" className="max-w-2xl mx-auto px-6 scroll-mt-32">
         <div className="bg-[#09090b]/80 backdrop-blur-md border border-white/10 rounded-[2rem] p-8 md:p-10 shadow-2xl relative overflow-hidden">
           <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#d94814]/10 blur-[50px] pointer-events-none" />
-          
+
           <div className="mb-8">
             <h3 className="text-xl font-bold text-white mb-2">Leave a footprint in the lab.</h3>
             <p className="text-sm text-neutral-400">Submit a review. Once verified by the admin, it will compile into the live marquee.</p>
@@ -243,14 +268,14 @@ export default function Testimonials() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-neutral-600"
+                  className="flex-1 bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-2 focus:ring-cyan-500/20 transition-colors placeholder:text-neutral-500"
                 />
                 <input
                   type="text"
                   placeholder="Service Taken (e.g. App Development)"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-neutral-600"
+                  className="flex-1 bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-2 focus:ring-cyan-500/20 transition-colors placeholder:text-neutral-500"
                 />
               </div>
               <textarea
@@ -259,7 +284,7 @@ export default function Testimonials() {
                 onChange={(e) => setText(e.target.value)}
                 required
                 rows={3}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-neutral-600 resize-none"
+                className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-2 focus:ring-cyan-500/20 transition-colors placeholder:text-neutral-500 resize-none"
               />
               <button
                 type="submit"

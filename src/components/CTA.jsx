@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function CTA() {
   return (
-    <section className="py-32 bg-transparent border-t border-white/5">
+    <section className="py-20 md:py-28 bg-transparent border-t border-white/5">
       <div className="max-w-screen-xl mx-auto px-6 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
